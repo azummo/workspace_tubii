@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ethernet_prototype/src/triggers.h&apos; to &apos;tubiiTriggers.h&apos;" description="Rename resource &apos;triggers.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/triggers.h" name="tubiiTriggers.h" stamp="1426879455635" updateReferences="true"/>
+</session>

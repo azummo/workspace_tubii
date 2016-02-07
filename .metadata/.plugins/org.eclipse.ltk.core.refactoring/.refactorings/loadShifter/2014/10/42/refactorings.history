@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;loadShifter/src/asyncDelay.h&apos; to &apos;loadShift.h&apos;" description="Rename resource &apos;asyncDelay.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/asyncDelay.h" name="loadShift.h" stamp="1413560784175" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;loadShifter/src/asyncDelay.c&apos; to &apos;loadShift.c&apos;" description="Rename resource &apos;asyncDelay.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/asyncDelay.c" name="loadShift.c" stamp="1413560799677" updateReferences="true"/>
+</session>

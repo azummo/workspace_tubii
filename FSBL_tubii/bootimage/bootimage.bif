@@ -1,0 +1,5 @@
+the_ROM_image:
+{
+	[bootloader]/Users/HEP/workspace_iocc/FSBL_tubii/Debug/FSBL_tubii.elf
+	/Users/HEP/workspace_iocc/hw_platform_tubii/system.bit
+}

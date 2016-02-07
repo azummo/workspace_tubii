@@ -1,0 +1,6 @@
+18:48:24 **** Build of project standalone_bsp_tubbi ****
+make -k all 
+'Finished building libraries'
+
+18:48:24 Build Finished (took 171ms)
+

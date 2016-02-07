@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;asyncDelaySet/src/clockLogic.c&apos; to &apos;asyncDelay.c&apos;" description="Rename resource &apos;clockLogic.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/clockLogic.c" name="asyncDelay.c" stamp="1410887221613" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;asyncDelaySet/src/clockLogic.h&apos; to &apos;asyncDelay.h&apos;" description="Rename resource &apos;clockLogic.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/clockLogic.h" name="asyncDelay.h" stamp="1410887232345" updateReferences="true"/>
+</session>

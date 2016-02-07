@@ -1,0 +1,5 @@
+the_ROM_image:
+{
+[bootloader]/Users/Ian/workspace_tubii/FSBL_tubii/Debug/FSBL_tubii.elf
+	/Users/Ian/workspace_tubii/hw_platform_7020/system.bit
+}

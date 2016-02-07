@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;load_copy/src/helloworld.c&apos;" deleteContents="false" description="Delete resource &apos;load_copy/src/helloworld.c&apos;" element1="/load_copy/src/helloworld.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1418680680179"/>&#x0A;<refactoring comment="Delete resource &apos;FSBL_copy&apos;" deleteContents="true" description="Delete resource &apos;FSBL_copy&apos;" element1="/FSBL_copy" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1418681113294"/>
+</session>

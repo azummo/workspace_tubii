@@ -1,0 +1,6 @@
+10:55:40 **** Build of project standalone_bsp_copy ****
+make -k all 
+'Finished building libraries'
+
+10:55:40 Build Finished (took 300ms)
+

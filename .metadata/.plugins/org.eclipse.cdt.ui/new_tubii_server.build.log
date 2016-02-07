@@ -1,0 +1,21 @@
+18:48:49 **** Auto Build of configuration Debug for project new_tubii_server ****
+make all 
+'Building file: ../src/tubii-server.c'
+'Invoking: ARM Linux gcc compiler'
+arm-xilinx-linux-gnueabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MMD -MP -MF"src/tubii-server.d" -MT"src/tubii-server.d" -o "src/tubii-server.o" "../src/tubii-server.c"
+'Finished building: ../src/tubii-server.c'
+' '
+'Building target: new_tubii_server.elf'
+'Invoking: ARM Linux gcc linker'
+arm-xilinx-linux-gnueabi-gcc  -o "new_tubii_server.elf"  ./src/adlist.o ./src/ae.o ./src/ae_epoll.o ./src/anet.o ./src/async.o ./src/data.o ./src/dict.o ./src/hiredis.o ./src/logging.o ./src/net.o ./src/read.o ./src/sds.o ./src/server.o ./src/sha1.o ./src/sock.o ./src/tubii-server.o ./src/tubii_client.o ./src/util.o   
+'Finished building target: new_tubii_server.elf'
+' '
+'Invoking: ARM Linux Print Size'
+arm-xilinx-linux-gnueabi-size new_tubii_server.elf  |tee "new_tubii_server.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 148401	   1436	   2324	 152161	  25261	new_tubii_server.elf
+'Finished building: new_tubii_server.elf.size'
+' '
+
+18:48:51 Build Finished (took 1s.747ms)
+

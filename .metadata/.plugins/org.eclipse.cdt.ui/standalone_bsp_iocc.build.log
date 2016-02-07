@@ -1,0 +1,6 @@
+17:02:33 **** Auto Build of project standalone_bsp_iocc ****
+make -k all 
+make: *** No rule to make target `all'.
+
+17:02:33 Build Finished (took 312ms)
+

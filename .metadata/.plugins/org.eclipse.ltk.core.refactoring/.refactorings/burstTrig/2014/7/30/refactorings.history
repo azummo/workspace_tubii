@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;burstTrig/src/prescaleTrig.c&apos; to &apos;burstTrig.c&apos;" description="Rename resource &apos;prescaleTrig.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/prescaleTrig.c" name="burstTrig.c" stamp="1406062886786" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;burstTrig/src/prescaleTrig.h&apos; to &apos;burstTrig.h&apos;" description="Rename resource &apos;prescaleTrig.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/prescaleTrig.h" name="burstTrig.h" stamp="1406062925833" updateReferences="true"/>
+</session>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;ethernet_prototype/src/pulser.h&apos; to &apos;tubiiPulser.h&apos;" description="Rename resource &apos;pulser.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/pulser.h" name="tubiiPulser.h" stamp="1425670774077" updateReferences="true"/>
-</session>

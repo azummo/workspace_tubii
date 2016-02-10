@@ -1,6 +1,0 @@
-10:53:37 **** Auto Build of project standalone_bsp_tubbi ****
-make -k all 
-'Finished building libraries'
-
-10:53:41 Build Finished (took 3s.604ms)
-

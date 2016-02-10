@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;tubiiDelay/src/burstTrig.c&apos; to &apos;tubiiDelay.c&apos;" description="Rename resource &apos;burstTrig.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/burstTrig.c" name="tubiiDelay.c" stamp="1408564712566" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;tubiiDelay/src/burstTrig.h&apos; to &apos;tubiiDelay.h&apos;" description="Rename resource &apos;burstTrig.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/burstTrig.h" name="tubiiDelay.h" stamp="1408564725708" updateReferences="true"/>
-</session>

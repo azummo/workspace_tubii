@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;tubii_pulser/src/xgpiops.h&apos;" deleteContents="false" description="Delete resource &apos;tubii_pulser/src/xgpiops.h&apos;" element1="/tubii_pulser/src/xgpiops.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1397167113283"/>
-</session>

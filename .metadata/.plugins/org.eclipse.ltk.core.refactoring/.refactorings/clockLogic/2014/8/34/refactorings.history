@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;clockLogic/src/burstTrig.c&apos; to &apos;clockLogic.c&apos;" description="Rename resource &apos;burstTrig.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/burstTrig.c" name="clockLogic.c" stamp="1408462353278" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;clockLogic/src/burstTrig.h&apos; to &apos;clockLogic.h&apos;" description="Rename resource &apos;burstTrig.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/burstTrig.h" name="clockLogic.h" stamp="1408462367240" updateReferences="true"/>
-</session>

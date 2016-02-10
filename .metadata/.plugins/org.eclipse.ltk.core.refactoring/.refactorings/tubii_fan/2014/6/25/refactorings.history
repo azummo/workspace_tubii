@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;tubii_fan/src/tubii_linux.c&apos; to &apos;tubii_fanin.c&apos;" description="Rename resource &apos;tubii_linux.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/tubii_linux.c" name="tubii_fanin.c" stamp="1403118766321" updateReferences="true"/>
-</session>

@@ -211,10 +211,10 @@ int main(int argc, char **argv)
     auto_init();
 
     /* start tubii readout */
-    //if (start_tubii_readout(1000)) {
+    if (start_tubii_readout(1000)) {
         //Log(WARNING, tubii_err);
-    //    return 1;
-    //}
+        return 1;
+    }
 
     /* set up status event */
     /*if (aeCreateTimeEvent(el, 0, tubii_status, NULL, NULL) == AE_ERR) {

@@ -305,8 +305,8 @@ void SetGenericdelay(client *c, int argc, sds *argv)
 
 void SetSmelliepulser(client *c, int argc, sds *argv)
 {
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
-	//int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
+	//int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
+	int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
 
 	smrate = atoi(argv[1]);
 	smwidth = atoi(argv[2]);
@@ -716,16 +716,22 @@ void stop_data_readout(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+OK");
 }
 
+int getDataReadout()
+{
+	return data_readout;
+}
+
 int start_tubii_readout(long long milliseconds)
 {
     /*if (tubii_readout_id != AE_ERR) {
-        sprintf(tubii_err, "mtc: readout already running!");
+        sprintf(tubii_err, "TUBii: readout already running!");
         return -1;
     }*/
-    //if(data_readout == 0) return 1000;
+	printf("TRY TO START READOUT\n\n");
+    //if(getDataReadout() == 0) return 0;
 
     // set up read out event
-    if (/*(tubii_readout_id = */aeCreateTimeEvent(el, milliseconds, tubii_readout, NULL, NULL)/*)*/ == AE_ERR) {
+    if ((/*tubii_readout_id =*/ aeCreateTimeEvent(el, milliseconds, tubii_readout, NULL, NULL)) == AE_ERR) {
         sprintf(tubii_err, "failed to set up tubii readout");
         return -1;
     }
@@ -735,13 +741,16 @@ int start_tubii_readout(long long milliseconds)
 
 int tubii_readout(aeEventLoop *el, long long id, void *data)
 {
-    struct MegaRecord mega;
+	// Check if we want to read data
+    if(getDataReadout() == 0) return 1000;
+
+	struct MegaRecord mega;
 	struct GenericRecordHeader header;
 
     mega.size=0;
     int loop=0;
     struct TubiiRecord trec;
-	for(loop=0; loop<10000; loop++){
+	for(loop=0; loop<32000; loop++){
 		/* Send a TUBii_RECORD to the data stream server */
 		fifoTrigger(&trec);
 
@@ -759,7 +768,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 	}
 
 	if(mega.size>0){
-		printf("Bundle! %i events!\n",mega.size);
+		//printf("Bundle! %i events!\n",mega.size);
 
 		header.RecordID = htonl(MEGA_RECORD);
 		header.RecordLength = htonl(sizeof(mega));
@@ -774,7 +783,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 		write_to_data_stream(&header, &mega);
     }
 
-    return 10;
+    return 1;
 }
 
 

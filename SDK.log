@@ -10558,3 +10558,51 @@ If this project was a BSP referenced by other C/C++ applications, then those app
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 11:50:13.801 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+14:49:01.740 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+14:49:02.020 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+14:49:03.221 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+14:49:03.551 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+14:49:03.991 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+14:49:04.041 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+14:49:04.821 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+14:49:08.571 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+14:49:09.701 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+14:49:09.701 INFO  - Clearing existing target manager status. 
+14:49:12.494 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+14:49:12.504 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+14:49:12.684 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+14:49:12.814 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+14:49:13.914 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+17:34:04.086 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+17:34:04.187 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+12:40:52.472 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+12:44:57.945 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+12:44:58.008 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+12:44:58.101 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+12:44:58.101 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+12:44:58.195 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+12:44:58.211 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+12:44:59.084 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+12:45:15.745 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+12:45:18.319 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+12:45:18.350 INFO  - Clearing existing target manager status. 
+12:46:18.429 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+12:46:18.429 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+12:46:18.554 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+12:46:18.569 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+12:46:19.614 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+12:48:40.828 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+12:48:40.829 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+10:53:33.709 ERROR - SDK has detected that project hw_platform_tubii has been deleted (or renamed).
+This project was referenced by a BSP project, which will now fail to compile properly.
+
+We recommend that you create a new BSP project pointing to a valid hardware project. Alternatively, you can fix the project references in the BSP, and update the path to the hardware specification file in 'libgen.options', and in ELF check options in dependant applications. 

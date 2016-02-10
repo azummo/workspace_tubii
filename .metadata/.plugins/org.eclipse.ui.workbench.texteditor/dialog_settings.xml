@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="countRe" key="selection"/>
+		<item value="config.logserv" key="selection"/>
 		<list key="findhistory">
+			<item value="config.logserv"/>
+			<item value="log-ser"/>
+			<item value="data_readout"/>
 			<item value="countre"/>
 			<item value="FIFO_BASE"/>
 			<item value="argv["/>
 			<item value="printf"/>
 			<item value="AE_FILE_EVENT"/>
-			<item value="init_clie"/>
-			<item value="hsock"/>
-			<item value="pBuffer"/>
 		</list>
 		<list key="replacehistory">
 		</list>

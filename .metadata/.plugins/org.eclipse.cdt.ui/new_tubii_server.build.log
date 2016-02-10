@@ -1,9 +1,301 @@
-18:48:49 **** Auto Build of configuration Debug for project new_tubii_server ****
+17:40:03 **** Auto Build of configuration Debug for project new_tubii_server ****
 make all 
-'Building file: ../src/tubii-server.c'
+'Building file: ../src/tubii_client.c'
 'Invoking: ARM Linux gcc compiler'
-arm-xilinx-linux-gnueabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MMD -MP -MF"src/tubii-server.d" -MT"src/tubii-server.d" -o "src/tubii-server.o" "../src/tubii-server.c"
-'Finished building: ../src/tubii-server.c'
+arm-xilinx-linux-gnueabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MMD -MP -MF"src/tubii_client.d" -MT"src/tubii_client.d" -o "src/tubii_client.o" "../src/tubii_client.c"
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h: In function 'MemoryMapping':
+../src/tubiiUtil.h:99:3: warning: implicit declaration of function 'close' [-Wimplicit-function-declaration]
+../src/tubiiUtil.h: In function 'InitialiseRegs':
+../src/tubiiUtil.h:106:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:107:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:108:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:109:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h: In function 'Testing':
+../src/tubiiUtil.h:116:2: warning: implicit declaration of function 'sleep' [-Wimplicit-function-declaration]
+In file included from ../src/tubii_client.c:13:0:
+../src/tubiiClocks.h: In function 'clockReset':
+../src/tubiiClocks.h:19:4: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:13:0:
+../src/tubiiClocks.h: In function 'clockStatus':
+../src/tubiiClocks.h:32:2: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:13:0:
+../src/tubiiClocks.h: In function 'clockDebug':
+../src/tubiiClocks.h:43:2: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:13:0:
+../src/tubiiClocks.h:43:2: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'u32' [-Wformat]
+In file included from ../src/tubii_client.c:14:0:
+../src/tubiiELLIE.h: In function 'Pulser':
+../src/tubiiELLIE.h:59:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:14:0:
+../src/tubiiELLIE.h:60:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:14:0:
+../src/tubiiELLIE.h:61:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:14:0:
+../src/tubiiELLIE.h: In function 'Delay':
+../src/tubiiELLIE.h:82:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h: In function 'Muxer':
+../src/tubiiRegs.h:29:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h: In function 'MuxEnable':
+../src/tubiiRegs.h:44:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h: In function 'DataReady':
+../src/tubiiRegs.h:63:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h: In function 'LoadShift':
+../src/tubiiRegs.h:75:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h:80:4: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h:81:4: warning: implicit declaration of function 'usleep' [-Wimplicit-function-declaration]
+../src/tubiiRegs.h: In function 'ReadShift':
+../src/tubiiRegs.h:89:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h:91:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h:96:4: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiRegs.h:99:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'burstTrig':
+../src/tubiiTriggers.h:30:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:33:4: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:33:4: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:33:4: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:33:4: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:33:4: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'u32' [-Wformat]
+../src/tubiiTriggers.h:33:4: warning: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'u32' [-Wformat]
+../src/tubiiTriggers.h:33:4: warning: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'u32' [-Wformat]
+../src/tubiiTriggers.h:33:4: warning: format '%x' expects argument of type 'unsigned int', but argument 5 has type 'u32' [-Wformat]
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'comboTrig':
+../src/tubiiTriggers.h:42:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'prescaleTrig':
+../src/tubiiTriggers.h:49:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'counterLatch':
+../src/tubiiTriggers.h:56:2: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'counterReset':
+../src/tubiiTriggers.h:65:2: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'counterMask':
+../src/tubiiTriggers.h:73:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'speakerMask':
+../src/tubiiTriggers.h:79:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'triggerMask':
+../src/tubiiTriggers.h:85:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'triggerReport':
+../src/tubiiTriggers.h:92:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:93:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:95:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:96:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:97:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:98:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:99:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:101:7: warning: unused variable 'writeptr' [-Wunused-variable]
+../src/tubiiTriggers.h:93:7: warning: unused variable 'trig_mask' [-Wunused-variable]
+../src/tubiiTriggers.h:92:7: warning: unused variable 'current_trig' [-Wunused-variable]
+../src/tubiiTriggers.h: In function 'currentTrigger':
+../src/tubiiTriggers.h:133:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:134:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h: In function 'fifoTrigger':
+../src/tubiiTriggers.h:140:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:141:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:142:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:143:3: warning: passing argument 1 of 'Xil_In32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:67:5: note: expected 'u32' but argument is of type 'void *'
+In file included from ../src/tubii_client.c:16:0:
+../src/tubiiTriggers.h:144:3: warning: passing argument 1 of 'Xil_Out32' makes integer from pointer without a cast [enabled by default]
+In file included from ../src/tubiiClocks.h:7:0,
+                 from ../src/tubii_client.c:13:
+../src/tubiiUtil.h:72:6: note: expected 'u32' but argument is of type 'void *'
+../src/tubii_client.c: In function 'clockreset':
+../src/tubii_client.c:149:2: warning: passing argument 1 of 'clockReset' makes pointer from integer without a cast [enabled by default]
+In file included from ../src/tubii_client.c:13:0:
+../src/tubiiClocks.h:14:5: note: expected 'char *' but argument is of type 'int'
+../src/tubii_client.c: In function 'SetCounterMask':
+../src/tubii_client.c:553:6: warning: unused variable 'ret' [-Wunused-variable]
+../src/tubii_client.c: In function 'SetSpeakerMask':
+../src/tubii_client.c:585:6: warning: unused variable 'ret' [-Wunused-variable]
+../src/tubii_client.c: In function 'SetTriggerMask':
+../src/tubii_client.c:604:6: warning: unused variable 'ret' [-Wunused-variable]
+../src/tubii_client.c: In function 'GetFifoTrigger':
+../src/tubii_client.c:641:6: warning: unused variable 'empty' [-Wunused-variable]
+../src/tubii_client.c: In function 'InitMapping':
+../src/tubii_client.c:112:1: warning: control reaches end of non-void function [-Wreturn-type]
+In file included from ../src/tubii_client.c:16:0:
+../src/tubii_client.c: In function 'speakerMask':
+../src/tubiiTriggers.h:80:1: warning: control reaches end of non-void function [-Wreturn-type]
+../src/tubii_client.c: In function 'counterMask':
+../src/tubiiTriggers.h:74:1: warning: control reaches end of non-void function [-Wreturn-type]
+'Finished building: ../src/tubii_client.c'
 ' '
 'Building target: new_tubii_server.elf'
 'Invoking: ARM Linux gcc linker'
@@ -13,9 +305,9 @@ arm-xilinx-linux-gnueabi-gcc  -o "new_tubii_server.elf"  ./src/adlist.o ./src/ae
 'Invoking: ARM Linux Print Size'
 arm-xilinx-linux-gnueabi-size new_tubii_server.elf  |tee "new_tubii_server.elf.size"
    text	   data	    bss	    dec	    hex	filename
- 148401	   1436	   2324	 152161	  25261	new_tubii_server.elf
+ 148445	   1436	   2324	 152205	  2528d	new_tubii_server.elf
 'Finished building: new_tubii_server.elf.size'
 ' '
 
-18:48:51 Build Finished (took 1s.747ms)
+17:40:05 Build Finished (took 2s.202ms)
 

@@ -1,6 +1,6 @@
-18:48:18 **** Build of configuration Debug for project ethernet_prototype ****
+13:20:49 **** Build of configuration Debug for project ethernet_prototype ****
 make all 
 make: Nothing to be done for `all'.
 
-18:48:19 Build Finished (took 296ms)
+13:20:49 Build Finished (took 389ms)
 

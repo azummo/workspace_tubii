@@ -35,18 +35,22 @@ void burstTrig(char* bArg)
   }
 }
 
-void comboTrig(char* cArg)
+void comboTrig(char* cArg1, char* cArg2)
 {
-  u32 mask= (u32) atoi(cArg);
-  Log(NOTICE, "TUBii: Set mask for combo trigger: %d",mask);
-  mWriteReg(MappedComboBaseAddress, RegOffset3, mask);
+  u32 enableMask= (u32) atoi(cArg1);
+  u32 logicMask= (u32) atoi(cArg2);
+  Log(NOTICE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
+  mWriteReg(MappedComboBaseAddress, RegOffset2, enableMask);
+  mWriteReg(MappedComboBaseAddress, RegOffset3, logicMask);
 }
 
-void prescaleTrig(char* pArg)
+void prescaleTrig(char* pArg1, char* pArg2)
 {
-  double rate= (double) atof(pArg);
-  Log(NOTICE, "TUBii: Set rate for prescale trigger: %d",rate);
+  double rate= (double) atof(pArg1);
+  int mask= (int) atoi(pArg2);
+  Log(NOTICE, "TUBii: Set rate for prescale trigger: %d on mask %i",rate,mask);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset2, rate);
+  mWriteReg(MappedPrescaleBaseAddress, RegOffset3, mask);
 }
 
 int counterLatch(char* length)

@@ -127,10 +127,10 @@ struct command commandTable[] = {
 		{"startReadout", start_data_readout,     1},
 		{"stopReadout",	 stop_data_readout,     1},
 		{"trigBurst",    trigBurst,    2},
-		{"trigCombo",  	 trigCombo,    2},
+		{"trigCombo",  	 trigCombo,    3},
 		{"GetCurrentTrigger", GetCurrentTrigger, 1},
 		{"GetFifoTrigger", GetFifoTrigger, 1},
-		{"trigPrescale", trigPrescale, 2},
+		{"trigPrescale", trigPrescale, 3},
 		/// High level functions
 		{"setGTDelays", SetGTDelays, 3},
 		{"getLODelay", GetLODelay, 1},

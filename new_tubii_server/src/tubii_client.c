@@ -305,8 +305,8 @@ void SetGenericdelay(client *c, int argc, sds *argv)
 
 void SetSmelliepulser(client *c, int argc, sds *argv)
 {
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
-	//int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
+	//int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
+	int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
 
 	smrate = atoi(argv[1]);
 	smwidth = atoi(argv[2]);

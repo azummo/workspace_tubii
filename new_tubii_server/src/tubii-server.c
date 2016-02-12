@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 {
     config.daemonize = 0;
     config.logserver = "minard";
-    config.dataserver = "192.168.80.1";
+    config.dataserver = "192.168.80.100";//"192.168.80.1";
     config.logfile = "";
     config.loglevel = NOTICE;
 

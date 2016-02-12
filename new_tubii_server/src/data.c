@@ -81,7 +81,7 @@ static int dispatch_connect(aeEventLoop *el, long long id, void *data)
 
     /* Try to connect to the dispatcher. If it fails, try again 10 seconds
      * later */
-    int sock = anetTcpNonBlockConnect(err, "192.168.80.100", 4002);
+    int sock = anetTcpNonBlockConnect(err, host, 4002);
 
     if (sock == ANET_ERR) {
         Log(WARNING, "failed to connect to data stream server: %s.", err);

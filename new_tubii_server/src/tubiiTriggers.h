@@ -51,6 +51,7 @@ void prescaleTrig(char* pArg1, char* pArg2)
   Log(NOTICE, "TUBii: Set rate for prescale trigger: %d on mask %i",rate,mask);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset2, rate);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset3, mask);
+
 }
 
 int counterLatch(char* length)

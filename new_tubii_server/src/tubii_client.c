@@ -191,74 +191,6 @@ void ping(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+PING");
 }
 
-void test(client *c, int argc, sds *argv)
-{
-	Testing(BURSTTRIG_BASEADDR,BURSTTRIG_HIGHADDR);
-	Log(NOTICE, "TUBii: BurstTrig Memory Test ... OK");
-	sleep(1);
-
-	Testing(CLOCKLOGIC_BASEADDR,CLOCKLOGIC_HIGHADDR);
-	Log(NOTICE, "TUBii: ClockLogic Memory Test ... OK");
-	sleep(1);
-
-	Testing(COMBOTRIG_BASEADDR,COMBOTRIG_HIGHADDR);
-	Log(NOTICE, "TUBii: ComboTrig Memory Test ... OK");
-	sleep(1);
-
-	Testing(COUNTDISP_BASEADDR,COUNTDISP_HIGHADDR);
-	Log(NOTICE, "TUBii: Display Memory Test ... OK");
-	sleep(1);
-
-	Testing(PRESCALETRIG_BASEADDR,PRESCALETRIG_HIGHADDR);
-	Log(NOTICE, "TUBii: PrescaleTrig Memory Test ... OK");
-	sleep(1);
-
-	Testing(GENERICDELAY_BASEADDR,GENERICDELAY_HIGHADDR);
-	Log(NOTICE, "TUBii: GenericDelay Memory Test ... OK");
-	sleep(1);
-
-	Testing(GTDELAY_BASEADDR,GTDELAY_HIGHADDR);
-	Log(NOTICE, "TUBii: GTDelay Memory Test ... OK");
-	sleep(1);
-
-	Testing(SMELLIEDELAY_BASEADDR,SMELLIEDELAY_HIGHADDR);
-	Log(NOTICE, "TUBii: SmellieDelay Memory Test ... OK");
-	sleep(1);
-
-	Testing(TELLIEDELAY_BASEADDR,TELLIEDELAY_HIGHADDR);
-	Log(NOTICE, "TUBii: TellieDelay Memory Test ... OK");
-	sleep(1);
-
-	Testing(SHIFTREGS_BASEADDR,SHIFTREGS_HIGHADDR);
-	Log(NOTICE, "TUBii: LoadShift Memory Test ... OK");
-	sleep(1);
-
-	Testing(MZHAPPY_BASEADDR,MZHAPPY_HIGHADDR);
-	Log(NOTICE, "TUBii: MZHappy Memory Test ... OK");
-	sleep(1);
-
-	Testing(GENERICPULSER_BASEADDR,GENERICPULSER_HIGHADDR);
-	Log(NOTICE, "TUBii: GenericPulser Memory Test ... OK");
-	sleep(1);
-
-	Testing(SMELLIEPULSER_BASEADDR,SMELLIEPULSER_HIGHADDR);
-	Log(NOTICE, "TUBii: SmelliePulser Memory Test ... OK");
-	sleep(1);
-
-	Testing(TELLIEPULSER_BASEADDR,TELLIEPULSER_HIGHADDR);
-	Log(NOTICE, "TUBii: TelliePulser Memory Test ... OK");
-	sleep(1);
-
-	Testing(TRIGGERSPLIT_BASEADDR,TRIGGERSPLIT_HIGHADDR);
-	Log(NOTICE, "TUBii: TriggerSplit Memory Test ... OK");
-	sleep(1);
-
-	Testing(TRIGGEROUT_BASEADDR,TRIGGEROUT_HIGHADDR);
-	Log(NOTICE, "TUBii: TriggerOut Memory Test ... OK");
-
-	addReplyStatus(c, "+OK");
-}
-
 // ELLIE commands
 void SetGenericpulser(client *c, int argc, sds *argv)
 {
@@ -305,8 +237,8 @@ void SetGenericdelay(client *c, int argc, sds *argv)
 
 void SetSmelliepulser(client *c, int argc, sds *argv)
 {
-	//int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
+	int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
+	//int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
 
 	smrate = atoi(argv[1]);
 	smwidth = atoi(argv[2]);
@@ -615,7 +547,7 @@ void GetTriggerMask(client *c, int argc, sds *argv)
 void trigBurst(client *c, int argc, sds *argv)
 {
 	// Does this work??
-	burstTrig(argv[1]);
+	burstTrig(argv[1],argv[2]);
 	addReplyStatus(c, "+OK");
 }
 

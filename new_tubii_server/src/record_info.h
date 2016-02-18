@@ -35,9 +35,9 @@ enum RecordTypes {
     MTCD_STATUS    = 0x4d545354,
     TRIG_RECORD    = 0x54524947,
     FIFO_LEVELS    = 0x4649464f,
-    TUBII_RECORD   = 0xabc12345,
-    TUBII_STATUS   = 0xabcd9876,
-    MEGA_RECORD    = 0xabc25252,
+    TUBII_RECORD   = 0xabc12345, // Temp
+    TUBII_STATUS   = 0xabcd9876, // Temp
+    MEGA_RECORD    = 0x54554232, // TUB2 Change later
 };
 
 #endif

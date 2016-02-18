@@ -23,11 +23,13 @@ void *MappedPrescaleBaseAddress;
 
 int trigMask, countMask, speakMask;
 
-void burstTrig(char* bArg)
+void burstTrig(char* bArg1, char* bArg2)
 {
-  double rate= (double) atof(bArg);
-  Log(NOTICE, "TUBii: Set rate for burst trigger: %d",rate);
-  mWriteReg(MappedBurstBaseAddress, RegOffset3, rate);
+  double rate= (double) atof(bArg1);
+  int mask= (int) atoi(bArg2);
+  Log(NOTICE, "TUBii: Set rate for burst trigger: %d on mask %d",rate, mask);
+  mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
+  mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
   int j=0;
   while(j<9999){
 	  printf("%x \t %x \t %x \t %x\n",mReadReg(MappedBurstBaseAddress,RegOffset0),mReadReg(MappedBurstBaseAddress,RegOffset1),mReadReg(MappedBurstBaseAddress,RegOffset2),mReadReg(MappedBurstBaseAddress,RegOffset3));

@@ -13,7 +13,6 @@ int auto_init();
 void initialise(client *c, int argc, sds *argv);
 void MZHappy(client *c, int argc, sds *argv);
 void ping(client *c, int argc, sds *argv);
-void test(client *c, int argc, sds *argv);
 
 // Clock
 void clockreset(client *c, int argc, sds *argv);

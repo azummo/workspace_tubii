@@ -8,6 +8,7 @@
 #ifndef TRIGGERS_H_
 #define TRIGGERS_H_
 #include <time.h>
+#include <math.h>
 
 int last_one=-1;
 int last_ptr=0;
@@ -23,39 +24,61 @@ void *MappedPrescaleBaseAddress;
 
 int trigMask, countMask, speakMask;
 
-void burstTrig(char* bArg1, char* bArg2)
+/////// Internal Triggers
+int burstTrig(char* bArg1, char* bArg2)
 {
   double rate= (double) atof(bArg1);
-  int mask= (int) atoi(bArg2);
-  Log(NOTICE, "TUBii: Set rate for burst trigger: %d on mask %d",rate, mask);
+  int bit= (int) atoi(bArg2);
+
+  if(bit<0 || bit>15){
+	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  int mask = pow(2,bit);
+  Log(NOTICE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
   mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
-  int j=0;
-  while(j<9999){
-	  printf("%x \t %x \t %x \t %x\n",mReadReg(MappedBurstBaseAddress,RegOffset0),mReadReg(MappedBurstBaseAddress,RegOffset1),mReadReg(MappedBurstBaseAddress,RegOffset2),mReadReg(MappedBurstBaseAddress,RegOffset3));
-	  j++;
-  }
+  return 0;
 }
 
-void comboTrig(char* cArg1, char* cArg2)
+int comboTrig(char* cArg1, char* cArg2)
 {
   u32 enableMask= (u32) atoi(cArg1);
   u32 logicMask= (u32) atoi(cArg2);
+
+  if(logicMask<0 || logicMask>65535 || enableMask<0 || enableMask>65535){
+	  Log(WARNING, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  sprintf(tubii_err, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  return -1;
+  }
+
   Log(NOTICE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
   mWriteReg(MappedComboBaseAddress, RegOffset2, enableMask);
   mWriteReg(MappedComboBaseAddress, RegOffset3, logicMask);
+  return 0;
 }
 
-void prescaleTrig(char* pArg1, char* pArg2)
+int prescaleTrig(char* pArg1, char* pArg2)
 {
   double rate= (double) atof(pArg1);
-  int mask= (int) atoi(pArg2);
-  Log(NOTICE, "TUBii: Set rate for prescale trigger: %d on mask %i",rate,mask);
+  int bit= (int) atoi(pArg2);
+
+  if(bit<0 || bit>15){
+	  Log(WARNING, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  int mask = pow(2,bit);
+  Log(NOTICE, "TUBii: Set rate for prescale trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset2, rate);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset3, mask);
-
+  return 0;
 }
 
+/////// Counters and Speakers
 int counterLatch(char* length)
 {
 	int imask = atoi(length);
@@ -94,6 +117,7 @@ int triggerMask(char* mask)
   return 0;
 }
 
+/////// Data Readout
 struct TubiiRecord triggerReport()
 {
   int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0);

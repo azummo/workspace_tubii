@@ -93,6 +93,7 @@ struct command commandTable[] = {
 		// utilities
 		{"initialise",	 initialise,   1},
 		{"MZHappy",      MZHappy,      1},
+		{"setMZHappyPulser", SetMZHappyPulser, 4},
 		{"ping",         ping,         1},
 		// ellie
 		{"setGenericDelay",  SetGenericdelay,  2},
@@ -123,13 +124,13 @@ struct command commandTable[] = {
 		{"countLatch",   countLatch,   2},
 		{"countReset",   countReset,   2},
 		{"gtdelay",      gtdelay,      2},
-		{"startReadout", start_data_readout,     1},
-		{"stopReadout",	 stop_data_readout,     1},
-		{"trigBurst",    trigBurst,    3},
-		{"trigCombo",  	 trigCombo,    3},
-		{"GetCurrentTrigger", GetCurrentTrigger, 1},
-		{"GetFifoTrigger", GetFifoTrigger, 1},
-		{"trigPrescale", trigPrescale, 3},
+		{"startReadout", start_data_readout, 1},
+		{"stopReadout",	 stop_data_readout,  1},
+		{"setBurstTrigger",    SetBurstTrigger,    3},
+		{"setComboTrigger",    SetComboTrigger,    3},
+		{"setPrescaleTrigger", SetPrescaleTrigger, 3},
+		{"GetCurrentTrigger",  GetCurrentTrigger,  1},
+		{"GetFifoTrigger",     GetFifoTrigger,     1},
 		/// High level functions
 		{"setGTDelays", SetGTDelays, 3},
 		{"getLODelay", GetLODelay, 1},

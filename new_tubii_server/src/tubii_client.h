@@ -12,6 +12,7 @@ int safe_strtof(char *s, float *f);
 int auto_init();
 void initialise(client *c, int argc, sds *argv);
 void MZHappy(client *c, int argc, sds *argv);
+void SetMZHappyPulser(client *c, int argc, sds *argv);
 void ping(client *c, int argc, sds *argv);
 
 // Clock
@@ -76,9 +77,9 @@ void GetTriggerMask(client *c, int argc, sds *argv);
 void countLatch(client *c, int argc, sds *argv);
 void countReset(client *c, int argc, sds *argv);
 void gtdelay(client *c, int argc, sds *argv);
-void trigBurst(client *c, int argc, sds *argv);
-void trigCombo(client *c, int argc, sds *argv);
-void trigPrescale(client *c, int argc, sds *argv);
+void SetBurstTrigger(client *c, int argc, sds *argv);
+void SetComboTrigger(client *c, int argc, sds *argv);
+void SetPrescaleTrigger(client *c, int argc, sds *argv);
 void GetCurrentTrigger(client *c, int argc, sds *argv);
 void GetFifoTrigger(client *c, int argc, sds *argv);
 

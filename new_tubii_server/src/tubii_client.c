@@ -186,6 +186,15 @@ void MZHappy(client *c, int argc, sds *argv)
 	else addReplyError(c, tubii_err);
 }
 
+void SetMZHappyPulser(client *c, int argc, sds *argv)
+{
+	// For Ian's debugging purposes
+	int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
+
+	if(ret == 0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
+}
+
 void ping(client *c, int argc, sds *argv)
 {
 	addReplyStatus(c, "+PING");
@@ -238,7 +247,6 @@ void SetGenericdelay(client *c, int argc, sds *argv)
 void SetSmelliepulser(client *c, int argc, sds *argv)
 {
 	int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
-	//int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
 
 	smrate = atoi(argv[1]);
 	smwidth = atoi(argv[2]);
@@ -391,9 +399,10 @@ void SetControlReg(client *c, int argc, sds *argv)
 
 void GetControlReg(client *c, int argc, sds *argv)
 {
-	int word= ReadShift();
+	// This needs a blue wire (which isn't a priority) so get it from memory instead
+	//int word= ReadShift();
 
-	addReply(c, ":%d", word);
+	addReply(c, ":%d", CntrlReg);
 }
 
 // CAEN Settings
@@ -544,23 +553,22 @@ void GetTriggerMask(client *c, int argc, sds *argv)
 	addReply(c, ":%d", trigMask);
 }
 
-void trigBurst(client *c, int argc, sds *argv)
+void SetBurstTrigger(client *c, int argc, sds *argv)
 {
-	// Does this work??
-	burstTrig(argv[1],argv[2]);
-	addReplyStatus(c, "+OK");
+	if(burstTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
 }
 
-void trigCombo(client *c, int argc, sds *argv)
+void SetComboTrigger(client *c, int argc, sds *argv)
 {
-	comboTrig(argv[1],argv[2]);
-	addReplyStatus(c, "+OK");
+	if(comboTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
 }
 
-void trigPrescale(client *c, int argc, sds *argv)
+void SetPrescaleTrigger(client *c, int argc, sds *argv)
 {
-	prescaleTrig(argv[1],argv[2]);
-	addReplyStatus(c, "+OK");
+	if(prescaleTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
 }
 
 void GetCurrentTrigger(client *c, int argc, sds *argv)

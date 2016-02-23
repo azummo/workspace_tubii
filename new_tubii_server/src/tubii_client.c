@@ -622,7 +622,7 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
     struct GenericRecordHeader header;
     struct TubiiStatus status;
     status.Clock = clockStatus();
-    status.ControlReg = ReadShift();
+    status.ControlReg = CntrlReg;
     // Other stuff (FIFO status, reset MZHappy, counter rate)
 
     header.RecordID = htonl(TUBII_STATUS);
@@ -690,7 +690,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
     mega.size=0;
     int loop=0;
     struct TubiiRecord trec;
-	for(loop=0; loop<32000; loop++){
+	for(loop=0; loop<1000; loop++){
 		/* Send a TUBii_RECORD to the data stream server */
 		fifoTrigger(&trec);
 

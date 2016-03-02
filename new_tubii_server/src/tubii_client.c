@@ -51,6 +51,10 @@ int InitMapping()
 	u32 CountHighAddress= COUNTDISP_HIGHADDR;
 	MappedCountBaseAddress= MemoryMapping(CountBaseAddress,CountHighAddress);
 
+	u32 CountLengthenBaseAddress= COUNTLENGTHEN_BASEADDR;
+	u32 CountLengthenHighAddress= COUNTLENGTHEN_HIGHADDR;
+	MappedCountLengthenBaseAddress= MemoryMapping(CountLengthenBaseAddress,CountLengthenHighAddress);
+
 	// Trigger, Counter & Speaker Masks
 	u32 TrigBaseAddress= TRIGGEROUT_BASEADDR;
 	u32 TrigHighAddress= TRIGGEROUT_HIGHADDR;
@@ -98,6 +102,10 @@ int InitMapping()
 	u32 DelayHighAddress= GENERICDELAY_HIGHADDR;
 	MappedDelayBaseAddress= MemoryMapping(DelayBaseAddress,DelayHighAddress);
 
+	u32 DelayLengthenBaseAddress= DELAYLENGTHEN_BASEADDR;
+	u32 DelayLengthenHighAddress= DELAYLENGTHEN_HIGHADDR;
+	MappedDelayLengthenBaseAddress= MemoryMapping(DelayLengthenBaseAddress,DelayLengthenHighAddress);
+
 	u32 SDelayBaseAddress= SMELLIEDELAY_BASEADDR;
 	u32 SDelayHighAddress= SMELLIEDELAY_HIGHADDR;
 	MappedSDelayBaseAddress= MemoryMapping(SDelayBaseAddress,SDelayHighAddress);
@@ -109,6 +117,10 @@ int InitMapping()
 	u32 GTDelayBaseAddress= GTDELAY_BASEADDR;
 	u32 GTDelayHighAddress= GTDELAY_HIGHADDR;
 	MappedGTDelayBaseAddress= MemoryMapping(GTDelayBaseAddress,GTDelayHighAddress);
+
+	u32 TWDelayBaseAddress= TRIGWORDDELAY_BASEADDR;
+	u32 TWDelayHighAddress= TRIGWORDDELAY_HIGHADDR;
+	MappedTrigWordDelayBaseAddress= MemoryMapping(TWDelayBaseAddress,TWDelayHighAddress);
 }
 
 int auto_init()
@@ -242,6 +254,14 @@ void SetGenericdelay(client *c, int argc, sds *argv)
 	//int ret3= LoadShift(argv[1]);
 
 	addReplyStatus(c, "+OK");
+}
+
+void LengthenDelay(client *c, int argc, sds *argv)
+{
+	int ret= Lengthen(argv[1]);
+
+	if(ret==0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
 }
 
 void SetSmelliepulser(client *c, int argc, sds *argv)
@@ -569,6 +589,16 @@ void SetPrescaleTrigger(client *c, int argc, sds *argv)
 {
 	if(prescaleTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
 	else addReplyError(c, tubii_err);
+}
+
+void SetTrigWordDelay(client *c, int argc, sds *argv)
+{
+	int ret= TrigWordDelay(argv[1]);
+	if(ret=0){
+	  addReplyError(c, tubii_err);
+	  return;
+	}
+	addReplyStatus(c, "+OK");
 }
 
 void GetCurrentTrigger(client *c, int argc, sds *argv)

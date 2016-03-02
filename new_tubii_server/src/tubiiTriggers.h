@@ -21,6 +21,8 @@ void *MappedFifoBaseAddress;
 void *MappedBurstBaseAddress;
 void *MappedComboBaseAddress;
 void *MappedPrescaleBaseAddress;
+void *MappedCountLengthenBaseAddress;
+void* MappedTrigWordDelayBaseAddress;
 
 int trigMask, countMask, speakMask;
 
@@ -100,6 +102,8 @@ int counterReset(char* length)
 int counterMask(char* mask)
 {
   int imask = atoi(mask);
+  mWriteReg(MappedCountLengthenBaseAddress, RegOffset1,200);
+  mWriteReg(MappedCountLengthenBaseAddress, RegOffset2,400);
   mWriteReg(MappedTrigBaseAddress, RegOffset1,imask);
 }
 
@@ -179,6 +183,25 @@ void fifoTrigger(struct TubiiRecord* record)
 	  err_flg=1;
   }
   else if(error<2) err_flg=0;
+}
+
+int TrigWordDelay(char* dArg)
+{
+  double ns = 0.1;
+  double length= (double) atof(dArg);
+  u32 delay = length*ns;
+  if(delay<0){
+	Log(WARNING, "TUBii: delay length is outside acceptable range.");
+	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
+	return -1;
+  }
+
+  Log(NOTICE, "TUBii: delay length is %s ns.", dArg);
+
+  // Set Delay
+  mWriteReg(MappedTrigWordDelayBaseAddress, RegOffset0, delay);
+
+  return 0;
 }
 
 #endif /* TRIGGERS_H_ */

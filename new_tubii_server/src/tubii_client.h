@@ -54,6 +54,7 @@ void GetPulserRate(client *c, int argc, sds *argv);
 void GetPulserWidth(client *c, int argc, sds *argv);
 void GetPulserNPulses(client *c, int argc, sds *argv);
 void GetDelay(client *c, int argc, sds *argv);
+void LengthenDelay(client *c, int argc, sds *argv);
 void SetSmelliedelay(client *c, int argc, sds *argv);
 void SetSmelliepulser(client *c, int argc, sds *argv);
 void GetSmellieRate(client *c, int argc, sds *argv);
@@ -84,6 +85,7 @@ void GetCurrentTrigger(client *c, int argc, sds *argv);
 void GetFifoTrigger(client *c, int argc, sds *argv);
 
 // TUBii Readout
+void SetTrigWordDelay(client *c, int argc, sds *argv);
 void start_data_readout(client *c, int argc, sds *argv);
 void stop_data_readout(client *c, int argc, sds *argv);
 int tubii_status(aeEventLoop *el, long long id, void *data);

@@ -17,6 +17,7 @@ void *MappedHappyBaseAddress;
 void *MappedPulserBaseAddress;
 void *MappedSPulserBaseAddress;
 void *MappedTPulserBaseAddress;
+void *MappedDelayLengthenBaseAddress;
 
 int smrate, smwidth, smnpulse, smdelay;
 int trate, twidth, tnpulse, tdelay;
@@ -83,5 +84,15 @@ int Delay(char* dArg, void* MappedBaseAddress)
 
   return 0;
 }
+
+int Lengthen(char* dArg)
+{
+	int length= atoi(dArg);
+	mWriteReg(MappedDelayLengthenBaseAddress, RegOffset1, length);
+	mWriteReg(MappedDelayLengthenBaseAddress, RegOffset2, length);
+
+	return 0;
+}
+
 
 #endif /* TUBIIELLIE_H_ */

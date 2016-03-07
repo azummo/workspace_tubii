@@ -509,18 +509,6 @@ void SetAllowableClockMisses(client *c, int argc, sds *argv)
 
 
 // Trigger Commands
-void SetCounterMask(client *c, int argc, sds *argv)
-{
-	int ret= counterMask(argv[1]);
-	countMask = atoi(argv[1]);
-	addReplyStatus(c, "+OK");
-}
-
-void GetCounterMask(client *c, int argc, sds *argv)
-{
-	addReply(c, ":%d", countMask);
-}
-
 void countLatch(client *c, int argc, sds *argv)
 {
 	counterLatch(argv[1]);
@@ -533,44 +521,37 @@ void countReset(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+OK");
 }
 
-void gtdelay(client *c, int argc, sds *argv)
+void SetCounterMask(client *c, int argc, sds *argv)
 {
-	int ret= Delay(argv[1],MappedGTDelayBaseAddress);
+	u32 ret= counterMask(argv[1]);
+	addReplyStatus(c, "+OK");
+}
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+void GetCounterMask(client *c, int argc, sds *argv)
+{
+	addReply(c, ":%u", getCounterMask());
 }
 
 void SetSpeakerMask(client *c, int argc, sds *argv)
 {
-	int ret= speakerMask(argv[1]);
-	speakMask = atoi(argv[1]);
-
-	// Do something with ret
+	u32 ret= speakerMask(argv[1]);
 	addReplyStatus(c, "+OK");
 }
 
 void GetSpeakerMask(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", speakMask);
+	addReply(c, ":%u", getSpeakerMask());
 }
-
-
-
-
-
 
 void SetTriggerMask(client *c, int argc, sds *argv)
 {
-	int ret= triggerMask(argv[1]);
-	trigMask = atoi(argv[1]);
-
+	u32 ret= triggerMask(argv[1]);
 	addReplyStatus(c, "+OK");
 }
 
 void GetTriggerMask(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", trigMask);
+	addReply(c, ":%u", getTriggerMask());
 }
 
 void SetBurstTrigger(client *c, int argc, sds *argv)
@@ -599,6 +580,14 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
 	  return;
 	}
 	addReplyStatus(c, "+OK");
+}
+
+void gtdelay(client *c, int argc, sds *argv)
+{
+	int ret= Delay(argv[1],MappedGTDelayBaseAddress);
+
+	if(ret == 0) addReplyStatus(c, "+OK");
+	else addReplyError(c, tubii_err);
 }
 
 void GetCurrentTrigger(client *c, int argc, sds *argv)
@@ -781,7 +770,7 @@ int safe_strtoul(char *s, uint32_t *si)
 {
     /* Convert string s -> 32 bit unsigned integer. */
     char *end;
-    
+
     errno = 0;
     *si = strtoul(s, &end, 0);
 

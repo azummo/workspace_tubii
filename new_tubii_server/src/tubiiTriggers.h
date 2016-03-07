@@ -24,8 +24,6 @@ void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
 void* MappedTrigWordDelayBaseAddress;
 
-int trigMask, countMask, speakMask;
-
 /////// Internal Triggers
 int burstTrig(char* bArg1, char* bArg2)
 {
@@ -42,6 +40,11 @@ int burstTrig(char* bArg1, char* bArg2)
   Log(NOTICE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
   mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
+  int i=0;
+  while(i<1000){
+    printf("%u \t %u \t %u \t %u \n",mReadReg(MappedBurstBaseAddress,RegOffset0),mReadReg(MappedBurstBaseAddress,RegOffset1),mReadReg(MappedBurstBaseAddress,RegOffset2),mReadReg(MappedBurstBaseAddress,RegOffset3));
+	i++;
+  }
   return 0;
 }
 
@@ -101,24 +104,46 @@ int counterReset(char* length)
 
 int counterMask(char* mask)
 {
-  int imask = atoi(mask);
-  mWriteReg(MappedCountLengthenBaseAddress, RegOffset1,200);
-  mWriteReg(MappedCountLengthenBaseAddress, RegOffset2,400);
+  uint32_t imask;
+  safe_strtoul(mask,&imask);
+  mWriteReg(MappedCountLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
+  mWriteReg(MappedCountLengthenBaseAddress, RegOffset2,400); // And deadtime
   mWriteReg(MappedTrigBaseAddress, RegOffset1,imask);
+
+  return imask;
+}
+
+int getCounterMask()
+{
+  return mReadReg(MappedTrigBaseAddress, RegOffset1);
 }
 
 int speakerMask(char* mask)
 {
-  int imask = atoi(mask);
+  uint32_t imask;
+  safe_strtoul(mask,&imask);
   mWriteReg(MappedTrigBaseAddress, RegOffset2,imask);
+
+  return imask;
 }
 
-int triggerMask(char* mask)
+int getSpeakerMask()
 {
-  int imask = atoi(mask);
+  return mReadReg(MappedTrigBaseAddress, RegOffset2);
+}
+
+u32 triggerMask(char* mask)
+{
+  uint32_t imask;
+  safe_strtoul(mask,&imask);
   mWriteReg(MappedTrigBaseAddress, RegOffset3,imask);
 
-  return 0;
+  return imask;
+}
+
+u32 getTriggerMask()
+{
+  return mReadReg(MappedTrigBaseAddress,RegOffset3);
 }
 
 /////// Data Readout

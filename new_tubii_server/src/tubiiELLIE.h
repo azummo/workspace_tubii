@@ -25,12 +25,15 @@ int grate, gwidth, gnpulse, gdelay;
 
 int Pulser(char* rArg, char* wArg, char* npArg, void* MappedBaseAddress)
 {
-  InitialiseRegs(MappedBaseAddress);
+  //InitialiseRegs(MappedBaseAddress);
 
   // Convert from 100 MHz Clk
-  double HunMHz = 100000000;
-  double rate= atof(rArg);
-  double length= atof(wArg);
+  float HunMHz = 100000000;
+  float rate=0, length=0;
+  uint32_t nPulse=0;
+  safe_strtof(rArg,&rate);
+  safe_strtof(wArg,&length);
+  safe_strtoul(npArg,&nPulse);
 
   if(rate < 0.001 || rate > 1000000){
 	Log(WARNING, "TUBii: pulser rate is outside acceptable range.");
@@ -43,17 +46,14 @@ int Pulser(char* rArg, char* wArg, char* npArg, void* MappedBaseAddress)
 	sprintf(tubii_err, "Tubii: Pulse width is too short.");
 	return -1;
   }
-  else if(length > 1.0/rate ){
+  else if(length > 1.0/(rate) ){
 	Log(WARNING, "TUBii: Pulse width is longer than period.");
 	sprintf(tubii_err, "Tubii: Pulse width is longer than period.");
 	return -1;
   }
 
-  rate = 1.0/rate;
-  u32 period = rate*HunMHz;
+  u32 period = HunMHz/rate;
   u32 width = period - length*HunMHz; // Due to bad planning, width is length of time pulse is low
-
-  int nPulse= atoi(npArg);
   Log(NOTICE, "TUBii: rate is %s Hz for %s pulses.", rArg, npArg);
 
   // 0 is pulse width, 1 is period, 3 is no. of pulses
@@ -66,11 +66,12 @@ int Pulser(char* rArg, char* wArg, char* npArg, void* MappedBaseAddress)
 
 int Delay(char* dArg, void* MappedBaseAddress)
 {
-  InitialiseRegs(MappedBaseAddress);
+  //InitialiseRegs(MappedBaseAddress);
 
-  double ns = 0.1;
-  double length= (double) atof(dArg);
+  float ns = 0.1, length=0;
+  safe_strtof(dArg,&length);
   u32 delay = length*ns;
+
   if(delay<0){
 	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
@@ -87,7 +88,8 @@ int Delay(char* dArg, void* MappedBaseAddress)
 
 int Lengthen(char* dArg)
 {
-	int length= atoi(dArg);
+	u32 length=0;
+	safe_strtoul(dArg,&length);
 	mWriteReg(MappedDelayLengthenBaseAddress, RegOffset1, length);
 	mWriteReg(MappedDelayLengthenBaseAddress, RegOffset2, length);
 

@@ -13,25 +13,23 @@ void *MappedClocksBaseAddress;
 
 int clockReset(char* cArg)
 {
-	int clk_choice= atoi(cArg);
-	int ret=0;
+	uint32_t clk_choice=-1;
+	safe_strtoul(cArg,&clk_choice);
 	if(clk_choice==1 || clk_choice==0){
 	  mWriteReg(MappedClocksBaseAddress, RegOffset0, clk_choice);
 	}
 	else{
       Log(WARNING, "TUBii: Invalid clock choice. Choose 0 or 1.");
 	  sprintf(tubii_err, "TUBii: Invalid clock choice. Choose 0 or 1.");
-	  ret = -1;
+	  return -1;
 	}
 
-	return ret;
+	return 0;
 }
 
 int clockStatus()
 {
-	int status=mReadReg(MappedClocksBaseAddress, RegOffset1);
-
-	return status;
+	return mReadReg(MappedClocksBaseAddress, RegOffset1);
 }
 
 int clockDebug()

@@ -136,12 +136,16 @@ int auto_init()
 	MuxEnable("0");
 	DataReady("6");
 	DataReady("4");
+	GainPathWord=255;
+	ChannelSelectWord=255;
 	//setup DGT and LO* delay lengths
 	Muxer("3");
 	MuxEnable("1");
 	LoadShift(153);
 	LoadShift(153);
 	MuxEnable("0");
+	LODelay=153;
+	DGTDelay=153;
 	//Set MTCA MIMIC DAC value
 	Muxer("2");
 	MuxEnable("1");
@@ -150,6 +154,7 @@ int auto_init()
 	LoadShift(153);
 	DataReady("0");
 	DataReady("4");
+	DACThresh = 153 + (153 << 8);
 	//Set Control Reg Value
 	Muxer("0");
 	MuxEnable("1");
@@ -157,6 +162,7 @@ int auto_init()
 	MuxEnable("0");
 	DataReady("5");
 	DataReady("4");
+	CntrlReg=58;
 
 	return 0;
 }

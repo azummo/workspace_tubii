@@ -11146,3 +11146,6 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 21:22:18.434 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+13:31:45.034 INFO  - Project hw_platform_7020's source hardware specification located at /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+13:32:19.462 INFO  - Project hw_platform_7020's source hardware specification location will not be monitored anymore. 

@@ -150,6 +150,13 @@ int auto_init()
 	LoadShift(153);
 	DataReady("0");
 	DataReady("4");
+	//Set Control Reg Value
+	Muxer("0");
+	MuxEnable("1");
+	LoadShift(58);
+	MuxEnable("0");
+	DataReady("5");
+	DataReady("4");
 
 	return 0;
 }

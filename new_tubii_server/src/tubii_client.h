@@ -77,6 +77,7 @@ void SetTriggerMask(client *c, int argc, sds *argv);
 void GetTriggerMask(client *c, int argc, sds *argv);
 void countLatch(client *c, int argc, sds *argv);
 void countReset(client *c, int argc, sds *argv);
+void countMode(client *c, int argc, sds *argv);
 void gtdelay(client *c, int argc, sds *argv);
 void SetBurstTrigger(client *c, int argc, sds *argv);
 void SetComboTrigger(client *c, int argc, sds *argv);

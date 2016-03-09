@@ -124,6 +124,7 @@ struct command commandTable[] = {
 		{"getTriggerMask", GetTriggerMask, 1},
 		{"countLatch",   countLatch,   2},
 		{"countReset",   countReset,   2},
+		{"countMode",   countMode,   2},
 		{"gtdelay",      gtdelay,      2},
 		{"settrigworddelay", SetTrigWordDelay, 2},
 		{"startReadout", start_data_readout, 1},
@@ -219,10 +220,10 @@ int main(int argc, char **argv)
     }
 
     /* set up status event */
-    /*if (aeCreateTimeEvent(el, 0, tubii_status, NULL, NULL) == AE_ERR) {
-        Log(WARNING, "failed to set up tubii readout");
+    if (aeCreateTimeEvent(el, 0, tubii_status, NULL, NULL) == AE_ERR) {
+        Log(WARNING, "failed to set up status tubii");
         return 1;
-    }*/
+    }
 
     /* enter the main event loop */
     el->stop = 0;

@@ -14,6 +14,7 @@ int last_one=-1;
 int last_ptr=0;
 int err_flg=0;
 int data_readout=0;
+int cmode=0;
 
 void *MappedCountBaseAddress;
 void *MappedTrigBaseAddress;
@@ -100,6 +101,24 @@ int counterReset(char* length)
 	mWriteReg(MappedCountBaseAddress, RegOffset1, imask);
 
 	return 0;
+}
+
+int counterMode(char* length)
+{
+	cmode = atoi(length);
+	return cmode;
+}
+
+void GetRate()
+{
+	// Toggle Latch
+	counterLatch("0");
+	usleep(1);
+	counterLatch("1");
+	usleep(1);
+	counterReset("0");
+	usleep(1);
+	counterReset("1");
 }
 
 int counterMask(char* mask)

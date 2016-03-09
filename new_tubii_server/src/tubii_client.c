@@ -528,6 +528,12 @@ void countReset(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+OK");
 }
 
+void countMode(client *c, int argc, sds *argv)
+{
+	counterMode(argv[1]);
+	addReplyStatus(c, "+OK");
+}
+
 void SetCounterMask(client *c, int argc, sds *argv)
 {
 	u32 ret= counterMask(argv[1]);
@@ -644,8 +650,16 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
 
 int tubii_status(aeEventLoop *el, long long id, void *data)
 {
-    /* Sends TUBii status record to the data stream */
-    struct GenericRecordHeader header;
+    // Check if we are in rate mode
+	if(cmode == 1){
+	  // Toggle latchs
+	  GetRate();
+	}
+	else{
+	  counterLatch("0");
+	}
+	/* Sends TUBii status record to the data stream */
+    /*struct GenericRecordHeader header;
     struct TubiiStatus status;
     status.Clock = clockStatus();
     status.ControlReg = CntrlReg;
@@ -656,12 +670,12 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
     header.RecordVersion = htonl(RECORD_VERSION);
 
     /* convert to big endian */
-    int i;
+    /*int i;
     for (i = 0; i < sizeof(status)/4; i++) {
         ((uint32_t *)&status)[i] = htonl(((uint32_t *)&status)[i]);
     }
 
-    write_to_data_stream(&header, &status);
+    write_to_data_stream(&header, &status);*/
 
     return 1000; // run again in one second
     /* or, if you are done with this event */

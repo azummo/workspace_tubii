@@ -11176,3 +11176,7 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 22:41:19.403 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+09:26:17.732 ERROR - Unexpected Exception while launch bash shell: {} java.io.IOException: Cannot run program "xterm" (in directory "/home/snoperator/workspace_tubii"): java.io.IOException: error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(Unknown Source)
+	at com.xilinx.sdk.xbash.OpenXBashHandler$1.run(Unknown Source)
+

@@ -14,7 +14,7 @@ int last_one=-1;
 int last_ptr=0;
 int err_flg=0;
 int data_readout=0;
-int cmode=0;
+int counter_mode=0;
 
 void *MappedCountBaseAddress;
 void *MappedTrigBaseAddress;
@@ -106,8 +106,10 @@ int counterReset(char* length)
 
 int counterMode(char* length)
 {
-	cmode = atoi(length);
-	return cmode;
+	counter_mode = atoi(length);
+	if(counter_mode == 0) counterLatch("0");
+
+	return counter_mode;
 }
 
 void GetRate()

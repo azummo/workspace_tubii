@@ -673,12 +673,9 @@ void ResetFIFO(client *c, int argc, sds *argv)
 int tubii_status(aeEventLoop *el, long long id, void *data)
 {
     // Check if we are in rate mode
-	if(cmode == 1){
+	if(counter_mode == 1){
 	  // Toggle latchs
 	  GetRate();
-	}
-	else{
-	  counterLatch("0");
 	}
 	/* Sends TUBii status record to the data stream */
     /*struct GenericRecordHeader header;

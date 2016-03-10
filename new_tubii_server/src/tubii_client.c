@@ -60,6 +60,10 @@ int InitMapping()
 	u32 TrigHighAddress= TRIGGEROUT_HIGHADDR;
 	MappedTrigBaseAddress= MemoryMapping(TrigBaseAddress,TrigHighAddress);
 
+	u32 GTIDBaseAddress= GTID_BASEADDR;
+	u32 GTIDHighAddress= GTID_HIGHADDR;
+	MappedGTIDBaseAddress= MemoryMapping(GTIDBaseAddress,GTIDHighAddress);
+
 	// Trig Fifo
 	u32 FifoBaseAddress= FIFOREADOUT_BASEADDR;
 	u32 FifoHighAddress= FIFOREADOUT_HIGHADDR;
@@ -601,6 +605,12 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+OK");
 }
 
+void ResetGTID(client *c, int argc, sds *argv)
+{
+	resetGTID();
+	addReplyStatus(c, "+OK");
+}
+
 void gtdelay(client *c, int argc, sds *argv)
 {
 	int ret= Delay(argv[1],MappedGTDelayBaseAddress);
@@ -651,6 +661,12 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     write_to_data_stream(&header, &mega);
     }
 
+    addReplyStatus(c, "+OK");
+}
+
+void ResetFIFO(client *c, int argc, sds *argv)
+{
+	resetFIFO();
     addReplyStatus(c, "+OK");
 }
 

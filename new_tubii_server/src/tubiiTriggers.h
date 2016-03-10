@@ -24,6 +24,7 @@ void *MappedComboBaseAddress;
 void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
 void* MappedTrigWordDelayBaseAddress;
+void* MappedGTIDBaseAddress;
 
 /////// Internal Triggers
 int burstTrig(char* bArg1, char* bArg2)
@@ -160,6 +161,13 @@ u32 triggerMask(char* mask)
   return imask;
 }
 
+u32 resetGTID()
+{
+  mWriteReg(MappedGTIDBaseAddress, RegOffset0,0);
+
+  return 0;
+}
+
 u32 getTriggerMask()
 {
   return mReadReg(MappedTrigBaseAddress,RegOffset3);
@@ -227,6 +235,13 @@ void fifoTrigger(struct TubiiRecord* record)
 	  err_flg=1;
   }
   else if(error<2) err_flg=0;
+}
+
+void resetFIFO()
+{
+  mWriteReg(MappedFifoBaseAddress, RegOffset0,2);
+  usleep(1000);
+  mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
 }
 
 int TrigWordDelay(char* dArg)

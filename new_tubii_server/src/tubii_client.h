@@ -84,6 +84,8 @@ void SetComboTrigger(client *c, int argc, sds *argv);
 void SetPrescaleTrigger(client *c, int argc, sds *argv);
 void GetCurrentTrigger(client *c, int argc, sds *argv);
 void GetFifoTrigger(client *c, int argc, sds *argv);
+void ResetFIFO(client *c, int argc, sds *argv);
+void ResetGTID(client *c, int argc, sds *argv);
 
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);

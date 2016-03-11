@@ -11180,3 +11180,27 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at java.lang.ProcessBuilder.start(Unknown Source)
 	at com.xilinx.sdk.xbash.OpenXBashHandler$1.run(Unknown Source)
 
+11:55:55.524 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml into /hw_platform_7020/system.xml. 
+11:55:55.535 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system_wrapper.bit into /hw_platform_7020/system_wrapper.bit. 
+11:55:55.921 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.c into /hw_platform_7020/ps7_init.c. 
+11:55:55.922 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.h into /hw_platform_7020/ps7_init.h. 
+11:55:55.925 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.html into /hw_platform_7020/ps7_init.html. 
+11:55:55.926 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_summary.html into /hw_platform_7020/ps7_summary.html. 
+11:55:55.926 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.tcl into /hw_platform_7020/ps7_init.tcl. 
+11:55:56.248 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+11:55:57.775 INFO  - Restoring local repository preferences: 
+		 C
+		 \Users\HEP\project_tubii; 
+11:55:57.950 INFO  - Updating MSS for Board Support Package Project: standalone_bsp_7020.
+		 The following new driver assignments were made:
+			Peripheral Instance: buttonTrigger_0, driver: generic_v1_00_a.
+ 
+11:55:58.811 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+11:55:58.990 INFO  - Clearing existing target manager status. 
+11:56:01.708 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.c into /FSBL_tubii/src/ps7_init.c. 
+11:56:01.710 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.h into /FSBL_tubii/src/ps7_init.h. 
+11:56:01.717 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.html into /FSBL_tubii/src/ps7_init.html. 
+11:56:01.717 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_summary.html into /FSBL_tubii/src/ps7_summary.html. 
+11:56:01.718 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
+11:56:02.721 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+12:06:30.237 ERROR - Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  

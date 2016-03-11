@@ -74,6 +74,11 @@ int InitMapping()
 	u32 BurstHighAddress= BURSTTRIG_HIGHADDR;
 	MappedBurstBaseAddress= MemoryMapping(BurstBaseAddress,BurstHighAddress);
 
+	// Button
+	u32 ButtonBaseAddress= BUTTONTRIG_BASEADDR;
+	u32 ButtonHighAddress= BUTTONTRIG_HIGHADDR;
+	MappedButtonBaseAddress= MemoryMapping(ButtonBaseAddress,ButtonHighAddress);
+
 	// Combo
 	u32 ComboBaseAddress= COMBOTRIG_BASEADDR;
 	u32 ComboHighAddress= COMBOTRIG_HIGHADDR;
@@ -581,6 +586,12 @@ void SetBurstTrigger(client *c, int argc, sds *argv)
 {
 	if(burstTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
 	else addReplyError(c, tubii_err);
+}
+
+void SetButtonTrigger(client *c, int argc, sds *argv)
+{
+	buttonTrig();
+    addReplyStatus(c, "+OK");
 }
 
 void SetComboTrigger(client *c, int argc, sds *argv)

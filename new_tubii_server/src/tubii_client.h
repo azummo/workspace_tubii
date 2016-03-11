@@ -80,6 +80,7 @@ void countReset(client *c, int argc, sds *argv);
 void countMode(client *c, int argc, sds *argv);
 void gtdelay(client *c, int argc, sds *argv);
 void SetBurstTrigger(client *c, int argc, sds *argv);
+void SetButtonTrigger(client *c, int argc, sds *argv);
 void SetComboTrigger(client *c, int argc, sds *argv);
 void SetPrescaleTrigger(client *c, int argc, sds *argv);
 void GetCurrentTrigger(client *c, int argc, sds *argv);

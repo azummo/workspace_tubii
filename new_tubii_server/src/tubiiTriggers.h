@@ -20,6 +20,7 @@ void *MappedCountBaseAddress;
 void *MappedTrigBaseAddress;
 void *MappedFifoBaseAddress;
 void *MappedBurstBaseAddress;
+void *MappedButtonBaseAddress;
 void *MappedComboBaseAddress;
 void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
@@ -47,6 +48,13 @@ int burstTrig(char* bArg1, char* bArg2)
     printf("%u \t %u \t %u \t %u \n",mReadReg(MappedBurstBaseAddress,RegOffset0),mReadReg(MappedBurstBaseAddress,RegOffset1),mReadReg(MappedBurstBaseAddress,RegOffset2),mReadReg(MappedBurstBaseAddress,RegOffset3));
 	i++;
   }
+  return 0;
+}
+
+int buttonTrig()
+{
+  Log(NOTICE, "TUBii: Fire the nuclear weapons!");
+  mWriteReg(MappedButtonBaseAddress, RegOffset0, 1);
   return 0;
 }
 

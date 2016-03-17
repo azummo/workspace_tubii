@@ -11204,3 +11204,5 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 11:56:01.718 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
 11:56:02.721 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
 12:06:30.237 ERROR - Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  
+23:14:20.914 INFO  - Updating .bit and .bmm files from XPS's export folder. 
+23:18:09.045 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 

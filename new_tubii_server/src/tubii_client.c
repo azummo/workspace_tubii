@@ -137,6 +137,12 @@ int auto_init()
 	// Final version should include things like safe trigger settings and MZHappy
 	InitMapping();
 
+	// MZHappy
+	Pulser("1","0.5","1e9",MappedHappyBaseAddress);
+
+	// Reset the FIFO
+	resetFIFO();
+
 	//Put caen in attenuating mode
 	Muxer("1");
 	MuxEnable("1");

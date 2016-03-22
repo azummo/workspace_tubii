@@ -171,6 +171,13 @@ u32 triggerMask(char* mask)
   return imask;
 }
 
+void softGT()
+{
+  mWriteReg(MappedTrigBaseAddress, RegOffset0,2147483648);
+  usleep(1);
+  mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
+}
+
 u32 resetGTID()
 {
   mWriteReg(MappedGTIDBaseAddress, RegOffset0,0);

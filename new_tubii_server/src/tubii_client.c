@@ -142,6 +142,10 @@ int auto_init()
 
 	// Reset the FIFO
 	resetFIFO();
+	//softGT();
+	//softGT();
+	//softGT();
+	//softGT();
 
 	//Put caen in attenuating mode
 	Muxer("1");
@@ -586,6 +590,12 @@ void SetTriggerMask(client *c, int argc, sds *argv)
 void GetTriggerMask(client *c, int argc, sds *argv)
 {
 	addReply(c, ":%u", getTriggerMask());
+}
+
+void SoftGT(client *c, int argc, sds *argv)
+{
+	softGT();
+	addReplyStatus(c, "+OK");
 }
 
 void SetBurstTrigger(client *c, int argc, sds *argv)

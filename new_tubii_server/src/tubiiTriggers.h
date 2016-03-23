@@ -97,7 +97,6 @@ int prescaleTrig(char* pArg1, char* pArg2)
 int counterLatch(char* length)
 {
 	int imask = atoi(length);
-	Log(NOTICE, "TUBii: Set counter latch: %i",imask);
 	mWriteReg(MappedCountBaseAddress, RegOffset0, imask);
 
 	return 0;
@@ -106,7 +105,6 @@ int counterLatch(char* length)
 int counterReset(char* length)
 {
 	int imask = atoi(length);
-	Log(NOTICE, "TUBii: Set counter reset: %i",imask);
 	mWriteReg(MappedCountBaseAddress, RegOffset1, imask);
 
 	return 0;

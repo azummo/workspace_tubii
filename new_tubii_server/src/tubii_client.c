@@ -23,269 +23,191 @@ int last_gtid=0;
 // Initialisation functions
 void initialise(client *c, int argc, sds *argv)
 {
-	// Calls auto_init which:
-	//  -Maps all the memory
-	//  -Sets registers
-	auto_init();
+  // Calls auto_init which:
+  //  -Maps all the memory
+  //  -Sets registers
+  auto_init();
 
-	// Need to check for errors
-	addReplyStatus(c, "+OK");
+  // Need to check for errors
+  addReplyStatus(c, "+OK");
 }
 
 int InitMapping()
 {
-	// Ian: Do all the memory mappings on start up as it'll save time during each function call
+  // Ian: Do all the memory mappings on start up as it'll save time during each function call
 
-	// Muxer & loadShift
-	u32 RegsBaseAddress= SHIFTREGS_BASEADDR;
-	u32 RegsHighAddress= SHIFTREGS_HIGHADDR;
-	MappedRegsBaseAddress= MemoryMapping(RegsBaseAddress,RegsHighAddress);
+  // Shift Registers
+  MappedRegsBaseAddress= MemoryMapping(SHIFTREGS_BASEADDR,SHIFTREGS_HIGHADDR);
 
-	// Clocks
-	u32 ClocksBaseAddress= CLOCKLOGIC_BASEADDR;
-	u32 ClocksHighAddress= CLOCKLOGIC_HIGHADDR;
-	MappedClocksBaseAddress= MemoryMapping(ClocksBaseAddress,ClocksHighAddress);
+  // Clocks
+  MappedClocksBaseAddress= MemoryMapping(CLOCKLOGIC_BASEADDR,CLOCKLOGIC_HIGHADDR);
 
-	// Counter Latch & Reset
-	u32 CountBaseAddress= COUNTDISP_BASEADDR;
-	u32 CountHighAddress= COUNTDISP_HIGHADDR;
-	MappedCountBaseAddress= MemoryMapping(CountBaseAddress,CountHighAddress);
+  // Counter Latch & Reset
+  MappedCountBaseAddress= MemoryMapping(COUNTDISP_BASEADDR,COUNTDISP_HIGHADDR);
+  MappedCountLengthenBaseAddress= MemoryMapping(COUNTLENGTHEN_BASEADDR,COUNTLENGTHEN_HIGHADDR);
 
-	u32 CountLengthenBaseAddress= COUNTLENGTHEN_BASEADDR;
-	u32 CountLengthenHighAddress= COUNTLENGTHEN_HIGHADDR;
-	MappedCountLengthenBaseAddress= MemoryMapping(CountLengthenBaseAddress,CountLengthenHighAddress);
+  // Trigger, Counter & Speaker Masks
+  MappedTrigBaseAddress= MemoryMapping(TRIGGEROUT_BASEADDR,TRIGGEROUT_HIGHADDR);
+  MappedGTIDBaseAddress= MemoryMapping(GTID_BASEADDR,GTID_HIGHADDR);
+  MappedFifoBaseAddress= MemoryMapping(FIFOREADOUT_BASEADDR,FIFOREADOUT_HIGHADDR);
 
-	// Trigger, Counter & Speaker Masks
-	u32 TrigBaseAddress= TRIGGEROUT_BASEADDR;
-	u32 TrigHighAddress= TRIGGEROUT_HIGHADDR;
-	MappedTrigBaseAddress= MemoryMapping(TrigBaseAddress,TrigHighAddress);
+  // Meta-Triggers
+  MappedBurstBaseAddress= MemoryMapping(BURSTTRIG_BASEADDR,BURSTTRIG_HIGHADDR);
+  MappedButtonBaseAddress= MemoryMapping(BUTTONTRIG_BASEADDR,BUTTONTRIG_HIGHADDR);
+  MappedComboBaseAddress= MemoryMapping(COMBOTRIG_BASEADDR,COMBOTRIG_HIGHADDR);
+  MappedPrescaleBaseAddress= MemoryMapping(PRESCALETRIG_BASEADDR,PRESCALETRIG_HIGHADDR);
 
-	u32 GTIDBaseAddress= GTID_BASEADDR;
-	u32 GTIDHighAddress= GTID_HIGHADDR;
-	MappedGTIDBaseAddress= MemoryMapping(GTIDBaseAddress,GTIDHighAddress);
-
-	// Trig Fifo
-	u32 FifoBaseAddress= FIFOREADOUT_BASEADDR;
-	u32 FifoHighAddress= FIFOREADOUT_HIGHADDR;
-	MappedFifoBaseAddress= MemoryMapping(FifoBaseAddress,FifoHighAddress);
-
-	// Burst
-	u32 BurstBaseAddress= BURSTTRIG_BASEADDR;
-	u32 BurstHighAddress= BURSTTRIG_HIGHADDR;
-	MappedBurstBaseAddress= MemoryMapping(BurstBaseAddress,BurstHighAddress);
-
-	// Button
-	u32 ButtonBaseAddress= BUTTONTRIG_BASEADDR;
-	u32 ButtonHighAddress= BUTTONTRIG_HIGHADDR;
-	MappedButtonBaseAddress= MemoryMapping(ButtonBaseAddress,ButtonHighAddress);
-
-	// Combo
-	u32 ComboBaseAddress= COMBOTRIG_BASEADDR;
-	u32 ComboHighAddress= COMBOTRIG_HIGHADDR;
-	MappedComboBaseAddress= MemoryMapping(ComboBaseAddress,ComboHighAddress);
-
-	// Prescale
-	u32 PrescaleBaseAddress= PRESCALETRIG_BASEADDR;
-	u32 PrescaleHighAddress= PRESCALETRIG_HIGHADDR;
-	MappedPrescaleBaseAddress= MemoryMapping(PrescaleBaseAddress,PrescaleHighAddress);
-
-	// Pulsers
-	u32 PulserBaseAddress= GENERICPULSER_BASEADDR;
-	u32 PulserHighAddress= GENERICPULSER_HIGHADDR;
-	MappedPulserBaseAddress= MemoryMapping(PulserBaseAddress,PulserHighAddress);
-
-	u32 SPulserBaseAddress= SMELLIEPULSER_BASEADDR;
-	u32 SPulserHighAddress= SMELLIEPULSER_HIGHADDR;
-	MappedSPulserBaseAddress= MemoryMapping(SPulserBaseAddress,SPulserHighAddress);
-
-	u32 TPulserBaseAddress= TELLIEPULSER_BASEADDR;
-	u32 TPulserHighAddress= TELLIEPULSER_HIGHADDR;
-	MappedTPulserBaseAddress= MemoryMapping(TPulserBaseAddress,TPulserHighAddress);
-
-	u32 HappyBaseAddress= MZHAPPY_BASEADDR;
-	u32 HappyHighAddress= MZHAPPY_HIGHADDR;
-	MappedHappyBaseAddress= MemoryMapping(HappyBaseAddress,HappyHighAddress);
+  // Pulsers
+  MappedPulserBaseAddress= MemoryMapping(GENERICPULSER_BASEADDR,GENERICPULSER_HIGHADDR);
+  MappedSPulserBaseAddress= MemoryMapping(SMELLIEPULSER_BASEADDR,SMELLIEPULSER_HIGHADDR);
+  MappedTPulserBaseAddress= MemoryMapping(TELLIEPULSER_BASEADDR,TELLIEPULSER_HIGHADDR);
+  MappedHappyBaseAddress= MemoryMapping(MZHAPPY_BASEADDR,MZHAPPY_HIGHADDR);
 
 	// Delays
-	u32 DelayBaseAddress= GENERICDELAY_BASEADDR;
-	u32 DelayHighAddress= GENERICDELAY_HIGHADDR;
-	MappedDelayBaseAddress= MemoryMapping(DelayBaseAddress,DelayHighAddress);
+  MappedDelayBaseAddress= MemoryMapping(GENERICDELAY_BASEADDR,GENERICDELAY_HIGHADDR);
+  MappedDelayLengthenBaseAddress= MemoryMapping(DELAYLENGTHEN_BASEADDR,DELAYLENGTHEN_HIGHADDR);
+  MappedSDelayBaseAddress= MemoryMapping(SMELLIEDELAY_BASEADDR,SMELLIEDELAY_HIGHADDR);
+  MappedTDelayBaseAddress= MemoryMapping(TELLIEDELAY_BASEADDR,TELLIEDELAY_HIGHADDR);
+  MappedGTDelayBaseAddress= MemoryMapping(GTDELAY_BASEADDR,GTDELAY_HIGHADDR);
+  MappedTrigWordDelayBaseAddress= MemoryMapping(TRIGWORDDELAY_BASEADDR,TRIGWORDDELAY_HIGHADDR);
 
-	u32 DelayLengthenBaseAddress= DELAYLENGTHEN_BASEADDR;
-	u32 DelayLengthenHighAddress= DELAYLENGTHEN_HIGHADDR;
-	MappedDelayLengthenBaseAddress= MemoryMapping(DelayLengthenBaseAddress,DelayLengthenHighAddress);
-
-	u32 SDelayBaseAddress= SMELLIEDELAY_BASEADDR;
-	u32 SDelayHighAddress= SMELLIEDELAY_HIGHADDR;
-	MappedSDelayBaseAddress= MemoryMapping(SDelayBaseAddress,SDelayHighAddress);
-
-	u32 TDelayBaseAddress= TELLIEDELAY_BASEADDR;
-	u32 TDelayHighAddress= TELLIEDELAY_HIGHADDR;
-	MappedTDelayBaseAddress= MemoryMapping(TDelayBaseAddress,TDelayHighAddress);
-
-	u32 GTDelayBaseAddress= GTDELAY_BASEADDR;
-	u32 GTDelayHighAddress= GTDELAY_HIGHADDR;
-	MappedGTDelayBaseAddress= MemoryMapping(GTDelayBaseAddress,GTDelayHighAddress);
-
-	u32 TWDelayBaseAddress= TRIGWORDDELAY_BASEADDR;
-	u32 TWDelayHighAddress= TRIGWORDDELAY_HIGHADDR;
-	MappedTrigWordDelayBaseAddress= MemoryMapping(TWDelayBaseAddress,TWDelayHighAddress);
+  return 0;
 }
 
 int auto_init()
 {
-	// Final version should include things like safe trigger settings and MZHappy
-	InitMapping();
+  // Map the registers
+  InitMapping();
 
-	// MZHappy
-	Pulser("1","0.5","1e9",MappedHappyBaseAddress);
+  // MZHappy
+  Pulser(1,0.5,1e9,MappedHappyBaseAddress);
 
-	// Reset the FIFO
-	resetFIFO();
-	//softGT();
-	//softGT();
-	//softGT();
-	//softGT();
+  // Reset the FIFO
+  resetFIFO();
+  //softGT();
+  //softGT();
+  //softGT();
+  //softGT();
 
-	//Put caen in attenuating mode
-	Muxer("1");
-	MuxEnable("1");
-	LoadShift(255);
-	LoadShift(255);
-	MuxEnable("0");
-	DataReady("6");
-	DataReady("4");
-	GainPathWord=255;
-	ChannelSelectWord=255;
-	//setup DGT and LO* delay lengths
-	Muxer("3");
-	MuxEnable("1");
-	LoadShift(153);
-	LoadShift(153);
-	MuxEnable("0");
-	LODelay=153;
-	DGTDelay=153;
-	//Set MTCA MIMIC DAC value
-	Muxer("2");
-	MuxEnable("1");
-	MuxEnable("0");
-	LoadShift(153);
-	LoadShift(153);
-	DataReady("0");
-	DataReady("4");
-	DACThresh = 153 + (153 << 8);
-	//Set Control Reg Value
-	Muxer("0");
-	MuxEnable("1");
-	LoadShift(58);
-	MuxEnable("0");
-	DataReady("5");
-	DataReady("4");
-	CntrlReg=58;
+  //Put caen in attenuating mode
+  CAENWords(255, 255);
+  //setup DGT and LO* delay lengths
+  GTDelays(153, 153);
+  //Set MTCA MIMIC DAC value
+  DACThresholds(153+(153<<8));
+  //Set Control Reg Value
+  ControlReg(58);
 
-	return 0;
+  // Final version should include safe trigger settings
+
+  return 0;
 }
 
 
 // Clock commands
 void clockreset(client *c, int argc, sds *argv)
 {
-	int ret= clockReset(1);
-	usleep(1000);
-	ret= clockReset(0);
+  uint32_t clk_choice;
+  safe_strtoul(argv[1],&clk_choice);
 
-	if(ret != 0){
-	  addReplyError(c, tubii_err);
-	  return;
-	}
+  int ret= clockReset(1);
+  usleep(1000);
+  ret= clockReset(0);
 
-	addReplyStatus(c, "+OK");
+  if(ret != 0) addReplyError(c, tubii_err);
+  else addReplyStatus(c, "+OK");
 }
 
 void clockstatus(client *c, int argc, sds *argv)
 {
-	int status= clockStatus();
+  int status= clockStatus();
 
-	// do something with ret which is the status of the backup clock
-	// add to the datastream?
+  // do something with ret which is the status of the backup clock
+  // add to the datastream?
 
-	addReply(c, ":%d", status);
+  addReply(c, ":%d", status);
 }
 
 void clockdebug(client *c, int argc, sds *argv)
 {
-	clockDebug();
-
-	addReplyStatus(c, "+OK");
+  clockDebug();
+  addReplyStatus(c, "+OK");
 }
 
 // Utility commands
-
 void MZHappy(client *c, int argc, sds *argv)
 {
-	// Set for 1e9 pulses. Should renew this in the status readout.
-	int ret= Pulser("1","0.5","1e9",MappedHappyBaseAddress);
+  // Set for 1e9 pulses. Should renew this in the status readout.
+  int ret= Pulser(1,0.5,1e9,MappedHappyBaseAddress);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetMZHappyPulser(client *c, int argc, sds *argv)
 {
-	// For Ian's debugging purposes
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedHappyBaseAddress);
+  // For Ian's debugging purposes
+  float rate=0, length=0;
+  uint32_t nPulse=0;
+  safe_strtof(argv[1],&rate);
+  safe_strtof(argv[2],&length);
+  safe_strtoul(argv[3],&nPulse);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  int ret= Pulser(rate,length,nPulse,MappedHappyBaseAddress);
+
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void ping(client *c, int argc, sds *argv)
 {
-	addReplyStatus(c, "+PING");
+  addReplyStatus(c, "+PING");
 }
 
 // ELLIE commands
 void SetGenericpulser(client *c, int argc, sds *argv)
 {
-	// Need to sync. create pulse and delay it async.
+  // Need to sync. create pulse and delay it async.
+  float rate=0, length=0;
+  uint32_t nPulse=0;
+  safe_strtof(argv[1],&rate);
+  safe_strtof(argv[2],&length);
+  safe_strtoul(argv[3],&nPulse);
 
-	// 1. Create Pulse
-	int ret1= Pulser(argv[1],argv[2],argv[3],MappedPulserBaseAddress);
-	if(ret1!=0){
-	  addReplyError(c, tubii_err);
-	  return;
-	}
+  // 1. Create Pulse
+  int ret1= Pulser(rate,length,nPulse,MappedPulserBaseAddress);
+  if(ret1!=0){
+    addReplyError(c, tubii_err);
+    return;
+  }
 
-	grate = atoi(argv[1]);
-	gwidth = atoi(argv[2]);
-	gnpulse = atoi(argv[3]);
-
-	// 2. Delay Pulse
-	/*int ret2= Muxer("4");
-	int ret3= LoadShift(argv[1]);
-    */
-	addReplyStatus(c, "+OK");
+  // 2. Delay Pulse
+  /*int ret2= Muxer("4");
+  int ret3= LoadShift(argv[1]);
+  */
+  addReplyStatus(c, "+OK");
 }
 
 void SetGenericdelay(client *c, int argc, sds *argv)
 {
-	// 1. Need to split argument into the sync part and async part
-	// Something like multiples of 10 go to sync and ones go to async
+  // 1. Need to split argument into the sync part and async part
+  // Something like multiples of 10 go to sync and ones go to async
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length*ns;
 
-	// 2. Sync part
-	int ret1= Delay(argv[1],MappedDelayBaseAddress);
-	if(ret1 != 0){
-	  addReplyError(c, tubii_err);
-	  return;
-	}
+  // 2. Sync part
+  int ret1= Delay(delay,MappedDelayBaseAddress);
+  if(ret1 != 0){
+    addReplyError(c, tubii_err);
+    return;
+  }
 
-	gdelay = atoi(argv[1]);
+  // 3. Async part to shift reg:
+  //int ret2= Muxer("5");
+  //int ret3= LoadShift(argv[1]);
 
-	// 3. Async part to shift reg:
-	//int ret2= Muxer("5");
-	//int ret3= LoadShift(argv[1]);
-
-	addReplyStatus(c, "+OK");
+  addReplyStatus(c, "+OK");
 }
 
 void LengthenDelay(client *c, int argc, sds *argv)
@@ -298,245 +220,240 @@ void LengthenDelay(client *c, int argc, sds *argv)
 
 void SetSmelliepulser(client *c, int argc, sds *argv)
 {
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedSPulserBaseAddress);
+  float rate=0, length=0;
+  uint32_t nPulse=0;
+  safe_strtof(argv[1],&rate);
+  safe_strtof(argv[2],&length);
+  safe_strtoul(argv[3],&nPulse);
 
-	smrate = atoi(argv[1]);
-	smwidth = atoi(argv[2]);
-	smnpulse = atoi(argv[3]);
+  int ret= Pulser(rate,length,nPulse,MappedSPulserBaseAddress);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetSmelliedelay(client *c, int argc, sds *argv)
 {
-	int ret= Delay(argv[1],MappedSDelayBaseAddress);
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length*ns;
+  int ret= Delay(delay,MappedSDelayBaseAddress);
 
-	smdelay = atoi(argv[1]);
-
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetTelliepulser(client *c, int argc, sds *argv)
 {
-	int ret= Pulser(argv[1],argv[2],argv[3],MappedTPulserBaseAddress);
+  float rate=0, length=0;
+  uint32_t nPulse=0;
+  safe_strtof(argv[1],&rate);
+  safe_strtof(argv[2],&length);
+  safe_strtoul(argv[3],&nPulse);
 
-	trate = atoi(argv[1]);
-	twidth = atoi(argv[2]);
-	tnpulse = atoi(argv[3]);
+  int ret= Pulser(rate,length,nPulse,MappedTPulserBaseAddress);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);;
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);;
 }
 
 void SetTelliedelay(client *c, int argc, sds *argv)
 {
-	int ret= Delay(argv[1],MappedTDelayBaseAddress);
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length*ns;
+  int ret= Delay(delay,MappedTDelayBaseAddress);
 
-	tdelay = atoi(argv[1]);
-
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void GetSmellieRate(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", smrate);
+  u32 period= mReadReg(MappedSPulserBaseAddress, RegOffset1);
+  float rate= HunMHz/period;
+
+  addReply(c, ":%d", rate);
 }
 
 void GetSmelliePulseWidth(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", smwidth);
+  float width= (mReadReg(MappedSPulserBaseAddress, RegOffset1) - mReadReg(MappedSPulserBaseAddress, RegOffset0))*HunMHz;
+  addReply(c, ":%d", width);
 }
 
 void GetSmellieNPulses(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", smnpulse);
+  addReply(c, ":%d", mReadReg(MappedSPulserBaseAddress, RegOffset3));
 }
 
 void GetSmellieDelay(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", smdelay);
+  addReply(c, ":%d", mReadReg(MappedSDelayBaseAddress, RegOffset3));
 }
 
 void GetTellieRate(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", trate);
+  u32 period= mReadReg(MappedTPulserBaseAddress, RegOffset1);
+  float rate= HunMHz/period;
+
+  addReply(c, ":%d", rate);
 }
 
 void GetTelliePulseWidth(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", twidth);
+  float width= (mReadReg(MappedTPulserBaseAddress, RegOffset1) - mReadReg(MappedTPulserBaseAddress, RegOffset0))*HunMHz;
+  addReply(c, ":%d", width);
 }
 
 void GetTellieNPulses(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", tnpulse);
+  addReply(c, ":%d", mReadReg(MappedTPulserBaseAddress, RegOffset3));
 }
 
 void GetTellieDelay(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", tdelay);
+  addReply(c, ":%d", mReadReg(MappedTDelayBaseAddress, RegOffset3));
 }
 
 void GetPulserRate(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", grate);
+  u32 period= mReadReg(MappedPulserBaseAddress, RegOffset1);
+  float rate= HunMHz/period;
+
+  addReply(c, ":%d", rate);
 }
 
 void GetPulserWidth(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", gwidth);
+  float width= (mReadReg(MappedPulserBaseAddress, RegOffset1) - mReadReg(MappedPulserBaseAddress, RegOffset0))*HunMHz;
+  addReply(c, ":%d", width);
 }
 
 void GetPulserNPulses(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", gnpulse);
+  addReply(c, ":%d", mReadReg(MappedPulserBaseAddress, RegOffset3));
 }
 
 void GetDelay(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", gdelay);
+  addReply(c, ":%d", mReadReg(MappedDelayBaseAddress, RegOffset3));
 }
 
 //// Shift Register commands
 //   Low level stuff
 void dataready(client *c, int argc, sds *argv)
 {
-	int ret= DataReady(argv[1]);
+  uint32_t dReady;
+  safe_strtoul(argv[1],&dReady);
+  int ret= DataReady(dReady);
 
-	if(ret==0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret==0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void loadShift(client *c, int argc, sds *argv)
 {
-	int ret= LoadShift(atoi(argv[1]));
+  uint32_t lShift;
+  safe_strtoul(argv[1],&lShift);
+  int ret= LoadShift(lShift);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void muxenable(client *c, int argc, sds *argv)
 {
-	int ret= MuxEnable(argv[1]);
+  uint32_t muxEn;
+  safe_strtoul(argv[1],&muxEn);
+  int ret= MuxEnable(muxEn);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void muxer(client *c, int argc, sds *argv)
 {
-	int ret= Muxer(argv[1]);
+  uint32_t mux;
+  safe_strtoul(argv[1],&mux);
+  int ret= Muxer(mux);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 // Control register
 void SetControlReg(client *c, int argc, sds *argv)
 {
-	Muxer("0");
-	MuxEnable("1");
-	LoadShift(atoi(argv[1]));
-	MuxEnable("0");
-	DataReady("5");
-	DataReady("4");
-
-	CntrlReg = atoi(argv[1]);
-
-	addReplyStatus(c, "+OK");
+  uint32_t cReg;
+  safe_strtoul(argv[1],&cReg);
+  ControlReg(cReg);
+  addReplyStatus(c, "+OK");
 }
 
 void GetControlReg(client *c, int argc, sds *argv)
 {
-	// This needs a blue wire (which isn't a priority) so get it from memory instead
-	//int word= ReadShift();
-
-	addReply(c, ":%d", CntrlReg);
+  // This won't be done by ReadShift due to a bug in the hardware
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset10));
 }
 
 // CAEN Settings
 void SetCaenWords(client *c, int argc, sds *argv)
 {
-	Muxer("1");
-	MuxEnable("1");
-	LoadShift(atoi(argv[1]));
-	LoadShift(atoi(argv[2]));
-	MuxEnable("0");
-	DataReady("6");
-	DataReady("4");
-
-	GainPathWord = atoi(argv[1]);
-	ChannelSelectWord = atoi(argv[2]);
-
-	addReplyStatus(c, "+OK");
+  uint32_t gPath, cSelect;
+  safe_strtoul(argv[1],&gPath);
+  safe_strtoul(argv[2],&cSelect);
+  CAENWords(gPath, cSelect);
+  addReplyStatus(c, "+OK");
 }
 
 void GetCAENGainPathWord(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", GainPathWord);
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset11));
 }
 
 void GetCAENChannelSelectWord(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", ChannelSelectWord);
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset12));
 }
 
 // DAC Settings
 void SetDACThreshold(client *c, int argc, sds *argv)
 {
-	DACThresh = atoi(argv[1]);
-
-	int DACThresh_pt1 = DACThresh & 0xFF;
-	int DACThresh_pt2 = DACThresh >> 8;
-
-	Muxer("2");
-	MuxEnable("1");
-	MuxEnable("0");
-	LoadShift(DACThresh_pt2);
-	LoadShift(DACThresh_pt1);
-	MuxEnable("0");
-	DataReady("0");
-	DataReady("4");
-
-	addReplyStatus(c, "+OK");
+  uint32_t dacThresh;
+  safe_strtoul(argv[1],&dacThresh);
+  DACThresholds(dacThresh);
+  addReplyStatus(c, "+OK");
 }
 
 void GetDACThreshold(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", DACThresh);
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset13));
 }
 
 // DGT & LO
 void SetGTDelays(client *c, int argc, sds *argv)
 {
-	Muxer("3");
-	MuxEnable("1");
-	LoadShift(atoi(argv[1]));
-	LoadShift(atoi(argv[2]));
-	MuxEnable("0");
-
-	LODelay = atoi(argv[1]);
-	DGTDelay = atoi(argv[2]);
-
-	addReplyStatus(c, "+OK");
+  uint32_t loDelay, dgtDelay;
+  safe_strtoul(argv[1],&loDelay);
+  safe_strtoul(argv[2],&dgtDelay);
+  GTDelays(loDelay, dgtDelay);
+  addReplyStatus(c, "+OK");
 }
 
 void GetLODelay(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", LODelay);
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset14));
 }
 
 void GetDGTDelay(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%d", DGTDelay);
+  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset15));
 }
 
 void SetAllowableClockMisses(client *c, int argc, sds *argv)
 {
-	// Do something and add get
+  // Do something and add get
 }
 
 
@@ -561,7 +478,7 @@ void countMode(client *c, int argc, sds *argv)
 
 void SetCounterMask(client *c, int argc, sds *argv)
 {
-	u32 ret= counterMask(argv[1]);
+	counterMask(argv[1]);
 	addReplyStatus(c, "+OK");
 }
 
@@ -572,7 +489,7 @@ void GetCounterMask(client *c, int argc, sds *argv)
 
 void SetSpeakerMask(client *c, int argc, sds *argv)
 {
-	u32 ret= speakerMask(argv[1]);
+	speakerMask(argv[1]);
 	addReplyStatus(c, "+OK");
 }
 
@@ -583,7 +500,7 @@ void GetSpeakerMask(client *c, int argc, sds *argv)
 
 void SetTriggerMask(client *c, int argc, sds *argv)
 {
-	u32 ret= triggerMask(argv[1]);
+	triggerMask(argv[1]);
 	addReplyStatus(c, "+OK");
 }
 
@@ -625,7 +542,7 @@ void SetPrescaleTrigger(client *c, int argc, sds *argv)
 void SetTrigWordDelay(client *c, int argc, sds *argv)
 {
 	int ret= TrigWordDelay(argv[1]);
-	if(ret=0){
+	if(ret==0){
 	  addReplyError(c, tubii_err);
 	  return;
 	}
@@ -640,10 +557,13 @@ void ResetGTID(client *c, int argc, sds *argv)
 
 void gtdelay(client *c, int argc, sds *argv)
 {
-	int ret= Delay(argv[1],MappedGTDelayBaseAddress);
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length*ns;
+  int ret= Delay(delay,MappedGTDelayBaseAddress);
 
-	if(ret == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void GetCurrentTrigger(client *c, int argc, sds *argv)
@@ -653,7 +573,6 @@ void GetCurrentTrigger(client *c, int argc, sds *argv)
 
 void GetFifoTrigger(client *c, int argc, sds *argv)
 {
-	int empty=0;
     struct MegaRecord mega;
 	struct GenericRecordHeader header;
 

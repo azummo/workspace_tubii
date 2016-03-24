@@ -21,32 +21,24 @@ typedef unsigned long u32;
 #define REG5_OFFSET 20
 #define REG6_OFFSET 24
 #define REG7_OFFSET 28
+#define REG8_OFFSET 32
+#define REG9_OFFSET 36
+#define REG10_OFFSET 40
+#define REG11_OFFSET 44
+#define REG12_OFFSET 48
+#define REG13_OFFSET 52
+#define REG14_OFFSET 56
+#define REG15_OFFSET 60
 
 #define SOCKET_ERROR        -1
 #define BUFFER_SIZE         100
 #define QUEUE_SIZE          5
 
-/** Write a value to a register. A 32 bit write is performed.
- * If the component is implemented in a smaller width, only the least
- * significant data is written.
- *
- * @param   BaseAddress is the base address of the CLOCKLOGICdevice.
- * @param   RegOffset is the register offset from the base to write to.
- * @param   Data is the data written to the register.
- *
- * @return  None.                                                     **/
+/// Write a value to a register. A 32 bit write is performed.
 #define mWriteReg(BaseAddress, RegOffset, Data) \
   	Xil_Out32((BaseAddress) + (RegOffset), (u32)(Data))
 
-/** Read a value from a register. A 32 bit read is performed.
- * If the component is implemented in a smaller width, only the least
- * significant data is read from the register. The most significant data
- * will be read as 0.
- *
- * @param   BaseAddress is the base address of the CLOCKLOGIC device.
- * @param   RegOffset is the register offset from the base to write to.
- *
- * @return  Data is the data from the register.                       **/
+/// Read a value from a register. A 32 bit read is performed.
 #define mReadReg(BaseAddress, RegOffset) \
     Xil_In32((BaseAddress) + (RegOffset))
 
@@ -59,6 +51,14 @@ u32 RegOffset4= REG4_OFFSET;
 u32 RegOffset5= REG5_OFFSET;
 u32 RegOffset6= REG6_OFFSET;
 u32 RegOffset7= REG7_OFFSET;
+u32 RegOffset8= REG8_OFFSET;
+u32 RegOffset9= REG9_OFFSET;
+u32 RegOffset10= REG10_OFFSET;
+u32 RegOffset11= REG11_OFFSET;
+u32 RegOffset12= REG12_OFFSET;
+u32 RegOffset13= REG13_OFFSET;
+u32 RegOffset14= REG14_OFFSET;
+u32 RegOffset15= REG15_OFFSET;
 
 // For error messages
 char tubii_err[256];
@@ -109,14 +109,8 @@ void InitialiseRegs(void* MappedBaseAddress)
   mWriteReg(MappedBaseAddress, RegOffset3, 0);
 }
 
-int Testing(u32 BaseAddress, u32 HighAddress)
-{
-	// Map memory
-	void* MappedBaseAddress=MemoryMapping(BaseAddress, HighAddress);
-	sleep(1);
-	// Write to addresses
-	InitialiseRegs(MappedBaseAddress);
-	return 0;
-}
+// Constants
+float HunMHz = 100000000;
+float ns=0.1;
 
 #endif /* TUBIIUTIL_H_ */

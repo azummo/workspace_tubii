@@ -460,99 +460,133 @@ void SetAllowableClockMisses(client *c, int argc, sds *argv)
 // Trigger Commands
 void countLatch(client *c, int argc, sds *argv)
 {
-	counterLatch(argv[1]);
-	addReplyStatus(c, "+OK");
+  uint32_t latch;
+  safe_strtoul(argv[1],&latch);
+  counterLatch(latch);
+  addReplyStatus(c, "+OK");
 }
 
 void countReset(client *c, int argc, sds *argv)
 {
-	counterReset(argv[1]);
-	addReplyStatus(c, "+OK");
+  uint32_t reset;
+  safe_strtoul(argv[1],&reset);
+  counterReset(reset);
+  addReplyStatus(c, "+OK");
 }
 
 void countMode(client *c, int argc, sds *argv)
 {
-	counterMode(argv[1]);
-	addReplyStatus(c, "+OK");
+  uint32_t mode;
+  safe_strtoul(argv[1],&mode);
+  counterMode(mode);
+  addReplyStatus(c, "+OK");
 }
 
 void SetCounterMask(client *c, int argc, sds *argv)
 {
-	counterMask(argv[1]);
-	addReplyStatus(c, "+OK");
+  uint32_t mask;
+  safe_strtoul(argv[1],&mask);
+  counterMask(mask);
+  addReplyStatus(c, "+OK");
 }
 
 void GetCounterMask(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%u", getCounterMask());
+  addReply(c, ":%u", getCounterMask());
 }
 
 void SetSpeakerMask(client *c, int argc, sds *argv)
 {
-	speakerMask(argv[1]);
-	addReplyStatus(c, "+OK");
+  uint32_t mask;
+  safe_strtoul(argv[1],&mask);
+  speakerMask(mask);
+  addReplyStatus(c, "+OK");
 }
 
 void GetSpeakerMask(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%u", getSpeakerMask());
+  addReply(c, ":%u", getSpeakerMask());
 }
 
 void SetTriggerMask(client *c, int argc, sds *argv)
 {
-	triggerMask(argv[1]);
-	addReplyStatus(c, "+OK");
+  triggerMask(argv[1]);
+  addReplyStatus(c, "+OK");
 }
 
 void GetTriggerMask(client *c, int argc, sds *argv)
 {
-	addReply(c, ":%u", getTriggerMask());
-}
-
-void SoftGT(client *c, int argc, sds *argv)
-{
-	softGT();
-	addReplyStatus(c, "+OK");
+  addReply(c, ":%u", getTriggerMask());
 }
 
 void SetBurstTrigger(client *c, int argc, sds *argv)
 {
-	if(burstTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  float rate;
+  uint32_t bit;
+  safe_strtof(argv[1],&rate);
+  safe_strtoul(argv[2],&bit);
+
+  if(burstTrig(rate,bit) == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetButtonTrigger(client *c, int argc, sds *argv)
 {
-	buttonTrig();
-    addReplyStatus(c, "+OK");
+  buttonTrig();
+  addReplyStatus(c, "+OK");
 }
 
 void SetComboTrigger(client *c, int argc, sds *argv)
 {
-	if(comboTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  u32 enableMask, logicMask;
+  safe_strtoul(argv[1],&enableMask);
+  safe_strtoul(argv[2],&logicMask);
+
+  if(comboTrig(enableMask,logicMask) == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetPrescaleTrigger(client *c, int argc, sds *argv)
 {
-	if(prescaleTrig(argv[1],argv[2]) == 0) addReplyStatus(c, "+OK");
-	else addReplyError(c, tubii_err);
+  float rate;
+  uint32_t bit;
+  safe_strtof(argv[1],&rate);
+  safe_strtoul(argv[2],&bit);
+
+  if(prescaleTrig(rate,bit) == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetTrigWordDelay(client *c, int argc, sds *argv)
 {
-	int ret= TrigWordDelay(argv[1]);
-	if(ret==0){
-	  addReplyError(c, tubii_err);
-	  return;
-	}
-	addReplyStatus(c, "+OK");
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length*ns;
+
+  int ret= TrigWordDelay(delay);
+  if(ret==0){
+	addReplyError(c, tubii_err);
+	return;
+  }
+  addReplyStatus(c, "+OK");
 }
 
 void ResetGTID(client *c, int argc, sds *argv)
 {
-	resetGTID();
-	addReplyStatus(c, "+OK");
+  resetGTID();
+  addReplyStatus(c, "+OK");
+}
+
+void SoftGT(client *c, int argc, sds *argv)
+{
+  softGT();
+  addReplyStatus(c, "+OK");
+}
+
+void ResetFIFO(client *c, int argc, sds *argv)
+{
+  resetFIFO();
+  addReplyStatus(c, "+OK");
 }
 
 void gtdelay(client *c, int argc, sds *argv)
@@ -566,6 +600,7 @@ void gtdelay(client *c, int argc, sds *argv)
   else addReplyError(c, tubii_err);
 }
 
+// Data readout
 void GetCurrentTrigger(client *c, int argc, sds *argv)
 {
     currentTrigger();
@@ -610,12 +645,6 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     addReplyStatus(c, "+OK");
 }
 
-void ResetFIFO(client *c, int argc, sds *argv)
-{
-	resetFIFO();
-    addReplyStatus(c, "+OK");
-}
-
 int tubii_status(aeEventLoop *el, long long id, void *data)
 {
     // Check if we are in rate mode
@@ -648,7 +677,6 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
 }
 
 
-// Data readout
 void start_data_readout(client *c, int argc, sds *argv)
 {
 	data_readout=1;

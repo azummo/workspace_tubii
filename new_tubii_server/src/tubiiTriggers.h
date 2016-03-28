@@ -28,11 +28,8 @@ void* MappedTrigWordDelayBaseAddress;
 void* MappedGTIDBaseAddress;
 
 /////// Internal Triggers
-int burstTrig(char* bArg1, char* bArg2)
+int burstTrig(float rate, int bit)
 {
-  double rate= (double) atof(bArg1);
-  int bit= (int) atoi(bArg2);
-
   if(bit<0 || bit>15){
 	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
@@ -43,26 +40,18 @@ int burstTrig(char* bArg1, char* bArg2)
   Log(NOTICE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
   mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
-  int i=0;
-  while(i<1000){
-    printf("%u \t %u \t %u \t %u \n",mReadReg(MappedBurstBaseAddress,RegOffset0),mReadReg(MappedBurstBaseAddress,RegOffset1),mReadReg(MappedBurstBaseAddress,RegOffset2),mReadReg(MappedBurstBaseAddress,RegOffset3));
-	i++;
-  }
   return 0;
 }
 
 int buttonTrig()
 {
-  Log(NOTICE, "TUBii: Fire the nuclear weapons!");
+  Log(NOTICE, "TUBii: Fire the button trigger.");
   mWriteReg(MappedButtonBaseAddress, RegOffset0, 1);
   return 0;
 }
 
-int comboTrig(char* cArg1, char* cArg2)
+int comboTrig(u32 enableMask, u32 logicMask)
 {
-  u32 enableMask= (u32) atoi(cArg1);
-  u32 logicMask= (u32) atoi(cArg2);
-
   if(logicMask<0 || logicMask>65535 || enableMask<0 || enableMask>65535){
 	  Log(WARNING, "TUBii: Choose a combo trigger mask between 0 and 65535.");
 	  sprintf(tubii_err, "TUBii: Choose a combo trigger mask between 0 and 65535.");
@@ -75,11 +64,8 @@ int comboTrig(char* cArg1, char* cArg2)
   return 0;
 }
 
-int prescaleTrig(char* pArg1, char* pArg2)
+int prescaleTrig(float rate, int bit)
 {
-  double rate= (double) atof(pArg1);
-  int bit= (int) atoi(pArg2);
-
   if(bit<0 || bit>15){
 	  Log(WARNING, "TUBii: Choose a prescale trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a prescale trigger bit between 0 and 15.");
@@ -94,51 +80,43 @@ int prescaleTrig(char* pArg1, char* pArg2)
 }
 
 /////// Counters and Speakers
-int counterLatch(char* length)
+int counterLatch(int latch)
 {
-	int imask = atoi(length);
-	mWriteReg(MappedCountBaseAddress, RegOffset0, imask);
-
-	return 0;
+  mWriteReg(MappedCountBaseAddress, RegOffset0, latch);
+  return 0;
 }
 
-int counterReset(char* length)
+int counterReset(int reset)
 {
-	int imask = atoi(length);
-	mWriteReg(MappedCountBaseAddress, RegOffset1, imask);
-
-	return 0;
+  mWriteReg(MappedCountBaseAddress, RegOffset1, reset);
+  return 0;
 }
 
-int counterMode(char* length)
+int counterMode(int mode)
 {
-	counter_mode = atoi(length);
-	if(counter_mode == 0) counterLatch("0");
-
-	return counter_mode;
+  if(mode == 0) counterLatch("0");
+  return counter_mode;
 }
 
 void GetRate()
 {
-	// Toggle Latch
-	counterLatch("0");
-	usleep(1);
-	counterLatch("1");
-	usleep(1);
-	counterReset("0");
-	usleep(1);
-	counterReset("1");
+  // Toggle Latch
+  counterLatch("0");
+  usleep(1);
+  counterLatch("1");
+  usleep(1);
+  counterReset("0");
+  usleep(1);
+  counterReset("1");
 }
 
-int counterMask(char* mask)
+int counterMask(u32 mask)
 {
-  uint32_t imask;
-  safe_strtoul(mask,&imask);
   mWriteReg(MappedCountLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
   mWriteReg(MappedCountLengthenBaseAddress, RegOffset2,400); // And deadtime
-  mWriteReg(MappedTrigBaseAddress, RegOffset1,imask);
+  mWriteReg(MappedTrigBaseAddress, RegOffset1,mask);
 
-  return imask;
+  return mask;
 }
 
 int getCounterMask()
@@ -146,13 +124,10 @@ int getCounterMask()
   return mReadReg(MappedTrigBaseAddress, RegOffset1);
 }
 
-int speakerMask(char* mask)
+int speakerMask(u32 mask)
 {
-  uint32_t imask;
-  safe_strtoul(mask,&imask);
-  mWriteReg(MappedTrigBaseAddress, RegOffset2,imask);
-
-  return imask;
+  mWriteReg(MappedTrigBaseAddress, RegOffset2,mask);
+  return mask;
 }
 
 int getSpeakerMask()
@@ -169,6 +144,11 @@ u32 triggerMask(char* mask)
   return imask;
 }
 
+u32 getTriggerMask()
+{
+  return mReadReg(MappedTrigBaseAddress,RegOffset3);
+}
+
 void softGT()
 {
   mWriteReg(MappedTrigBaseAddress, RegOffset0,2147483648);
@@ -176,16 +156,9 @@ void softGT()
   mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
 }
 
-u32 resetGTID()
+void resetGTID()
 {
   mWriteReg(MappedGTIDBaseAddress, RegOffset0,0);
-
-  return 0;
-}
-
-u32 getTriggerMask()
-{
-  return mReadReg(MappedTrigBaseAddress,RegOffset3);
 }
 
 /////// Data Readout
@@ -259,22 +232,15 @@ void resetFIFO()
   mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
 }
 
-int TrigWordDelay(char* dArg)
+int TrigWordDelay(u32 delay)
 {
-  double ns = 0.1;
-  double length= (double) atof(dArg);
-  u32 delay = length*ns;
   if(delay<0){
 	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
 	return -1;
   }
 
-  Log(NOTICE, "TUBii: delay length is %s ns.", dArg);
-
-  // Set Delay
   mWriteReg(MappedTrigWordDelayBaseAddress, RegOffset0, delay);
-
   return 0;
 }
 

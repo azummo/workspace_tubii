@@ -159,7 +159,9 @@ void softGT()
 
 void resetGTID()
 {
-  mWriteReg(MappedGTIDBaseAddress, RegOffset0,0);
+  mWriteReg(MappedTrigBaseAddress, RegOffset0,1073741824);
+  usleep(1);
+  mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
 }
 
 /////// Data Readout
@@ -206,7 +208,7 @@ struct TubiiRecord triggerReport()
 void currentTrigger()
 {
   //struct TubiiRecord record;
-  int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0);
+  int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
   int trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
   printf("Current trig is: %i with mask %i\n", current_trig, trig_mask);
 }

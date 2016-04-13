@@ -136,6 +136,7 @@ struct command commandTable[] = {
 		{"setPrescaleTrigger", SetPrescaleTrigger, 3},
 		{"GetCurrentTrigger",  GetCurrentTrigger,  1},
 		{"GetFifoTrigger",     GetFifoTrigger,     1},
+		{"EnableFifo",		   EnableFIFO,         1},
 		{"ResetFifo",     	   ResetFIFO,     	   1},
 		{"ResetGTID",		   ResetGTID,          1},
 		/// High level functions

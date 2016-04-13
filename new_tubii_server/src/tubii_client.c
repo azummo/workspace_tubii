@@ -589,6 +589,12 @@ void ResetFIFO(client *c, int argc, sds *argv)
   addReplyStatus(c, "+OK");
 }
 
+void EnableFIFO(client *c, int argc, sds *argv)
+{
+  enableFIFO();
+  addReplyStatus(c, "+OK");
+}
+
 void gtdelay(client *c, int argc, sds *argv)
 {
   float length=0;
@@ -620,6 +626,7 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     struct TubiiRecord trec;
     fifoTrigger(&trec);
 
+    printf("GTID %i Word %i\n",trec.GTID,trec.TrigWord);
     if(last_gtid!=trec.GTID){
     if(last_gtid!=trec.GTID-1 && trec.GTID!=0) printf("Missed one! %i --> %i\n",last_gtid,trec.GTID);
 

@@ -153,13 +153,14 @@ u32 getTriggerMask()
 void softGT()
 {
   mWriteReg(MappedTrigBaseAddress, RegOffset0,2147483648);
-  usleep(1);
+  usleep(100);
   mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
 }
 
 void resetGTID()
 {
   mWriteReg(MappedTrigBaseAddress, RegOffset0,1073741824);
+  //mWriteReg(MappedTrigBaseAddress, RegOffset0,3221225472);
   usleep(1);
   mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
 }
@@ -215,10 +216,11 @@ void currentTrigger()
 
 void fifoTrigger(struct TubiiRecord* record)
 {
+  int error;
   mWriteReg(MappedFifoBaseAddress, RegOffset0,1);
   record->TrigWord = mReadReg(MappedFifoBaseAddress, RegOffset1) & 0xFFFFFF;
   record->GTID = mReadReg(MappedFifoBaseAddress, RegOffset2) & 0xFFFFFF;
-  int error= mReadReg(MappedFifoBaseAddress, RegOffset3);
+  error= mReadReg(MappedFifoBaseAddress, RegOffset3);
   mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
 
   if(error>1 && err_flg==0){
@@ -233,6 +235,11 @@ void resetFIFO()
   mWriteReg(MappedFifoBaseAddress, RegOffset0,2);
   usleep(1000);
   mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
+}
+
+void enableFIFO()
+{
+  mWriteReg(MappedFifoBaseAddress, RegOffset0,12);
 }
 
 int TrigWordDelay(u32 delay)

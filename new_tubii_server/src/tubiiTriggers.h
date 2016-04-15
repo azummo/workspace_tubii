@@ -211,7 +211,8 @@ void currentTrigger()
   //struct TubiiRecord record;
   int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
   int trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
-  printf("Current trig is: %i with mask %i\n", current_trig, trig_mask);
+  int gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
+  printf("Current trig is: %i with mask %i and gtid %i\n", current_trig, trig_mask, gtid);
 }
 
 void fifoTrigger(struct TubiiRecord* record)

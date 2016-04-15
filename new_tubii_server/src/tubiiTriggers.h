@@ -95,7 +95,7 @@ int counterReset(int reset)
 int counterMode(int mode)
 {
   counter_mode = mode;
-  if(mode == 0) counterLatch("0");
+  if(counter_mode == 0) counterLatch("0");
   return counter_mode;
 }
 

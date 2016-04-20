@@ -462,6 +462,27 @@
 
 /******************************************************************/
 
+/* Definitions for driver SYSMON */
+#define XPAR_XSYSMON_NUM_INSTANCES 1
+
+/* Definitions for peripheral XADC_WIZ_0 */
+#define XPAR_XADC_WIZ_0_DEVICE_ID 0
+#define XPAR_XADC_WIZ_0_BASEADDR 0x43C20000
+#define XPAR_XADC_WIZ_0_HIGHADDR 0x43C2FFFF
+#define XPAR_XADC_WIZ_0_INCLUDE_INTR 1
+
+
+/******************************************************************/
+
+/* Canonical definitions for peripheral XADC_WIZ_0 */
+#define XPAR_SYSMON_0_DEVICE_ID XPAR_XADC_WIZ_0_DEVICE_ID
+#define XPAR_SYSMON_0_BASEADDR 0x43C20000
+#define XPAR_SYSMON_0_HIGHADDR 0x43C2FFFF
+#define XPAR_SYSMON_0_INCLUDE_INTR 1
+
+
+/******************************************************************/
+
 /* Definition for CPU ID */
 #define XPAR_CPU_ID 0
 

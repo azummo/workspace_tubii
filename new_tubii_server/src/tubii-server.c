@@ -150,8 +150,9 @@ struct command commandTable[] = {
 		{"getControlReg", GetControlReg, 1},
 		{"setDACThreshold", SetDACThreshold, 2},
 		{"getDACThreshold", GetDACThreshold, 1},
-		{"setAllowableClockMisses", SetAllowableClockMisses, 2}
-
+		{"setAllowableClockMisses", SetAllowableClockMisses, 2},
+		// XADC
+		{"xadc", xadc, 1}
 };
 
 void sigint_handler(int dummy)

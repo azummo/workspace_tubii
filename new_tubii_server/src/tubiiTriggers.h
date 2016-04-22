@@ -102,13 +102,13 @@ int counterMode(int mode)
 void GetRate()
 {
   // Toggle Latch
-  counterLatch("0");
+  counterLatch(0);
   usleep(1);
-  counterLatch("1");
+  counterLatch(1);
   usleep(1);
-  counterReset("0");
+  counterReset(0);
   usleep(1);
-  counterReset("1");
+  counterReset(1);
 }
 
 int counterMask(u32 mask)
@@ -166,53 +166,13 @@ void resetGTID()
 }
 
 /////// Data Readout
-struct TubiiRecord triggerReport()
+u32 currentTrigger()
 {
-  int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0);
-  int trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
-
-  mWriteReg(MappedFifoBaseAddress, RegOffset3,4);
-  int trig= mReadReg(MappedFifoBaseAddress, RegOffset0) & 0xFFFFFF;
-  int gtid= mReadReg(MappedFifoBaseAddress, RegOffset1) & 0xFFFFFF;
-  int error= mReadReg(MappedFifoBaseAddress, RegOffset2);
-  int ptrs= mReadReg(MappedFifoBaseAddress, RegOffset3);
-  int readptr = (ptrs & 0xFF000000) >> 24;
-  int writeptr = (ptrs & 0xFF0000) >> 16;
-  error = error & 3;
-
-  /*if(error == 2){
-	 //printf("FIFO is up to date\n");
-	 struct TubiiRecord EmptyRecord;
-	 EmptyRecord.GTID = -1;
-	 EmptyRecord.TrigWord = -1;
-	 return EmptyRecord;
-  }*/
-
-  //printf("Current trig is: %i with mask %i\n", current_trig, trig_mask);
-  //printf("Fifo trig is: %i with GTID: %i \n", trig, gtid);
-  //printf("Error is: %i --- RPtr: %i WPtr: %i\n", error, readptr, writeptr);
-
-  if(last_one != gtid-1 && last_one!=gtid){
-	  printf("Misreport: %i --> %i\n", last_one, gtid);
-	  printf("Misptr: %i --> %i\n", last_ptr, readptr);
-  }
-  last_one=gtid;
-  last_ptr=readptr;
-
-  struct TubiiRecord record;
-  record.GTID = gtid;
-  record.TrigWord = trig;
-
-  return record;
-}
-
-void currentTrigger()
-{
-  //struct TubiiRecord record;
-  int current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
-  int trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
-  int gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
-  printf("Current trig is: %i with mask %i and gtid %i\n", current_trig, trig_mask, gtid);
+  u32 current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
+  u32 trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
+  u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
+  printf("Current trig is: %u with mask %u and gtid %u\n", current_trig, trig_mask, gtid);
+  return current_trig;
 }
 
 void fifoTrigger(struct TubiiRecord* record)
@@ -225,7 +185,7 @@ void fifoTrigger(struct TubiiRecord* record)
   mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
 
   if(error>1 && err_flg==0){
-	  printf("Error is: %i \n", error);
+	  //printf("Error is: %i \n", error);
 	  err_flg=1;
   }
   else if(error<2) err_flg=0;

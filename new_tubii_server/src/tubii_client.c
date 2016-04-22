@@ -612,7 +612,7 @@ void gtdelay(client *c, int argc, sds *argv)
 // Data readout
 void GetCurrentTrigger(client *c, int argc, sds *argv)
 {
-    currentTrigger();
+  addReply(c, ":%u", currentTrigger());
 }
 
 void GetFifoTrigger(client *c, int argc, sds *argv)
@@ -646,7 +646,7 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     printf("%i events!\n",mega.size);
 
     header.RecordID = htonl(MEGA_RECORD);
-    header.RecordLength = htonl(sizeof(mega));
+    header.RecordLength = htonl(sizeof(u32)*(2*mega.size+1));
     header.RecordVersion = htonl(RECORD_VERSION);
 
     write_to_data_stream(&header, &mega);
@@ -710,7 +710,6 @@ int start_tubii_readout(long long milliseconds)
         sprintf(tubii_err, "TUBii: readout already running!");
         return -1;
     }*/
-	printf("TRY TO START READOUT\n\n");
     //if(getDataReadout() == 0) return 0;
 
     // set up read out event

@@ -19,6 +19,7 @@
 
 
 extern aeEventLoop *el;
+long long tubii_readout_id = AE_ERR;
 int last_gtid=0;
 
 // Initialisation functions
@@ -662,24 +663,20 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
 	  // Toggle latchs
 	  GetRate();
 	}
+
 	/* Sends TUBii status record to the data stream */
-    /*struct GenericRecordHeader header;
+    struct GenericRecordHeader header;
     struct TubiiStatus status;
     status.Clock = clockStatus();
-    status.ControlReg = CntrlReg;
-    // Other stuff (FIFO status, reset MZHappy, counter rate)
+    //status.ControlReg = mReadReg(MappedRegsBaseAddress, RegOffset10);
+    status.GTID = currentgtid();
+    status.FIFO = fifoStatus();
 
     header.RecordID = htonl(TUBII_STATUS);
     header.RecordLength = htonl(sizeof(status));
     header.RecordVersion = htonl(RECORD_VERSION);
 
-    /* convert to big endian */
-    /*int i;
-    for (i = 0; i < sizeof(status)/4; i++) {
-        ((uint32_t *)&status)[i] = htonl(((uint32_t *)&status)[i]);
-    }
-
-    write_to_data_stream(&header, &status);*/
+    write_to_data_stream(&header, &status);
 
     return 1000; // run again in one second
     /* or, if you are done with this event */
@@ -706,14 +703,14 @@ int getDataReadout()
 
 int start_tubii_readout(long long milliseconds)
 {
-    /*if (tubii_readout_id != AE_ERR) {
+    if (tubii_readout_id != AE_ERR) {
         sprintf(tubii_err, "TUBii: readout already running!");
         return -1;
-    }*/
+    }
     //if(getDataReadout() == 0) return 0;
 
     // set up read out event
-    if ((/*tubii_readout_id =*/ aeCreateTimeEvent(el, milliseconds, tubii_readout, NULL, NULL)) == AE_ERR) {
+    if ((tubii_readout_id = aeCreateTimeEvent(el, milliseconds, tubii_readout, NULL, NULL)) == AE_ERR) {
         sprintf(tubii_err, "failed to set up tubii readout");
         return -1;
     }
@@ -742,7 +739,6 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 			if(last_gtid!=trec.GTID-1 && trec.GTID!=0) printf("Missed one! %i --> %i\n",last_gtid,trec.GTID);
 
 			last_gtid=trec.GTID;
-			//printf("Event %i -- %i\n",loop,trec.GTID);
 
 			mega.array[mega.size]=trec;
 			mega.size = mega.size+1;
@@ -751,16 +747,9 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 
 	if(mega.size>0){
 		//printf("Bundle! %i events!\n",mega.size);
-
 		header.RecordID = htonl(MEGA_RECORD);
 		header.RecordLength = htonl(sizeof(mega));
 		header.RecordVersion = htonl(RECORD_VERSION);
-
-		/* convert to big endian */
-		/*int i;
-    	for (i = 0; i < sizeof(trec)/4; i++) {
-        ((uint32_t *)&trec)[i] = htonl(((uint32_t *)&trec)[i]);
-    	}*/
 
 		write_to_data_stream(&header, &mega);
     }
@@ -820,16 +809,16 @@ int xadc(client *c, int argc, sds *argv)
     Status_ADC = XAdcPs_CfgInitialize(XADCInstPtr,ConfigPtr,MappedXADCBaseAddress);
     if(XST_SUCCESS != Status_ADC){
       printf("ADC INIT FAILED\n\r");
-      return XST_FAILURE;
+      addReplyStatus(c, "+NOT OK");
     }
 
-    printf("Self-test\n");
+    /*printf("Self-test\n");
     //self test
     Status_ADC = XAdcPs_SelfTest(XADCInstPtr);
  	if (Status_ADC != XST_SUCCESS) {
  	  printf("Failed Self-test!\n");
- 	  return XST_FAILURE;
- 	}
+ 		addReplyStatus(c, "+NOT OK");
+ 	}*/
 
 	printf("Set squencer\n");
  	//stop sequencer
@@ -845,7 +834,7 @@ int xadc(client *c, int argc, sds *argv)
     XAdcPs_SetSeqChEnables(XADCInstPtr,XADCPS_CH_TEMP|XADCPS_CH_VCCINT|XADCPS_CH_VCCAUX|XADCPS_CH_VBRAM|XADCPS_CH_VCCPINT| XADCPS_CH_VCCPAUX|XADCPS_CH_VCCPDRO);
 
 	printf("Begin Loop\n");
-    while(1){
+    /*while(1){
       TempRawData = XAdcPs_GetAdcData(XADCInstPtr, XADCPS_CH_TEMP);
       TempData = XAdcPs_RawToTemperature(TempRawData);
       printf("Raw Temp %lu Real Temp %f \n\r", TempRawData, TempData);
@@ -881,9 +870,9 @@ int xadc(client *c, int argc, sds *argv)
       VDDRRawData = XAdcPs_GetAdcData(XADCInstPtr, XADCPS_CH_VCCPDRO);
       VDDRData = XAdcPs_RawToVoltage(VDDRRawData);
       printf("Raw VccDDR %lu Real VccDDR %f \n\r", VDDRRawData, VDDRData);
-    }
+    }*/
 
-    return 0;
+	addReplyStatus(c, "+OK");
 }
 
 

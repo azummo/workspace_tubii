@@ -175,6 +175,12 @@ u32 currentTrigger()
   return current_trig;
 }
 
+u32 currentgtid()
+{
+  u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
+  return gtid;
+}
+
 void fifoTrigger(struct TubiiRecord* record)
 {
   int error;
@@ -189,6 +195,12 @@ void fifoTrigger(struct TubiiRecord* record)
 	  err_flg=1;
   }
   else if(error<2) err_flg=0;
+}
+
+u32 fifoStatus()
+{
+  u32 error= mReadReg(MappedFifoBaseAddress, RegOffset3);
+  return error;
 }
 
 void resetFIFO()

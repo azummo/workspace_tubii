@@ -24,6 +24,8 @@ struct MegaRecord {
 struct TubiiStatus {
     uint32_t Clock;
     uint32_t ControlReg;
+    uint32_t GTID;
+    uint32_t FIFO;
 };
 
 enum RecordTypes {
@@ -36,7 +38,7 @@ enum RecordTypes {
     TRIG_RECORD    = 0x54524947,
     FIFO_LEVELS    = 0x4649464f,
     TUBII_RECORD   = 0xabc12345, // Temp
-    TUBII_STATUS   = 0xabcd9876, // Temp
+    TUBII_STATUS   = 0x54554253, // Temp
     MEGA_RECORD    = 0x54554232, // TUB2 Change later
 };
 

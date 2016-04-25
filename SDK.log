@@ -11775,3 +11775,5 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 13:31:59.722 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
 13:32:00.751 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
 13:34:15.222 ERROR - Unexpected error while parsing XMD response ?: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  
+17:18:29.433 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 

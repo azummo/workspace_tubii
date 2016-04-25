@@ -290,7 +290,16 @@ typedef struct {
 
 } XAdcPs;
 
-XAdcPs_Config XAdcPs_ConfigTable[];
+#define XPAR_XADCPS_NUM_INSTANCES 1
+#define XPAR_XADCPS_0_DEVICE_ID   0
+#define XPAR_XADCPS_0_BASEADDR	  (0xF8007000)
+XAdcPs_Config XAdcPs_ConfigTable[XPAR_XADCPS_NUM_INSTANCES] =
+{
+	{
+		XPAR_XADCPS_0_DEVICE_ID,	/**< Unique ID of device */
+		XPAR_XADCPS_0_BASEADDR		/**< Base address of device */
+	}
+};
 
 XAdcPs_Config *XAdcPs_LookupConfig(u16 DeviceId)
 {
@@ -321,6 +330,7 @@ int XAdcPs_CfgInitialize(XAdcPs *InstancePtr, XAdcPs_Config *ConfigPtr, u32 Effe
 
 	/* Write Unlock value to Device Config Unlock register */
 	mWriteReg((InstancePtr)->Config.BaseAddress, XADCPS_UNLK_OFFSET, XADCPS_UNLK_VALUE);
+	printf("%x \t %x\n",XADCPS_UNLK_VALUE,mReadReg((InstancePtr)->Config.BaseAddress,XADCPS_UNLK_OFFSET));
 
 	/* Enable the PS access of xadc and set FIFO thresholds */
 	RegValue = mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_CFG_OFFSET);
@@ -353,7 +363,7 @@ void XAdcPs_Reset(XAdcPs *InstancePtr)
     ((ReadWrite ? XADCPS_JTAG_CMD_WRITE_MASK : XADCPS_JTAG_CMD_READ_MASK ) | ((RegOffset << XADCPS_JTAG_ADDR_SHIFT) & XADCPS_JTAG_ADDR_MASK) | (Data & XADCPS_JTAG_DATA_MASK))
 
 #define XAdcPs_WriteFifo(InstancePtr, Data)	mWriteReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET, Data);
-#define XAdcPs_ReadFifo(InstancePtr)	mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_RDFIFO_OFFSET);
+#define XAdcPs_ReadFifo(InstancePtr)	    mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_RDFIFO_OFFSET);
 
 
 void XAdcPs_WriteInternalReg(XAdcPs *InstancePtr, u32 RegOffset, u32 Data)
@@ -361,11 +371,15 @@ void XAdcPs_WriteInternalReg(XAdcPs *InstancePtr, u32 RegOffset, u32 Data)
 	u32 RegData;
 
 	/* Write the Data into the FIFO Register. */
+	printf("FORMAT\n");
 	RegData = XAdcPs_FormatWriteData(RegOffset, Data, 1);
 
+	printf("WRITEF\n");
 	XAdcPs_WriteFifo(InstancePtr, RegData);
+	printf("%x \t %x \n", RegData, mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET));
 
 	/* Read the Read FIFO after any write since for each write one location of Read FIFO gets updated */
+	printf("READF\n");
 	XAdcPs_ReadFifo(InstancePtr);
 }
 
@@ -396,8 +410,10 @@ void XAdcPs_SetAlarmThreshold(XAdcPs *InstancePtr, u8 AlarmThrReg, u16 Value)
 	Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
 	Xil_AssertVoid(AlarmThrReg <= XADCPS_ATR_VCCPDRO_LOWER);
 
+	printf("SET\n");
 	/* Write the value into the specified Alarm Threshold Register. */
 	XAdcPs_WriteInternalReg(InstancePtr, XADCPS_ATR_TEMP_UPPER_OFFSET + AlarmThrReg,Value);
+	printf("SOT\n");
 }
 
 u16 XAdcPs_GetAlarmThreshold(XAdcPs *InstancePtr, u8 AlarmThrReg)
@@ -429,10 +445,10 @@ int XAdcPs_SelfTest(XAdcPs *InstancePtr)
 	XAdcPs_Reset(InstancePtr);
 
 	/* Write a value into the Alarm Threshold registers, read it back, and do the comparison */
-	printf("Write\n");
+	printf("Write %x \t %x \t %x\n", XADCPS_ATR_TEST_VALUE, MappedXADCBaseAddress, InstancePtr->Config.BaseAddress);
 	XAdcPs_SetAlarmThreshold(InstancePtr, XADCPS_ATR_VCCINT_UPPER, XADCPS_ATR_TEST_VALUE);
 	RegValue = XAdcPs_GetAlarmThreshold(InstancePtr, XADCPS_ATR_VCCINT_UPPER);
-	printf("Read\n");
+	printf("Read %x\n", RegValue);
 
 	if (RegValue == XADCPS_ATR_TEST_VALUE) {
 		Status = XST_SUCCESS;

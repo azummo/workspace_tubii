@@ -568,7 +568,7 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
   u32 delay = length*ns;
 
   int ret= TrigWordDelay(delay);
-  if(ret==0){
+  if(ret!=0){
 	addReplyError(c, tubii_err);
 	return;
   }

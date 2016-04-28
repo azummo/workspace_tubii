@@ -152,17 +152,16 @@ u32 getTriggerMask()
 
 void softGT()
 {
-  mWriteReg(MappedTrigBaseAddress, RegOffset0,2147483648);
+  mWriteReg(MappedTrigBaseAddress, RegOffset6,1);
   usleep(100);
-  mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
+  mWriteReg(MappedTrigBaseAddress, RegOffset6, 0);
 }
 
 void resetGTID()
 {
-  mWriteReg(MappedTrigBaseAddress, RegOffset0,1073741824);
-  //mWriteReg(MappedTrigBaseAddress, RegOffset0,3221225472);
+  mWriteReg(MappedTrigBaseAddress, RegOffset7,1);
   usleep(1);
-  mWriteReg(MappedTrigBaseAddress, RegOffset0, 0);
+  mWriteReg(MappedTrigBaseAddress, RegOffset7, 0);
 }
 
 /////// Data Readout
@@ -171,7 +170,8 @@ u32 currentTrigger()
   u32 current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
   u32 trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
   u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
-  printf("Current trig is: %u with mask %u and gtid %u\n", current_trig, trig_mask, gtid);
+  u32 sync= mReadReg(MappedTrigBaseAddress, RegOffset5);
+  printf("Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
   return current_trig;
 }
 

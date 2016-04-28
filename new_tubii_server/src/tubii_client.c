@@ -98,7 +98,7 @@ int auto_init()
   //setup DGT and LO* delay lengths
   GTDelays(153, 153);
   //Set MTCA MIMIC DAC value
-  DACThresholds(153+(153<<8));
+  DACThresholds(4095);
   //Set Control Reg Value
   ControlReg(58);
 

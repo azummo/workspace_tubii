@@ -126,7 +126,7 @@ int CAENWords(int GainPath, int ChanSelect)
 int DACThresholds(int DACThresh)
 {
   int DACThresh_pt1 = DACThresh & 0xFF;
-  int DACThresh_pt2 = DACThresh >> 8;
+  int DACThresh_pt2 = (DACThresh >> 8) & 0xFF;
 
   Muxer(2);
   MuxEnable(1);

@@ -16,7 +16,7 @@
 #include "tubiiTriggers.h"
 #include "tubiiUtil.h"
 #include "tubiiXadc.h"
-
+#include "testfunc.h"
 
 extern aeEventLoop *el;
 long long tubii_readout_id = AE_ERR;
@@ -29,6 +29,7 @@ void initialise(client *c, int argc, sds *argv)
   //  -Maps all the memory
   //  -Sets registers
   auto_init();
+  testfunc();
 
   // Need to check for errors
   addReplyStatus(c, "+OK");

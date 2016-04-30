@@ -24,33 +24,22 @@ endif
 -include ../makefile.defs
 
 # Add inputs and outputs from these tool invocations to the build variables 
-ELFSIZE += \
-new_tubii_server.elf.size \
-
 
 # All Target
-all: new_tubii_server.elf secondary-outputs
+all: libTestLib.a
 
 # Tool invocations
-new_tubii_server.elf: $(OBJS)  $(USER_OBJS)
+libTestLib.a: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
-	@echo 'Invoking: ARM Linux gcc linker'
-	arm-xilinx-linux-gnueabi-gcc -L"C:\Users\Ian\Documents\GitHub\workspace_tubii\TestLib\Debug" -o "new_tubii_server.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	@echo 'Invoking: ARM Linux archiver'
+	arm-xilinx-linux-gnueabi-ar -r  "libTestLib.a" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
-	@echo ' '
-
-new_tubii_server.elf.size: new_tubii_server.elf
-	@echo 'Invoking: ARM Linux Print Size'
-	arm-xilinx-linux-gnueabi-size new_tubii_server.elf  |tee "new_tubii_server.elf.size"
-	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES)$(ELFSIZE)$(S_UPPER_DEPS) new_tubii_server.elf
+	-$(RM) $(OBJS)$(C_DEPS)$(ARCHIVES)$(S_UPPER_DEPS) libTestLib.a
 	-@echo ' '
-
-secondary-outputs: $(ELFSIZE)
 
 .PHONY: all clean dependents
 .SECONDARY:

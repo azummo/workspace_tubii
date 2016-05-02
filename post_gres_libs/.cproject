@@ -39,7 +39,7 @@
 								<option id="xilinx.gnu.compiler.option.debugging.level.114807121" name="Debug Level" superClass="xilinx.gnu.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 							</tool>
 							<tool id="xilinx.gnu.arm.toolchain.archiver.staticlib.debug.1947711628" name="ARM archiver" superClass="xilinx.gnu.arm.toolchain.archiver.staticlib.debug">
-								<option id="gnu.both.lib.option.flags.1570501757" superClass="gnu.both.lib.option.flags" value="-rcs" valueType="string"/>
+								<option id="gnu.both.lib.option.flags.1570501757" name="Archiver flags" superClass="gnu.both.lib.option.flags" value="-rcs" valueType="string"/>
 							</tool>
 							<tool id="xilinx.gnu.arm.c.toolchain.linker.579558089" name="ARM gcc linker" superClass="xilinx.gnu.arm.c.toolchain.linker"/>
 							<tool id="xilinx.gnu.arm.cxx.toolchain.linker.1615892823" name="ARM g++ linker" superClass="xilinx.gnu.arm.cxx.toolchain.linker"/>

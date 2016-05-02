@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Apr 29 23:53:36 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon May 02 12:30:03 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -741,7 +741,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_316"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_346"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -989,7 +989,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_317"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_347"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1237,7 +1237,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_318"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_348"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1485,7 +1485,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_319"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_349"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1733,7 +1733,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_320"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_350"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1979,7 +1979,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_62"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_68"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3510,7 +3510,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1259"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1277"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5345,7 +5345,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1260"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1278"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7180,7 +7180,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1261"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1279"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -10240,7 +10240,7 @@
       <PARAMETERS>
         <PARAMETER NAME="C_COMMON_CLOCK" VALUE="0"/>
         <PARAMETER NAME="C_COUNT_TYPE" VALUE="0"/>
-        <PARAMETER NAME="C_DATA_COUNT_WIDTH" VALUE="15"/>
+        <PARAMETER NAME="C_DATA_COUNT_WIDTH" VALUE="16"/>
         <PARAMETER NAME="C_DEFAULT_VALUE" VALUE="BlankString"/>
         <PARAMETER NAME="C_DIN_WIDTH" VALUE="48"/>
         <PARAMETER NAME="C_DOUT_RST_VAL" VALUE="0"/>
@@ -10276,13 +10276,13 @@
         <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL" VALUE="2"/>
         <PARAMETER NAME="C_PROG_EMPTY_THRESH_NEGATE_VAL" VALUE="3"/>
         <PARAMETER NAME="C_PROG_EMPTY_TYPE" VALUE="0"/>
-        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL" VALUE="32765"/>
-        <PARAMETER NAME="C_PROG_FULL_THRESH_NEGATE_VAL" VALUE="32764"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL" VALUE="65533"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_NEGATE_VAL" VALUE="65532"/>
         <PARAMETER NAME="C_PROG_FULL_TYPE" VALUE="0"/>
-        <PARAMETER NAME="C_RD_DATA_COUNT_WIDTH" VALUE="15"/>
-        <PARAMETER NAME="C_RD_DEPTH" VALUE="32768"/>
+        <PARAMETER NAME="C_RD_DATA_COUNT_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="C_RD_DEPTH" VALUE="65536"/>
         <PARAMETER NAME="C_RD_FREQ" VALUE="1"/>
-        <PARAMETER NAME="C_RD_PNTR_WIDTH" VALUE="15"/>
+        <PARAMETER NAME="C_RD_PNTR_WIDTH" VALUE="16"/>
         <PARAMETER NAME="C_UNDERFLOW_LOW" VALUE="0"/>
         <PARAMETER NAME="C_USE_DOUT_RST" VALUE="1"/>
         <PARAMETER NAME="C_USE_ECC" VALUE="0"/>
@@ -10291,10 +10291,10 @@
         <PARAMETER NAME="C_USE_FWFT_DATA_COUNT" VALUE="0"/>
         <PARAMETER NAME="C_VALID_LOW" VALUE="0"/>
         <PARAMETER NAME="C_WR_ACK_LOW" VALUE="0"/>
-        <PARAMETER NAME="C_WR_DATA_COUNT_WIDTH" VALUE="15"/>
-        <PARAMETER NAME="C_WR_DEPTH" VALUE="32768"/>
+        <PARAMETER NAME="C_WR_DATA_COUNT_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="C_WR_DEPTH" VALUE="65536"/>
         <PARAMETER NAME="C_WR_FREQ" VALUE="1"/>
-        <PARAMETER NAME="C_WR_PNTR_WIDTH" VALUE="15"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH" VALUE="16"/>
         <PARAMETER NAME="C_WR_RESPONSE_LATENCY" VALUE="1"/>
         <PARAMETER NAME="C_MSGON_VAL" VALUE="1"/>
         <PARAMETER NAME="C_ENABLE_RST_SYNC" VALUE="1"/>
@@ -10443,9 +10443,9 @@
         <PARAMETER NAME="INTERFACE_TYPE" VALUE="Native"/>
         <PARAMETER NAME="Performance_Options" VALUE="Standard_FIFO"/>
         <PARAMETER NAME="Input_Data_Width" VALUE="48"/>
-        <PARAMETER NAME="Input_Depth" VALUE="32768"/>
+        <PARAMETER NAME="Input_Depth" VALUE="65536"/>
         <PARAMETER NAME="Output_Data_Width" VALUE="48"/>
-        <PARAMETER NAME="Output_Depth" VALUE="32768"/>
+        <PARAMETER NAME="Output_Depth" VALUE="65536"/>
         <PARAMETER NAME="Enable_ECC" VALUE="false"/>
         <PARAMETER NAME="Use_Embedded_Registers" VALUE="false"/>
         <PARAMETER NAME="Reset_Pin" VALUE="true"/>
@@ -10468,17 +10468,17 @@
         <PARAMETER NAME="Inject_Dbit_Error" VALUE="false"/>
         <PARAMETER NAME="Use_Extra_Logic" VALUE="false"/>
         <PARAMETER NAME="Data_Count" VALUE="false"/>
-        <PARAMETER NAME="Data_Count_Width" VALUE="15"/>
+        <PARAMETER NAME="Data_Count_Width" VALUE="16"/>
         <PARAMETER NAME="Write_Data_Count" VALUE="false"/>
-        <PARAMETER NAME="Write_Data_Count_Width" VALUE="15"/>
+        <PARAMETER NAME="Write_Data_Count_Width" VALUE="16"/>
         <PARAMETER NAME="Read_Data_Count" VALUE="false"/>
-        <PARAMETER NAME="Read_Data_Count_Width" VALUE="15"/>
+        <PARAMETER NAME="Read_Data_Count_Width" VALUE="16"/>
         <PARAMETER NAME="Disable_Timing_Violations" VALUE="false"/>
         <PARAMETER NAME="Read_Clock_Frequency" VALUE="1"/>
         <PARAMETER NAME="Write_Clock_Frequency" VALUE="1"/>
         <PARAMETER NAME="Programmable_Full_Type" VALUE="No_Programmable_Full_Threshold"/>
-        <PARAMETER NAME="Full_Threshold_Assert_Value" VALUE="32765"/>
-        <PARAMETER NAME="Full_Threshold_Negate_Value" VALUE="32764"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value" VALUE="65533"/>
+        <PARAMETER NAME="Full_Threshold_Negate_Value" VALUE="65532"/>
         <PARAMETER NAME="Programmable_Empty_Type" VALUE="No_Programmable_Empty_Threshold"/>
         <PARAMETER NAME="Empty_Threshold_Assert_Value" VALUE="2"/>
         <PARAMETER NAME="Empty_Threshold_Negate_Value" VALUE="3"/>

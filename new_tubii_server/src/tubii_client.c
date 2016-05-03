@@ -107,9 +107,6 @@ int auto_init()
 // Clock commands
 void clockreset(client *c, int argc, sds *argv)
 {
-  uint32_t clk_choice;
-  safe_strtoul(argv[1],&clk_choice);
-
   int ret= clockReset(1);
   usleep(1000);
   ret= clockReset(0);

@@ -82,7 +82,7 @@ static int parseOptions(int argc, char **argv)
 
 struct command commandTable[] = {
 		// clocks
-		{"clockReset",   clockreset,   2},
+		{"clockReset",   clockreset,   1},
 		{"clockStatus",  clockstatus,  1},
 		{"clockDebug",  clockdebug,  1},
 		// shift registers

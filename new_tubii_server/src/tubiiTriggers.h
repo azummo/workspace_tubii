@@ -31,13 +31,13 @@ void* MappedGTIDBaseAddress;
 int burstTrig(float rate, int bit)
 {
   if(bit<0 || bit>15){
-	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  Log(VERBOSE, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  return -1;
   }
 
   int mask = pow(2,bit);
-  Log(NOTICE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
+  Log(VERBOSE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
   mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
   return 0;
@@ -45,7 +45,7 @@ int burstTrig(float rate, int bit)
 
 int buttonTrig()
 {
-  Log(NOTICE, "TUBii: Fire the button trigger.");
+  Log(VERBOSE, "TUBii: Fire the button trigger.");
   mWriteReg(MappedButtonBaseAddress, RegOffset0, 1);
   return 0;
 }
@@ -53,12 +53,12 @@ int buttonTrig()
 int comboTrig(u32 enableMask, u32 logicMask)
 {
   if(logicMask<0 || logicMask>65535 || enableMask<0 || enableMask>65535){
-	  Log(WARNING, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  Log(VERBOSE, "TUBii: Choose a combo trigger mask between 0 and 65535.");
 	  sprintf(tubii_err, "TUBii: Choose a combo trigger mask between 0 and 65535.");
 	  return -1;
   }
 
-  Log(NOTICE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
+  Log(VERBOSE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
   mWriteReg(MappedComboBaseAddress, RegOffset2, enableMask);
   mWriteReg(MappedComboBaseAddress, RegOffset3, logicMask);
   return 0;
@@ -67,13 +67,13 @@ int comboTrig(u32 enableMask, u32 logicMask)
 int prescaleTrig(float rate, int bit)
 {
   if(bit<0 || bit>15){
-	  Log(WARNING, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  Log(VERBOSE, "TUBii: Choose a prescale trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a prescale trigger bit between 0 and 15.");
 	  return -1;
   }
 
   int mask = pow(2,bit);
-  Log(NOTICE, "TUBii: Set rate for prescale trigger: %lf on bit %i",rate,bit);
+  Log(VERBOSE, "TUBii: Set rate for prescale trigger: %lf on bit %i",rate,bit);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset2, rate);
   mWriteReg(MappedPrescaleBaseAddress, RegOffset3, mask);
   return 0;
@@ -171,7 +171,7 @@ u32 currentTrigger()
   u32 trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
   u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
   u32 sync= mReadReg(MappedTrigBaseAddress, RegOffset5);
-  printf("Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
+  Log(NOTICE, "Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
   return current_trig;
 }
 
@@ -218,7 +218,7 @@ void enableFIFO()
 int TrigWordDelay(u32 delay)
 {
   if(delay<0){
-	Log(WARNING, "TUBii: delay length is outside acceptable range.");
+	Log(VERBOSE, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
 	return -1;
   }

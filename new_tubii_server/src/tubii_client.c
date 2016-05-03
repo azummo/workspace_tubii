@@ -16,7 +16,7 @@
 #include "tubiiTriggers.h"
 #include "tubiiUtil.h"
 #include "tubiiXadc.h"
-#include "testfunc.h"
+#include "testfunc.h" // For Static Lib testing DELETE
 
 extern aeEventLoop *el;
 long long tubii_readout_id = AE_ERR;
@@ -29,7 +29,7 @@ void initialise(client *c, int argc, sds *argv)
   //  -Maps all the memory
   //  -Sets registers
   auto_init();
-  testfunc();
+  testfunc(); // For static lib testing DELETE
 
   // Need to check for errors
   addReplyStatus(c, "+OK");
@@ -66,7 +66,7 @@ int InitMapping()
   MappedTPulserBaseAddress= MemoryMapping(TELLIEPULSER_BASEADDR,TELLIEPULSER_HIGHADDR);
   MappedHappyBaseAddress= MemoryMapping(MZHAPPY_BASEADDR,MZHAPPY_HIGHADDR);
 
-	// Delays
+  // Delays
   MappedDelayBaseAddress= MemoryMapping(GENERICDELAY_BASEADDR,GENERICDELAY_HIGHADDR);
   MappedDelayLengthenBaseAddress= MemoryMapping(DELAYLENGTHEN_BASEADDR,DELAYLENGTHEN_HIGHADDR);
   MappedSDelayBaseAddress= MemoryMapping(SMELLIEDELAY_BASEADDR,SMELLIEDELAY_HIGHADDR);
@@ -74,6 +74,7 @@ int InitMapping()
   MappedGTDelayBaseAddress= MemoryMapping(GTDELAY_BASEADDR,GTDELAY_HIGHADDR);
   MappedTrigWordDelayBaseAddress= MemoryMapping(TRIGWORDDELAY_BASEADDR,TRIGWORDDELAY_HIGHADDR);
 
+  // XADC
   MappedXADCBaseAddress= MemoryMapping(XADC_BASEADDR,XADC_HIGHADDR);
 
   return 0;
@@ -89,10 +90,6 @@ int auto_init()
 
   // Reset the FIFO
   resetFIFO();
-  //softGT();
-  //softGT();
-  //softGT();
-  //softGT();
 
   //Put caen in attenuating mode
   CAENWords(255, 255);
@@ -102,8 +99,6 @@ int auto_init()
   DACThresholds(4095);
   //Set Control Reg Value
   ControlReg(58);
-
-  // Final version should include safe trigger settings
 
   return 0;
 }
@@ -151,7 +146,7 @@ void MZHappy(client *c, int argc, sds *argv)
 
 void SetMZHappyPulser(client *c, int argc, sds *argv)
 {
-  // For Ian's debugging purposes
+  // For Ian's debugging purposes, MZHappy can also be used as a pulser
   float rate=0, length=0;
   uint32_t nPulse=0;
   safe_strtof(argv[1],&rate);
@@ -675,6 +670,9 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
 	  GetRate();
 	}
 
+	// Renew the MZHappy Pulser
+	Pulser(1,0.5,100,MappedHappyBaseAddress);
+
 	/* Sends TUBii status record to the data stream */
     struct GenericRecordHeader header;
     struct TubiiStatus status;
@@ -747,7 +745,8 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 		// Have we advanced?
 		if(last_gtid!=trec.GTID){
 			// Have we missed a tick
-			if(last_gtid!=trec.GTID-1 && trec.GTID!=0) printf("Missed one! %i --> %i\n",last_gtid,trec.GTID);
+			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1)
+				Log(WARNING, "TUBII: FIFO skipped a GTID from %i to %i\n",last_gtid,trec.GTID);
 
 			last_gtid=trec.GTID;
 

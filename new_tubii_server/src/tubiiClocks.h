@@ -17,7 +17,7 @@ int clockReset(int clk_choice)
 	mWriteReg(MappedClocksBaseAddress, RegOffset0, clk_choice);
   }
   else{
-    Log(WARNING, "TUBii: Invalid clock choice. Choose 0 or 1.");
+    Log(DEBUG, "TUBii: Invalid clock choice. Choose 0 or 1.");
 	sprintf(tubii_err, "TUBii: Invalid clock choice. Choose 0 or 1.");
 	return -1;
   }
@@ -30,6 +30,7 @@ int clockStatus()
   return mReadReg(MappedClocksBaseAddress, RegOffset1);
 }
 
+// DELETE THIS FUNCTION
 int clockDebug()
 {
   u32 BaseAddress= COUNTDEBUG_BASEADDR;

@@ -34,15 +34,7 @@ typedef unsigned long u32;
 #define BUFFER_SIZE         100
 #define QUEUE_SIZE          5
 
-/// Write a value to a register. A 32 bit write is performed.
-#define mWriteReg(BaseAddress, RegOffset, Data) \
-  	Xil_Out32((BaseAddress) + (RegOffset), (u32)(Data))
-
-/// Read a value from a register. A 32 bit read is performed.
-#define mReadReg(BaseAddress, RegOffset) \
-    Xil_In32((BaseAddress) + (RegOffset))
-
-/// Register offsets
+// Register offsets
 u32 RegOffset0= REG0_OFFSET;
 u32 RegOffset1= REG1_OFFSET;
 u32 RegOffset2= REG2_OFFSET;
@@ -60,8 +52,13 @@ u32 RegOffset13= REG13_OFFSET;
 u32 RegOffset14= REG14_OFFSET;
 u32 RegOffset15= REG15_OFFSET;
 
-// For error messages
-char tubii_err[256];
+// Write a value to a register. A 32 bit write is performed.
+#define mWriteReg(BaseAddress, RegOffset, Data) \
+  	Xil_Out32((BaseAddress) + (RegOffset), (u32)(Data))
+
+// Read a value from a register. A 32 bit read is performed.
+#define mReadReg(BaseAddress, RegOffset) \
+    Xil_In32((BaseAddress) + (RegOffset))
 
 // Read to and from addresses
 u32 Xil_In32(u32 Addr)
@@ -85,7 +82,7 @@ void* MemoryMapping(u32 BaseAddress, u32 HighAddress)
   // Open Memory location
   memfd = open("/dev/mem", O_RDWR | O_SYNC);
   if (memfd == -1){
-	Log(WARNING, "TUBii: Can't open /dev/mem.");
+	Log(WARNING, "TUBii: Can't open memory location.");
    	exit(0);
   }
 
@@ -108,6 +105,9 @@ void InitialiseRegs(void* MappedBaseAddress)
   mWriteReg(MappedBaseAddress, RegOffset2, 0);
   mWriteReg(MappedBaseAddress, RegOffset3, 0);
 }
+
+// For error messages
+char tubii_err[256];
 
 // Constants
 float HunMHz = 100000000;

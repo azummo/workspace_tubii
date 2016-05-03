@@ -14,7 +14,7 @@ void *MappedReadBaseAddress;
 int Muxer(u32 mux)
 {
   if(mux>7 || mux<0){
-	Log(WARNING, "TUBii: Muxer must be between 0 and 7.");
+	Log(DEBUG, "TUBii: Muxer must be between 0 and 7.");
     sprintf(tubii_err, "TUBii: Muxer must be between 0 and 7.");
 	return -1;
   }
@@ -26,7 +26,7 @@ int Muxer(u32 mux)
 int MuxEnable(u32 mux)
 {
   if(mux != 0 && mux != 1){
-	Log(WARNING, "TUBii: MuxEnable must be 1 or 0.");
+	Log(DEBUG, "TUBii: MuxEnable must be 1 or 0.");
 	sprintf(tubii_err, "TUBii: MuxEnable must be 1 or 0.");
 	return -1;
   }
@@ -42,7 +42,7 @@ int DataReady(u32 dReg)
   // 3 MTCA Mimic
   // 4 Clocks
   if(dReg > 15 || dReg <0){
-	Log(WARNING, "TUBii: Invalid register selected.");
+	Log(DEBUG, "TUBii: Invalid register selected.");
 	sprintf(tubii_err, "TUBii: Invalid register selected.");
 	return -1;
   }
@@ -54,7 +54,7 @@ int DataReady(u32 dReg)
 int LoadShift(u32 data)
 {
   if(data>255 || data<0){
-	Log(WARNING, "TUBii: Data out of range 0 to 255.");
+	Log(DEBUG, "TUBii: Data out of range 0 to 255.");
 	sprintf(tubii_err, "TUBii: Data out of range 0 to 255.");
 	return -1;
   }
@@ -100,7 +100,7 @@ int ControlReg(int word)
   DataReady(4);
 
   mWriteReg(MappedRegsBaseAddress, RegOffset10, word);
-  Log(NOTICE, "TUBii: Set control register %d.", word);
+  Log(VERBOSE, "TUBii: Set control register %d.", word);
 
   return 0;
 }
@@ -118,8 +118,8 @@ int CAENWords(int GainPath, int ChanSelect)
 
   mWriteReg(MappedRegsBaseAddress, RegOffset11, GainPath);
   mWriteReg(MappedRegsBaseAddress, RegOffset12, ChanSelect);
-  Log(NOTICE, "TUBii: Set CAEN gain path %d.", GainPath);
-  Log(NOTICE, "TUBii: Set CAEN channel select %d.", ChanSelect);
+  Log(VERBOSE, "TUBii: Set CAEN gain path %d.", GainPath);
+  Log(VERBOSE, "TUBii: Set CAEN channel select %d.", ChanSelect);
 
   return 0;
 }
@@ -139,7 +139,7 @@ int DACThresholds(int DACThresh)
   DataReady(4);
 
   mWriteReg(MappedRegsBaseAddress, RegOffset13, DACThresh);
-  Log(NOTICE, "TUBii: Set DAC threshold %d.", DACThresh);
+  Log(VERBOSE, "TUBii: Set DAC threshold %d.", DACThresh);
 
   return 0;
 }
@@ -154,8 +154,8 @@ int GTDelays(int LO, int DGT)
 
   mWriteReg(MappedRegsBaseAddress, RegOffset14, LO);
   mWriteReg(MappedRegsBaseAddress, RegOffset15, DGT);
-  Log(NOTICE, "TUBii: Set LO* Delay %d.", LO);
-  Log(NOTICE, "TUBii: Set DGT Delay %d.", DGT);
+  Log(VERBOSE, "TUBii: Set LO* Delay %d.", LO);
+  Log(VERBOSE, "TUBii: Set DGT Delay %d.", DGT);
 
   return 0;
 }

@@ -148,6 +148,7 @@ struct command commandTable[] = {
 		{"getCAENChannelSelectWord", GetCAENChannelSelectWord, 1},
 		{"setControlReg", SetControlReg, 2},
 		{"getControlReg", GetControlReg, 1},
+		{"setECalBit", SetECalBit, 2},
 		{"setDACThreshold", SetDACThreshold, 2},
 		{"getDACThreshold", GetDACThreshold, 1},
 		{"setAllowableClockMisses", SetAllowableClockMisses, 2},

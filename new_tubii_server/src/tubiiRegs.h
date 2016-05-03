@@ -105,6 +105,7 @@ int ControlReg(int word)
   return 0;
 }
 
+
 int CAENWords(int GainPath, int ChanSelect)
 {
   Muxer(1);

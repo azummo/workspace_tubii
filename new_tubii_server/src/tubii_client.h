@@ -39,6 +39,7 @@ void GetCAENChannelSelectWord(client *c, int argc, sds *argv);
 // Control Register
 void SetControlReg(client *c, int argc, sds *argv);
 void GetControlReg(client *c, int argc, sds *argv);
+void SetECalBit(client *c, int argc, sds *argv);
 
 // DAC Settings
 void SetDACThreshold(client *c, int argc, sds *argv);

@@ -402,6 +402,16 @@ void GetControlReg(client *c, int argc, sds *argv)
   addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset10));
 }
 
+void SetECalBit(client *c, int argc, sds *argv)
+{
+  uint32_t cReg;
+  safe_strtoul(argv[1],&cReg);
+  if(cReg!=1 || cReg!=0) addReplyError(c, "ECals can only be set on (1) or off (0).");
+
+  ControlReg(mReadReg(MappedRegsBaseAddress, RegOffset10) || cReg*4);
+  addReplyStatus(c, "+OK");
+}
+
 // CAEN Settings
 void SetCaenWords(client *c, int argc, sds *argv)
 {

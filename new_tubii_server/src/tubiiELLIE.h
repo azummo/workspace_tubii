@@ -43,9 +43,9 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   Log(VERBOSE, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
 
   // 0 is pulse width, 1 is period, 3 is no. of pulses
-  mWriteReg(MappedBaseAddress, RegOffset0, width);
-  mWriteReg(MappedBaseAddress, RegOffset1, period);
-  mWriteReg(MappedBaseAddress, RegOffset3, nPulse);
+  mWriteReg((u32) MappedBaseAddress, RegOffset0, width);
+  mWriteReg((u32) MappedBaseAddress, RegOffset1, period);
+  mWriteReg((u32) MappedBaseAddress, RegOffset3, nPulse);
 
   return 0;
 }
@@ -59,7 +59,7 @@ int Delay(u32 delay, void* MappedBaseAddress)
   }
 
   // Set Delay
-  mWriteReg(MappedBaseAddress, RegOffset3, delay);
+  mWriteReg((u32) MappedBaseAddress, RegOffset3, delay);
   Log(VERBOSE, "TUBii: delay length is %d ns.", delay);
 
   return 0;
@@ -69,8 +69,8 @@ int Lengthen(char* dArg)
 {
   u32 length=0;
   safe_strtoul(dArg,&length);
-  mWriteReg(MappedDelayLengthenBaseAddress, RegOffset1, length);
-  mWriteReg(MappedDelayLengthenBaseAddress, RegOffset2, length);
+  mWriteReg((u32) MappedDelayLengthenBaseAddress, RegOffset1, length);
+  mWriteReg((u32) MappedDelayLengthenBaseAddress, RegOffset2, length);
 
   return 0;
 }

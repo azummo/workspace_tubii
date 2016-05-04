@@ -39,12 +39,9 @@
 							<tool id="xilinx.gnu.armlinux.toolchain.archiver.2109400644" name="ARM Linux archiver" superClass="xilinx.gnu.armlinux.toolchain.archiver"/>
 							<tool id="xilinx.gnu.armlinux.c.toolchain.linker.debug.1356365266" name="ARM Linux gcc linker" superClass="xilinx.gnu.armlinux.c.toolchain.linker.debug">
 								<option id="xilinx.gnu.c.link.option.libs.145466900" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="TestLib"/>
 									<listOptionValue builtIn="false" value="m"/>
 								</option>
-								<option id="xilinx.gnu.c.link.option.paths.1055864898" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TestLib/Debug}&quot;"/>
-								</option>
+								<option id="xilinx.gnu.c.link.option.paths.1055864898" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths"/>
 								<inputType id="xilinx.gnu.linker.input.905545020" superClass="xilinx.gnu.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -133,4 +130,5 @@
 			<resource resourceType="PROJECT" workspacePath="/new_tubii_server"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

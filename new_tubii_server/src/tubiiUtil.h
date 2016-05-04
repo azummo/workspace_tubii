@@ -100,10 +100,10 @@ void* MemoryMapping(u32 BaseAddress, u32 HighAddress)
 void InitialiseRegs(void* MappedBaseAddress)
 {
   // Set all regs to zero...
-  mWriteReg(MappedBaseAddress, RegOffset0, 0);
-  mWriteReg(MappedBaseAddress, RegOffset1, 0);
-  mWriteReg(MappedBaseAddress, RegOffset2, 0);
-  mWriteReg(MappedBaseAddress, RegOffset3, 0);
+  mWriteReg((u32) MappedBaseAddress, RegOffset0, 0);
+  mWriteReg((u32) MappedBaseAddress, RegOffset1, 0);
+  mWriteReg((u32) MappedBaseAddress, RegOffset2, 0);
+  mWriteReg((u32) MappedBaseAddress, RegOffset3, 0);
 }
 
 // For error messages

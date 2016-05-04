@@ -100,6 +100,6 @@ int tubii_readout(aeEventLoop *el, long long id, void *data);
 int start_tubii_readout(long long milliseconds);
 
 // XADC
-int xadc(client *c, int argc, sds *argv);
+void xadc(client *c, int argc, sds *argv);
 
 #endif

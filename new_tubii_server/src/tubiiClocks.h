@@ -14,7 +14,7 @@ void *MappedClocksBaseAddress;
 int clockReset(int clk_choice)
 {
   if(clk_choice==1 || clk_choice==0){
-	mWriteReg(MappedClocksBaseAddress, RegOffset0, clk_choice);
+	mWriteReg((u32) MappedClocksBaseAddress, RegOffset0, clk_choice);
   }
   else{
     Log(DEBUG, "TUBii: Invalid clock choice. Choose 0 or 1.");
@@ -27,7 +27,7 @@ int clockReset(int clk_choice)
 
 int clockStatus()
 {
-  return mReadReg(MappedClocksBaseAddress, RegOffset1);
+  return mReadReg((u32) MappedClocksBaseAddress, RegOffset1);
 }
 
 // DELETE THIS FUNCTION
@@ -37,7 +37,7 @@ int clockDebug()
   u32 HighAddress= COUNTDEBUG_HIGHADDR;
   void *MappedBaseAddress= MemoryMapping(BaseAddress,HighAddress);
 
-  printf("%x\n",mReadReg(MappedBaseAddress, RegOffset0));
+  printf("%x\n",mReadReg((u32) MappedBaseAddress, RegOffset0));
 
   munmap((void*)MappedBaseAddress, (HighAddress-BaseAddress));
   return 0;

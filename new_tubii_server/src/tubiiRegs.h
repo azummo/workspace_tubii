@@ -18,7 +18,7 @@ int Muxer(u32 mux)
     sprintf(tubii_err, "TUBii: Muxer must be between 0 and 7.");
 	return -1;
   }
-  mWriteReg(MappedRegsBaseAddress, RegOffset0, mux);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset0, mux);
 
   return 0;
 }
@@ -30,7 +30,7 @@ int MuxEnable(u32 mux)
 	sprintf(tubii_err, "TUBii: MuxEnable must be 1 or 0.");
 	return -1;
   }
-  mWriteReg(MappedRegsBaseAddress, RegOffset1, mux);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset1, mux);
 
   return 0;
 }
@@ -46,7 +46,7 @@ int DataReady(u32 dReg)
 	sprintf(tubii_err, "TUBii: Invalid register selected.");
 	return -1;
   }
-  mWriteReg(MappedRegsBaseAddress, RegOffset2, dReg);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset2, dReg);
 
   return 0;
 }
@@ -58,12 +58,12 @@ int LoadShift(u32 data)
 	sprintf(tubii_err, "TUBii: Data out of range 0 to 255.");
 	return -1;
   }
-  mWriteReg(MappedRegsBaseAddress, RegOffset3, data);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset3, data);
 
   int cnt=0;
   for(cnt=0; cnt<8; cnt++){
 	// Set
-	mWriteReg(MappedRegsBaseAddress, RegOffset4, 1);
+	mWriteReg((u32) MappedRegsBaseAddress, RegOffset4, 1);
 	usleep(10000);
   }
 
@@ -74,18 +74,18 @@ int ReadShift()
 {
   Log(WARNING, "TUBii: ReadShift doesn't work due to HW problems. Ignore this.");
 
-  mWriteReg(MappedRegsBaseAddress, RegOffset7, 0);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 0);
   usleep(10000);
-  mWriteReg(MappedRegsBaseAddress, RegOffset7, 2);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 2);
   usleep(10000);
 
   int cnt=0;
   for(cnt=0; cnt<8; cnt++){
 	// Set
-	mWriteReg(MappedRegsBaseAddress, RegOffset7, 3);
+	mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 3);
 	usleep(10000);
   }
-  u32 word = mReadReg(MappedRegsBaseAddress, RegOffset6) & 0xFF;
+  u32 word = mReadReg((u32) MappedRegsBaseAddress, RegOffset6) & 0xFF;
 
   return word;
 }
@@ -99,7 +99,7 @@ int ControlReg(int word)
   DataReady(5);
   DataReady(4);
 
-  mWriteReg(MappedRegsBaseAddress, RegOffset10, word);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset10, word);
   Log(VERBOSE, "TUBii: Set control register %d.", word);
 
   return 0;
@@ -116,8 +116,8 @@ int CAENWords(int GainPath, int ChanSelect)
   DataReady(6);
   DataReady(4);
 
-  mWriteReg(MappedRegsBaseAddress, RegOffset11, GainPath);
-  mWriteReg(MappedRegsBaseAddress, RegOffset12, ChanSelect);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset11, GainPath);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset12, ChanSelect);
   Log(VERBOSE, "TUBii: Set CAEN gain path %d.", GainPath);
   Log(VERBOSE, "TUBii: Set CAEN channel select %d.", ChanSelect);
 
@@ -138,7 +138,7 @@ int DACThresholds(int DACThresh)
   DataReady(0);
   DataReady(4);
 
-  mWriteReg(MappedRegsBaseAddress, RegOffset13, DACThresh);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset13, DACThresh);
   Log(VERBOSE, "TUBii: Set DAC threshold %d.", DACThresh);
 
   return 0;
@@ -152,8 +152,8 @@ int GTDelays(int LO, int DGT)
   LoadShift(DGT);
   MuxEnable(0);
 
-  mWriteReg(MappedRegsBaseAddress, RegOffset14, LO);
-  mWriteReg(MappedRegsBaseAddress, RegOffset15, DGT);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset14, LO);
+  mWriteReg((u32) MappedRegsBaseAddress, RegOffset15, DGT);
   Log(VERBOSE, "TUBii: Set LO* Delay %d.", LO);
   Log(VERBOSE, "TUBii: Set DGT Delay %d.", DGT);
 

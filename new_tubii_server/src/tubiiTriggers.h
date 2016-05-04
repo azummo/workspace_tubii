@@ -38,15 +38,15 @@ int burstTrig(float rate, int bit)
 
   int mask = pow(2,bit);
   Log(VERBOSE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
-  mWriteReg(MappedBurstBaseAddress, RegOffset2, rate);
-  mWriteReg(MappedBurstBaseAddress, RegOffset3, mask);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, rate);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, mask);
   return 0;
 }
 
 int buttonTrig()
 {
   Log(VERBOSE, "TUBii: Fire the button trigger.");
-  mWriteReg(MappedButtonBaseAddress, RegOffset0, 1);
+  mWriteReg((u32) MappedButtonBaseAddress, RegOffset0, 1);
   return 0;
 }
 
@@ -59,8 +59,8 @@ int comboTrig(u32 enableMask, u32 logicMask)
   }
 
   Log(VERBOSE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
-  mWriteReg(MappedComboBaseAddress, RegOffset2, enableMask);
-  mWriteReg(MappedComboBaseAddress, RegOffset3, logicMask);
+  mWriteReg((u32) MappedComboBaseAddress, RegOffset2, enableMask);
+  mWriteReg((u32) MappedComboBaseAddress, RegOffset3, logicMask);
   return 0;
 }
 
@@ -74,28 +74,28 @@ int prescaleTrig(float rate, int bit)
 
   int mask = pow(2,bit);
   Log(VERBOSE, "TUBii: Set rate for prescale trigger: %lf on bit %i",rate,bit);
-  mWriteReg(MappedPrescaleBaseAddress, RegOffset2, rate);
-  mWriteReg(MappedPrescaleBaseAddress, RegOffset3, mask);
+  mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset2, rate);
+  mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset3, mask);
   return 0;
 }
 
 /////// Counters and Speakers
 int counterLatch(int latch)
 {
-  mWriteReg(MappedCountBaseAddress, RegOffset0, latch);
+  mWriteReg((u32) MappedCountBaseAddress, RegOffset0, latch);
   return 0;
 }
 
 int counterReset(int reset)
 {
-  mWriteReg(MappedCountBaseAddress, RegOffset1, reset);
+  mWriteReg((u32) MappedCountBaseAddress, RegOffset1, reset);
   return 0;
 }
 
 int counterMode(int mode)
 {
   counter_mode = mode;
-  if(counter_mode == 0) counterLatch("0");
+  if(counter_mode == 0) counterLatch(0);
   return counter_mode;
 }
 
@@ -113,82 +113,82 @@ void GetRate()
 
 int counterMask(u32 mask)
 {
-  mWriteReg(MappedCountLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
-  mWriteReg(MappedCountLengthenBaseAddress, RegOffset2,400); // And deadtime
-  mWriteReg(MappedTrigBaseAddress, RegOffset1,mask);
+  mWriteReg((u32) MappedCountLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
+  mWriteReg((u32) MappedCountLengthenBaseAddress, RegOffset2,400); // And deadtime
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset1,mask);
 
   return mask;
 }
 
 int getCounterMask()
 {
-  return mReadReg(MappedTrigBaseAddress, RegOffset1);
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset1);
 }
 
 int speakerMask(u32 mask)
 {
-  mWriteReg(MappedTrigBaseAddress, RegOffset2,mask);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset2,mask);
   return mask;
 }
 
 int getSpeakerMask()
 {
-  return mReadReg(MappedTrigBaseAddress, RegOffset2);
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset2);
 }
 
 u32 triggerMask(char* mask)
 {
   uint32_t imask;
   safe_strtoul(mask,&imask);
-  mWriteReg(MappedTrigBaseAddress, RegOffset3,imask);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,imask);
 
   return imask;
 }
 
 u32 getTriggerMask()
 {
-  return mReadReg(MappedTrigBaseAddress,RegOffset3);
+  return mReadReg((u32) MappedTrigBaseAddress,RegOffset3);
 }
 
 void softGT()
 {
-  mWriteReg(MappedTrigBaseAddress, RegOffset6,1);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset6,1);
   usleep(100);
-  mWriteReg(MappedTrigBaseAddress, RegOffset6, 0);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset6, 0);
 }
 
 void resetGTID()
 {
   //mWriteReg(MappedTrigBaseAddress, RegOffset7,1);
   //usleep(1);
-  mWriteReg(MappedTrigBaseAddress, RegOffset7, 0);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset7, 0);
 }
 
 /////// Data Readout
 u32 currentTrigger()
 {
-  u32 current_trig= mReadReg(MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
-  u32 trig_mask= mReadReg(MappedTrigBaseAddress, RegOffset3);
-  u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
-  u32 sync= mReadReg(MappedTrigBaseAddress, RegOffset5);
+  u32 current_trig= mReadReg((u32) MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
+  u32 trig_mask= mReadReg((u32) MappedTrigBaseAddress, RegOffset3);
+  u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
+  u32 sync= mReadReg((u32) MappedTrigBaseAddress, RegOffset5);
   Log(NOTICE, "Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
   return current_trig;
 }
 
 u32 currentgtid()
 {
-  u32 gtid= mReadReg(MappedTrigBaseAddress, RegOffset4);
+  u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
   return gtid;
 }
 
 void fifoTrigger(struct TubiiRecord* record)
 {
   int error;
-  mWriteReg(MappedFifoBaseAddress, RegOffset0,1);
-  record->TrigWord = mReadReg(MappedFifoBaseAddress, RegOffset1) & 0xFFFFFF;
-  record->GTID = mReadReg(MappedFifoBaseAddress, RegOffset2) & 0xFFFFFF;
-  error= mReadReg(MappedFifoBaseAddress, RegOffset3);
-  mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,1);
+  record->TrigWord = mReadReg((u32) MappedFifoBaseAddress, RegOffset1) & 0xFFFFFF;
+  record->GTID = mReadReg((u32) MappedFifoBaseAddress, RegOffset2) & 0xFFFFFF;
+  error= mReadReg((u32) MappedFifoBaseAddress, RegOffset3);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,0);
 
   if(error>1 && err_flg==0){
 	  //printf("Error is: %i \n", error);
@@ -199,20 +199,20 @@ void fifoTrigger(struct TubiiRecord* record)
 
 u32 fifoStatus()
 {
-  u32 error= mReadReg(MappedFifoBaseAddress, RegOffset3);
+  u32 error= mReadReg((u32) MappedFifoBaseAddress, RegOffset3);
   return error;
 }
 
 void resetFIFO()
 {
-  mWriteReg(MappedFifoBaseAddress, RegOffset0,2);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,2);
   usleep(1000);
-  mWriteReg(MappedFifoBaseAddress, RegOffset0,0);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,0);
 }
 
 void enableFIFO()
 {
-  mWriteReg(MappedFifoBaseAddress, RegOffset0,12);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,12);
 }
 
 int TrigWordDelay(u32 delay)
@@ -223,7 +223,7 @@ int TrigWordDelay(u32 delay)
 	return -1;
   }
 
-  mWriteReg(MappedTrigWordDelayBaseAddress, RegOffset0, delay);
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset0, delay);
   return 0;
 }
 

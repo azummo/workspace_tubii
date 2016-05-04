@@ -16,7 +16,6 @@
 #include "tubiiTriggers.h"
 #include "tubiiUtil.h"
 #include "tubiiXadc.h"
-#include "testfunc.h" // For Static Lib testing DELETE
 
 extern aeEventLoop *el;
 long long tubii_readout_id = AE_ERR;
@@ -29,7 +28,6 @@ void initialise(client *c, int argc, sds *argv)
   //  -Maps all the memory
   //  -Sets registers
   auto_init();
-  testfunc(); // For static lib testing DELETE
 
   // Need to check for errors
   addReplyStatus(c, "+OK");
@@ -267,7 +265,7 @@ void SetTelliedelay(client *c, int argc, sds *argv)
 
 void GetSmellieRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg(MappedSPulserBaseAddress, RegOffset1);
+  u32 period= mReadReg((u32) MappedSPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
 
   addReply(c, ":%d", rate);
@@ -275,23 +273,23 @@ void GetSmellieRate(client *c, int argc, sds *argv)
 
 void GetSmelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg(MappedSPulserBaseAddress, RegOffset1) - mReadReg(MappedSPulserBaseAddress, RegOffset0))*HunMHz;
+  float width= (mReadReg((u32) MappedSPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedSPulserBaseAddress, RegOffset0))*HunMHz;
   addReply(c, ":%d", width);
 }
 
 void GetSmellieNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedSPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedSPulserBaseAddress, RegOffset3));
 }
 
 void GetSmellieDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedSDelayBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedSDelayBaseAddress, RegOffset3));
 }
 
 void GetTellieRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg(MappedTPulserBaseAddress, RegOffset1);
+  u32 period= mReadReg((u32) MappedTPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
 
   addReply(c, ":%d", rate);
@@ -299,23 +297,23 @@ void GetTellieRate(client *c, int argc, sds *argv)
 
 void GetTelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg(MappedTPulserBaseAddress, RegOffset1) - mReadReg(MappedTPulserBaseAddress, RegOffset0))*HunMHz;
+  float width= (mReadReg((u32) MappedTPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedTPulserBaseAddress, RegOffset0))*HunMHz;
   addReply(c, ":%d", width);
 }
 
 void GetTellieNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedTPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedTPulserBaseAddress, RegOffset3));
 }
 
 void GetTellieDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedTDelayBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedTDelayBaseAddress, RegOffset3));
 }
 
 void GetPulserRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg(MappedPulserBaseAddress, RegOffset1);
+  u32 period= mReadReg((u32) MappedPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
 
   addReply(c, ":%d", rate);
@@ -323,18 +321,18 @@ void GetPulserRate(client *c, int argc, sds *argv)
 
 void GetPulserWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg(MappedPulserBaseAddress, RegOffset1) - mReadReg(MappedPulserBaseAddress, RegOffset0))*HunMHz;
+  float width= (mReadReg((u32) MappedPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedPulserBaseAddress, RegOffset0))*HunMHz;
   addReply(c, ":%d", width);
 }
 
 void GetPulserNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedPulserBaseAddress, RegOffset3));
 }
 
 void GetDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedDelayBaseAddress, RegOffset3));
+  addReply(c, ":%d", mReadReg((u32) MappedDelayBaseAddress, RegOffset3));
 }
 
 //// Shift Register commands
@@ -391,17 +389,20 @@ void SetControlReg(client *c, int argc, sds *argv)
 void GetControlReg(client *c, int argc, sds *argv)
 {
   // This won't be done by ReadShift due to a bug in the hardware
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset10));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset10));
 }
 
 void SetECalBit(client *c, int argc, sds *argv)
 {
   uint32_t cReg;
   safe_strtoul(argv[1],&cReg);
-  if(cReg!=1 || cReg!=0) addReplyError(c, "ECals can only be set on (1) or off (0).");
-
-  ControlReg(mReadReg(MappedRegsBaseAddress, RegOffset10) || cReg*4);
-  addReplyStatus(c, "+OK");
+  if(cReg==1 || cReg==0){
+	  ControlReg((mReadReg((u32) MappedRegsBaseAddress, RegOffset10) & 4294967291) + 4*cReg);
+	  addReplyStatus(c, "+OK");
+  }
+  else{
+	  addReplyError(c, "ECals can only be set on (1) or off (0).");
+  }
 }
 
 // CAEN Settings
@@ -416,12 +417,12 @@ void SetCaenWords(client *c, int argc, sds *argv)
 
 void GetCAENGainPathWord(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset11));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset11));
 }
 
 void GetCAENChannelSelectWord(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset12));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset12));
 }
 
 // DAC Settings
@@ -435,7 +436,7 @@ void SetDACThreshold(client *c, int argc, sds *argv)
 
 void GetDACThreshold(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset13));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset13));
 }
 
 // DGT & LO
@@ -450,12 +451,12 @@ void SetGTDelays(client *c, int argc, sds *argv)
 
 void GetLODelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset14));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset14));
 }
 
 void GetDGTDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg(MappedRegsBaseAddress, RegOffset15));
+  addReply(c, ":%d", mReadReg((u32) MappedRegsBaseAddress, RegOffset15));
 }
 
 void SetAllowableClockMisses(client *c, int argc, sds *argv)
@@ -768,7 +769,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 
 static XAdcPs XADCMonInst;
 
-int xadc(client *c, int argc, sds *argv)
+void xadc(client *c, int argc, sds *argv)
 {
 	XAdcPs_Config *ConfigPtr;
 	XAdcPs *XADCInstPtr = &XADCMonInst;

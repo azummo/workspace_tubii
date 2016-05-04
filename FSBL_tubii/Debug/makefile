@@ -35,7 +35,7 @@ all: FSBL_tubii.elf secondary-outputs
 FSBL_tubii.elf: $(OBJS) ../src/lscript.ld $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM gcc linker'
-	arm-xilinx-eabi-gcc -L"C:\Users\Ian\Documents\GitHub\workspace_tubii\FSBL_tubii\src" -Wl,-T -Wl,../src/lscript.ld -L../../standalone_bsp_7020/ps7_cortexa9_0/lib -o "FSBL_tubii.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-xilinx-eabi-gcc -L"/home/snoperator/workspace_tubii/FSBL_tubii/src" -Wl,-T -Wl,../src/lscript.ld -L../../standalone_bsp_7020/ps7_cortexa9_0/lib -o "FSBL_tubii.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

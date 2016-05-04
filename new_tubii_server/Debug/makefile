@@ -35,7 +35,7 @@ all: new_tubii_server.elf secondary-outputs
 new_tubii_server.elf: $(OBJS)  $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linux gcc linker'
-	arm-xilinx-linux-gnueabi-gcc -L"C:\Users\Ian\Documents\GitHub\workspace_tubii\TestLib\Debug" -o "new_tubii_server.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-xilinx-linux-gnueabi-gcc  -o "new_tubii_server.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

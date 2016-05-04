@@ -63,9 +63,9 @@ static int parseOptions(int argc, char **argv)
         } else if (!strcmp(argv[i],"--logfile") && !lastarg) {
             config.logfile = argv[++i];
         } else if (!strcmp(argv[i],"-v")) {
-            config.loglevel++;
-        } else if (!strcmp(argv[i],"-q")) {
             config.loglevel--;
+        } else if (!strcmp(argv[i],"-q")) {
+            config.loglevel++;
         } else {
             if (argv[i][0] == '-') {
                 fprintf(stderr,

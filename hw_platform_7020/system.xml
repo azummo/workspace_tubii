@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon May 02 12:30:03 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed May  4 00:13:52 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -741,7 +741,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_346"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_376"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -989,7 +989,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_347"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_377"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1237,7 +1237,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_348"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_378"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1485,7 +1485,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_349"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_379"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1733,7 +1733,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_350"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_380"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1979,7 +1979,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_68"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_74"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3510,7 +3510,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1277"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1295"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5345,7 +5345,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1278"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1296"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7180,7 +7180,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1279"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1297"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -11303,26 +11303,6 @@
             <CONNECTION INSTANCE="triggers_0" PORT="gtid_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="sync" SIGIS="undef" SIGNAME="triggers_0_synco">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="synco"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="sync24" SIGIS="undef" SIGNAME="triggers_0_sync24o">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="sync24o"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="reset" SIGIS="undef" SIGNAME="triggers_0_resetgtid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="resetgtid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="rst_ok" SIGIS="undef" SIGNAME="implement_gtid_0_rst_ok">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="rst_ok"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="triggers_0_gtrigout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="gtrigout"/>
@@ -12728,16 +12708,6 @@
             <CONNECTION INSTANCE="implement_gtid_0" PORT="gtid_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="synco" SIGIS="undef" SIGNAME="triggers_0_synco">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="sync"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="sync24o" SIGIS="undef" SIGNAME="triggers_0_sync24o">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="sync24"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" NAME="gtrigout" SIGIS="undef" SIGNAME="triggers_0_gtrigout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="Outtt"/>
@@ -12755,11 +12725,6 @@
         <PORT DIR="I" NAME="sync24i" SIGIS="undef" SIGNAME="External_Ports_sync24">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="sync24"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="resetgtid" SIGIS="undef" SIGNAME="triggers_0_resetgtid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="reset"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="trig_word" SIGIS="undef" SIGNAME="triggers_0_trig_word">
@@ -12791,11 +12756,6 @@
         <PORT DIR="O" NAME="counter" SIGIS="undef" SIGNAME="triggers_0_counter">
           <CONNECTIONS>
             <CONNECTION INSTANCE="oneshot_pulse_1" PORT="pulse_i"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="rst_ok" SIGIS="undef" SIGNAME="implement_gtid_0_rst_ok">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="rst_ok"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">

@@ -23,8 +23,8 @@ struct MegaRecord {
 
 struct TubiiStatus {
     uint32_t Clock;
-    uint32_t ControlReg;
-    uint32_t GTID;
+    uint32_t GTID_out;
+    uint32_t GTID_in;
     uint32_t FIFO;
 };
 

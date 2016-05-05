@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed May  4 00:13:52 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed May  4 14:53:41 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,12 +25,12 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="triggers_0_trig_out">
+    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="triggers_0_trig_out">
       <CONNECTIONS>
         <CONNECTION INSTANCE="triggers_0" PORT="trig_out"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="triggers_0_trig_out">
+    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="triggers_0_trig_out">
       <CONNECTIONS>
         <CONNECTION INSTANCE="triggers_0" PORT="trig_out"/>
       </CONNECTIONS>
@@ -741,7 +741,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_376"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_381"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -989,7 +989,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_377"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_382"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1237,7 +1237,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_378"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_383"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1485,7 +1485,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_379"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_384"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1733,7 +1733,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_380"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_385"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1979,7 +1979,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_74"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_75"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3510,7 +3510,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1295"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1298"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5345,7 +5345,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1296"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1299"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7180,7 +7180,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1297"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1300"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -12744,8 +12744,8 @@
         </PORT>
         <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="triggers_0_trig_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
             <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="speaker" SIGIS="undef" SIGNAME="triggers_0_speaker">
@@ -19023,7 +19023,7 @@
     <FILE FULLNAME="ps7_init.html" TYPE="html"/>
     <FILE FULLNAME="ps7_init.tcl" TYPE="tcl"/>
     <FILE FULLNAME="ps7_summary.html" TYPE="html"/>
-    <FILE FULLNAME="system_wrapper.bit" TYPE="bit"/></FILES>
+  </FILES>
 
   <REPOSITORIES/>
 

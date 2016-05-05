@@ -675,8 +675,8 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
     struct GenericRecordHeader header;
     struct TubiiStatus status;
     status.Clock = clockStatus();
-    //status.ControlReg = mReadReg(MappedRegsBaseAddress, RegOffset10);
-    status.GTID = currentgtid();
+    status.GTID_out = last_gtid;
+    status.GTID_in = currentgtid();
     status.FIFO = fifoStatus();
 
     header.RecordID = htonl(TUBII_STATUS);
@@ -743,7 +743,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 		// Have we advanced?
 		if(last_gtid!=trec.GTID){
 			// Have we missed a tick
-			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1)
+			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1 && (last_gtid & 0xFFFF)!=0xFFFE)
 				Log(WARNING, "TUBII: FIFO skipped a GTID from %i to %i\n",last_gtid,trec.GTID);
 
 			last_gtid=trec.GTID;

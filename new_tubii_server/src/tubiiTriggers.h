@@ -159,8 +159,8 @@ void softGT()
 
 void resetGTID()
 {
-  mWriteReg(MappedTrigBaseAddress, RegOffset7,1);
-  usleep(1);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset7,1);
+  usleep(1000);
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset7, 0);
 }
 

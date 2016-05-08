@@ -455,7 +455,10 @@ void GetDGTDelay(client *c, int argc, sds *argv)
 
 void SetAllowableClockMisses(client *c, int argc, sds *argv)
 {
-  // Do something and add get
+  uint32_t nMisses;
+  safe_strtoul(argv[1],&nMisses);
+  ClockMisses(nMisses);
+  addReplyStatus(c, "+OK");
 }
 
 

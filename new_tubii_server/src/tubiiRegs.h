@@ -70,26 +70,6 @@ int LoadShift(u32 data)
   return 0;
 }
 
-int ReadShift()
-{
-  Log(WARNING, "TUBii: ReadShift doesn't work due to HW problems. Ignore this.");
-
-  mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 0);
-  usleep(10000);
-  mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 2);
-  usleep(10000);
-
-  int cnt=0;
-  for(cnt=0; cnt<8; cnt++){
-	// Set
-	mWriteReg((u32) MappedRegsBaseAddress, RegOffset7, 3);
-	usleep(10000);
-  }
-  u32 word = mReadReg((u32) MappedRegsBaseAddress, RegOffset6) & 0xFF;
-
-  return word;
-}
-
 int ControlReg(int word)
 {
   Muxer(0);
@@ -156,6 +136,18 @@ int GTDelays(int LO, int DGT)
   mWriteReg((u32) MappedRegsBaseAddress, RegOffset15, DGT);
   Log(VERBOSE, "TUBii: Set LO* Delay %d.", LO);
   Log(VERBOSE, "TUBii: Set DGT Delay %d.", DGT);
+
+  return 0;
+}
+
+int ClockMisses(int nMisses)
+{
+  // I think this'll work...
+  Muxer(5);
+  MuxEnable(1);
+  LoadShift(nMisses);
+  MuxEnable(0);
+  Log(VERBOSE, "TUBii: Set number of allowable missed clock ticks %d.", nMisses);
 
   return 0;
 }

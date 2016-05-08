@@ -210,11 +210,6 @@ void resetFIFO()
   mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,0);
 }
 
-void enableFIFO()
-{
-  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,12);
-}
-
 int TrigWordDelay(u32 delay)
 {
   if(delay<0){

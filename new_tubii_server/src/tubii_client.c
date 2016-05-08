@@ -123,12 +123,6 @@ void clockstatus(client *c, int argc, sds *argv)
   addReply(c, ":%d", status);
 }
 
-void clockdebug(client *c, int argc, sds *argv)
-{
-  clockDebug();
-  addReplyStatus(c, "+OK");
-}
-
 // Utility commands
 void MZHappy(client *c, int argc, sds *argv)
 {
@@ -594,12 +588,6 @@ void SoftGT(client *c, int argc, sds *argv)
 void ResetFIFO(client *c, int argc, sds *argv)
 {
   resetFIFO();
-  addReplyStatus(c, "+OK");
-}
-
-void EnableFIFO(client *c, int argc, sds *argv)
-{
-  enableFIFO();
   addReplyStatus(c, "+OK");
 }
 

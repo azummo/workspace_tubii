@@ -18,7 +18,6 @@ void ping(client *c, int argc, sds *argv);
 // Clock
 void clockreset(client *c, int argc, sds *argv);
 void clockstatus(client *c, int argc, sds *argv);
-void clockdebug(client *c, int argc, sds *argv);
 
 // Low-level register commands
 void dataready(client *c, int argc, sds *argv);
@@ -88,7 +87,6 @@ void SetPrescaleTrigger(client *c, int argc, sds *argv);
 void GetCurrentTrigger(client *c, int argc, sds *argv);
 void GetFifoTrigger(client *c, int argc, sds *argv);
 void ResetFIFO(client *c, int argc, sds *argv);
-void EnableFIFO(client *c, int argc, sds *argv);
 void ResetGTID(client *c, int argc, sds *argv);
 
 // TUBii Readout

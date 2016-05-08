@@ -30,17 +30,4 @@ int clockStatus()
   return mReadReg((u32) MappedClocksBaseAddress, RegOffset1);
 }
 
-// DELETE THIS FUNCTION
-int clockDebug()
-{
-  u32 BaseAddress= COUNTDEBUG_BASEADDR;
-  u32 HighAddress= COUNTDEBUG_HIGHADDR;
-  void *MappedBaseAddress= MemoryMapping(BaseAddress,HighAddress);
-
-  printf("%x\n",mReadReg((u32) MappedBaseAddress, RegOffset0));
-
-  munmap((void*)MappedBaseAddress, (HighAddress-BaseAddress));
-  return 0;
-}
-
 #endif /* CLOCKS_H_ */

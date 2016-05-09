@@ -28,7 +28,7 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="xilinx.gnu.compiler.option.optimization.level.1724591214" name="Optimization Level" superClass="xilinx.gnu.compiler.option.optimization.level" valueType="enumerated"/>
 								<option id="xilinx.gnu.compiler.option.debugging.level.1459467036" name="Debug Level" superClass="xilinx.gnu.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="xilinx.gnu.compiler.dircategory.includes.1146421690" name="Include Paths" superClass="xilinx.gnu.compiler.dircategory.includes" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TestLib/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/new_tubii_server/src}&quot;"/>
 								</option>
 								<inputType id="xilinx.gnu.armlinux.c.compiler.input.1645053460" name="C source files" superClass="xilinx.gnu.armlinux.c.compiler.input"/>
 							</tool>
@@ -40,8 +40,11 @@
 							<tool id="xilinx.gnu.armlinux.c.toolchain.linker.debug.1356365266" name="ARM Linux gcc linker" superClass="xilinx.gnu.armlinux.c.toolchain.linker.debug">
 								<option id="xilinx.gnu.c.link.option.libs.145466900" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="pq"/>
 								</option>
-								<option id="xilinx.gnu.c.link.option.paths.1055864898" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths"/>
+								<option id="xilinx.gnu.c.link.option.paths.1055864898" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src}&quot;"/>
+								</option>
 								<inputType id="xilinx.gnu.linker.input.905545020" superClass="xilinx.gnu.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

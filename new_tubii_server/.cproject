@@ -40,6 +40,7 @@
 							<tool id="xilinx.gnu.armlinux.c.toolchain.linker.debug.1356365266" name="ARM Linux gcc linker" superClass="xilinx.gnu.armlinux.c.toolchain.linker.debug">
 								<option id="xilinx.gnu.c.link.option.libs.145466900" name="Libraries (-l)" superClass="xilinx.gnu.c.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="pq"/>
 								</option>
 								<option id="xilinx.gnu.c.link.option.paths.1055864898" name="Library search path (-L)" superClass="xilinx.gnu.c.link.option.paths" valueType="libPaths">

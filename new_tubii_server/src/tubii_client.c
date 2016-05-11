@@ -17,6 +17,8 @@
 #include "tubiiUtil.h"
 #include "tubiiXadc.h"
 
+#include "libpq-fe.h"
+
 extern aeEventLoop *el;
 long long tubii_readout_id = AE_ERR;
 int last_gtid=0;
@@ -756,7 +758,91 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
     return 1;
 }
 
+void PostGresNonsense()
+{
+	const char *conninfo = "dbname = postgres";
+	PGconn     *conn;
+	PGresult   *res;
+	int         nFields, i, j;
 
+	/* Make a connection to the database */
+	conn = PQconnectdb(conninfo);
+
+	/* Check to see that the backend connection was successfully made */
+	if (PQstatus(conn) != CONNECTION_OK)
+	{
+		printf("Connection to database failed: %s", PQerrorMessage(conn));
+	    PQfinish(conn);
+	    exit(1);
+	}
+
+	/* Our test case here involves using a cursor, for which we must be inside
+	 * a transaction block.  We could do the whole thing with a single
+	 * PQexec() of "select * from pg_database", but that's too trivial to make
+	 * a good example. */
+
+	/* Start a transaction block */
+	res = PQexec(conn, "BEGIN");
+	if (PQresultStatus(res) != PGRES_COMMAND_OK)
+	{
+		printf("BEGIN command failed: %s", PQerrorMessage(conn));
+		PQclear(res);
+		PQfinish(conn);
+		exit(1);
+	}
+
+	/* Should PQclear PGresult whenever it is no longer needed to avoid memory leaks */
+	PQclear(res);
+
+	/* Fetch rows from pg_database, the system catalog of databases */
+	res = PQexec(conn, "DECLARE myportal CURSOR FOR select * from pg_database");
+	if (PQresultStatus(res) != PGRES_COMMAND_OK)
+	{
+		printf("DECLARE CURSOR failed: %s", PQerrorMessage(conn));
+		PQclear(res);
+	    PQfinish(conn);
+	    exit(1);
+	}
+	PQclear(res);
+
+	res = PQexec(conn, "FETCH ALL in myportal");
+	if (PQresultStatus(res) != PGRES_TUPLES_OK)
+	{
+		printf("FETCH ALL failed: %s", PQerrorMessage(conn));
+	    PQclear(res);
+	    PQfinish(conn);
+	    exit(1);
+	}
+
+	/* first, print out the attribute names */
+	nFields = PQnfields(res);
+	for (i = 0; i < nFields; i++)
+		printf("%-15s", PQfname(res, i));
+	printf("\n\n");
+
+	/* next, print out the rows */
+	for (i = 0; i < PQntuples(res); i++)
+	{
+		for (j = 0; j < nFields; j++)
+			printf("%-15s", PQgetvalue(res, i, j));
+	    printf("\n");
+	}
+
+	PQclear(res);
+
+	/* close the portal ... we don't bother to check for errors ... */
+	res = PQexec(conn, "CLOSE myportal");
+	PQclear(res);
+
+	/* end the transaction */
+	res = PQexec(conn, "END");
+	PQclear(res);
+
+	/* close the connection to the database and cleanup */
+	PQfinish(conn);
+
+	return 0;
+}
 
 static XAdcPs XADCMonInst;
 

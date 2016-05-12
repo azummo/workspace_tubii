@@ -758,6 +758,68 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
     return 1;
 }
 
+void save_TUBii_command(client *c, int argc, sds *argv)
+{
+    /* Update the TUBii state. */
+    uint32_t key;
+    PGconn *conn;
+    char conninfo[1024];
+    PGresult *res = NULL;
+    char command[10000];
+
+    char* dbname="test", dbhost="", dbuser="", dbpass="";
+    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbname, dbhost, dbuser, dbpass);
+
+    /* Now we update the database */
+    conn = PQconnectdb(conninfo);
+
+    if (PQstatus(conn) != CONNECTION_OK) {
+        addReplyErrorFormat(c, "connection to database failed: %s", PQerrorMessage(conn));
+        goto pq_error;
+    }
+
+    sprintf(command, "insert into TUBii ("
+                     "control_register"
+                     ") "
+                     "VALUES ("
+                     "%u"
+                     ") "
+                     "RETURNING key",
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset10));
+
+    res = PQexec(conn, command);
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        addReplyErrorFormat(c, "insert command failed: %s",
+                            PQerrorMessage(conn));
+        goto pq_error;
+    }
+
+    if (PQnfields(res) != 1) {
+        addReplyError(c, "failed to get key from insert");
+        goto pq_error;
+    }
+
+    if (safe_strtoul(PQgetvalue(res, 0, 0), &key)) {
+        addReplyErrorFormat(c, "couldn't convert key from '%s' -> int", PQgetvalue(res, 0, 0));
+        goto pq_error;
+    }
+
+    PQclear(res);
+    PQfinish(conn);
+
+    addReply(c, "%u", key);
+    return;
+
+err:
+    addReplyError(c, tubii_err);
+    return;
+
+pq_error:
+    if (res) PQclear(res);
+    PQfinish(conn);
+}
+
 void PostGresNonsense()
 {
 	const char *conninfo = "dbname = postgres";

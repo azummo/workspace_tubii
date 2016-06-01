@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun May 08 06:00:39 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jun 01 11:38:02 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,14 +25,14 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="triggers_0_trig_out">
+    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="triggers_0" PORT="trig_out"/>
+        <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="triggers_0_trig_out">
+    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="triggers_0" PORT="trig_out"/>
+        <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="display_reset" SIGIS="undef" SIGNAME="countDisplay_0_display_clr">
@@ -88,6 +88,8 @@
     <PORT DIR="I" NAME="gt_in" SIGIS="undef" SIGNAME="External_Ports_gt_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="triggers_0" PORT="gtrig"/>
+        <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+        <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="read_clk_out" SIGIS="undef" SIGNAME="ShiftRegisters_0_read_cntrl">
@@ -112,7 +114,10 @@
     </PORT>
     <PORT DIR="I" NAME="mtca_mimic_in" SIGIS="undef" SIGNAME="External_Ports_mtca_mimic_in">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="triggers_0" PORT="mtca_mimic_in"/>
+        <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+        <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+        <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+        <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="backup_clk_in_use" SIGIS="undef" SIGNAME="External_Ports_backup_clk_in_use">
@@ -128,9 +133,12 @@
     <PORT DIR="I" NAME="ext_trig_in" SIGIS="undef" SIGNAME="External_Ports_ext_trig_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigin"/>
-        <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigin"/>
         <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigin"/>
-        <CONNECTION INSTANCE="triggers_0" PORT="ext_trig_in"/>
+        <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigin"/>
+        <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+        <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+        <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+        <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="muxer" SIGIS="undef" SIGNAME="ShiftRegisters_0_muxer">
@@ -210,9 +218,9 @@
         <CONNECTION INSTANCE="oneshot_pulse_0" PORT="pulse_o"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="speaker" SIGIS="undef" SIGNAME="triggers_0_speaker">
+    <PORT DIR="O" NAME="speaker" SIGIS="undef" SIGNAME="util_reduced_logic_1_Res">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="triggers_0" PORT="speaker"/>
+        <CONNECTION INSTANCE="util_reduced_logic_1" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -741,7 +749,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_406"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_456"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -989,7 +997,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_407"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_457"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1237,7 +1245,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_408"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_458"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1485,7 +1493,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_409"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_459"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1733,7 +1741,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_410"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_460"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1979,7 +1987,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_80"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_90"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2290,8 +2298,8 @@
         <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
         <PARAMETER NAME="C_NUM_ADDR_RANGES" VALUE="1"/>
-        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0x0000000043c0f0000000000043c200000000000043c020000000000043c090000000000043c140000000000043c010000000000043c040000000000043c12000"/>
-        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x0000000c000000100000000c0000000c0000000c0000000c0000000c0000000c"/>
+        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0x0000000043c0f0000000000043c200000000000043c020000000000043c09000ffffffffffffffff0000000043c010000000000043c040000000000043c12000"/>
+        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x0000000c000000100000000c0000000c000000000000000c0000000c0000000c"/>
         <PARAMETER NAME="C_S_AXI_BASE_ID" VALUE="0x00000000"/>
         <PARAMETER NAME="C_S_AXI_THREAD_ID_WIDTH" VALUE="0x00000000"/>
         <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
@@ -3046,7 +3054,7 @@
         <PARAMETER NAME="M02_A13_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A14_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A15_BASE_ADDR" VALUE="0xffffffffffffffff"/>
-        <PARAMETER NAME="M03_A00_BASE_ADDR" VALUE="0x0000000043c14000"/>
+        <PARAMETER NAME="M03_A00_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M03_A01_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M03_A02_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M03_A03_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -3302,7 +3310,7 @@
         <PARAMETER NAME="M02_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M02_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M02_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="M03_A00_ADDR_WIDTH" VALUE="12"/>
+        <PARAMETER NAME="M03_A00_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M03_A01_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M03_A02_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M03_A03_ADDR_WIDTH" VALUE="0"/>
@@ -3510,7 +3518,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1316"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1346"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3630,9 +3638,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_awaddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3656,9 +3661,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_awprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3677,9 +3679,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_awvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awvalid"/>
@@ -3705,9 +3704,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_awready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3729,9 +3725,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_wdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wdata"/>
@@ -3757,9 +3750,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_wstrb"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3781,9 +3771,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_wvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wvalid"/>
@@ -3809,9 +3796,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_wready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3833,9 +3817,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_bresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bresp"/>
@@ -3861,9 +3842,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_bvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3885,9 +3863,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_bready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bready"/>
@@ -3913,9 +3888,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_araddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3939,9 +3911,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_arprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -3960,9 +3929,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_arvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arvalid"/>
@@ -3988,9 +3954,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_arready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -4012,9 +3975,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_rdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rdata"/>
@@ -4040,9 +4000,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_rresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -4066,9 +4023,6 @@
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_rvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -4090,9 +4044,6 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="prescaleTrigger_0" PORT="s00_axi_rready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="s00_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rready"/>
@@ -5339,7 +5290,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1317"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1347"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7174,7 +7125,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1318"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1348"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7732,8 +7683,8 @@
         <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
         <PARAMETER NAME="C_NUM_ADDR_RANGES" VALUE="8"/>
-        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0xffffffffffffffff0000000043c160000000000043c150000000000043c130000000000043c100000000000043c0e0000000000043c0d0000000000043c080000000000043c110000000000043c0c0000000000043c0b0000000000043c0a0000000000043c070000000000043c060000000000043c050000000000043c030000000000043c140000000000043c120000000000043c0f0000000000043c090000000000043c040000000000043c020000000000043c010000000000043c20000"/>
-        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x000000000000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c00000010"/>
+        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0x0000000043c110000000000043c0c0000000000043c0b0000000000043c0a0000000000043c070000000000043c060000000000043c050000000000043c03000ffffffffffffffff0000000043c160000000000043c150000000000043c130000000000043c100000000000043c0e0000000000043c0d0000000000043c08000ffffffffffffffff0000000043c120000000000043c0f0000000000043c090000000000043c040000000000043c020000000000043c010000000000043c20000"/>
+        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c000000000000000c0000000c0000000c0000000c0000000c0000000c0000000c000000000000000c0000000c0000000c0000000c0000000c0000000c00000010"/>
         <PARAMETER NAME="C_S_AXI_BASE_ID" VALUE="0x00000000"/>
         <PARAMETER NAME="C_S_AXI_THREAD_ID_WIDTH" VALUE="0x0000000c"/>
         <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
@@ -8447,7 +8398,7 @@
         <PARAMETER NAME="M00_A04_BASE_ADDR" VALUE="0x0000000043c09000"/>
         <PARAMETER NAME="M00_A05_BASE_ADDR" VALUE="0x0000000043c0f000"/>
         <PARAMETER NAME="M00_A06_BASE_ADDR" VALUE="0x0000000043c12000"/>
-        <PARAMETER NAME="M00_A07_BASE_ADDR" VALUE="0x0000000043c14000"/>
+        <PARAMETER NAME="M00_A07_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -8456,14 +8407,14 @@
         <PARAMETER NAME="M00_A13_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A14_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A15_BASE_ADDR" VALUE="0xffffffffffffffff"/>
-        <PARAMETER NAME="M01_A00_BASE_ADDR" VALUE="0x0000000043c03000"/>
-        <PARAMETER NAME="M01_A01_BASE_ADDR" VALUE="0x0000000043c05000"/>
-        <PARAMETER NAME="M01_A02_BASE_ADDR" VALUE="0x0000000043c06000"/>
-        <PARAMETER NAME="M01_A03_BASE_ADDR" VALUE="0x0000000043c07000"/>
-        <PARAMETER NAME="M01_A04_BASE_ADDR" VALUE="0x0000000043c0a000"/>
-        <PARAMETER NAME="M01_A05_BASE_ADDR" VALUE="0x0000000043c0b000"/>
-        <PARAMETER NAME="M01_A06_BASE_ADDR" VALUE="0x0000000043c0c000"/>
-        <PARAMETER NAME="M01_A07_BASE_ADDR" VALUE="0x0000000043c11000"/>
+        <PARAMETER NAME="M01_A00_BASE_ADDR" VALUE="0x0000000043c08000"/>
+        <PARAMETER NAME="M01_A01_BASE_ADDR" VALUE="0x0000000043c0d000"/>
+        <PARAMETER NAME="M01_A02_BASE_ADDR" VALUE="0x0000000043c0e000"/>
+        <PARAMETER NAME="M01_A03_BASE_ADDR" VALUE="0x0000000043c10000"/>
+        <PARAMETER NAME="M01_A04_BASE_ADDR" VALUE="0x0000000043c13000"/>
+        <PARAMETER NAME="M01_A05_BASE_ADDR" VALUE="0x0000000043c15000"/>
+        <PARAMETER NAME="M01_A06_BASE_ADDR" VALUE="0x0000000043c16000"/>
+        <PARAMETER NAME="M01_A07_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -8472,14 +8423,14 @@
         <PARAMETER NAME="M01_A13_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A14_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A15_BASE_ADDR" VALUE="0xffffffffffffffff"/>
-        <PARAMETER NAME="M02_A00_BASE_ADDR" VALUE="0x0000000043c08000"/>
-        <PARAMETER NAME="M02_A01_BASE_ADDR" VALUE="0x0000000043c0d000"/>
-        <PARAMETER NAME="M02_A02_BASE_ADDR" VALUE="0x0000000043c0e000"/>
-        <PARAMETER NAME="M02_A03_BASE_ADDR" VALUE="0x0000000043c10000"/>
-        <PARAMETER NAME="M02_A04_BASE_ADDR" VALUE="0x0000000043c13000"/>
-        <PARAMETER NAME="M02_A05_BASE_ADDR" VALUE="0x0000000043c15000"/>
-        <PARAMETER NAME="M02_A06_BASE_ADDR" VALUE="0x0000000043c16000"/>
-        <PARAMETER NAME="M02_A07_BASE_ADDR" VALUE="0xffffffffffffffff"/>
+        <PARAMETER NAME="M02_A00_BASE_ADDR" VALUE="0x0000000043c03000"/>
+        <PARAMETER NAME="M02_A01_BASE_ADDR" VALUE="0x0000000043c05000"/>
+        <PARAMETER NAME="M02_A02_BASE_ADDR" VALUE="0x0000000043c06000"/>
+        <PARAMETER NAME="M02_A03_BASE_ADDR" VALUE="0x0000000043c07000"/>
+        <PARAMETER NAME="M02_A04_BASE_ADDR" VALUE="0x0000000043c0a000"/>
+        <PARAMETER NAME="M02_A05_BASE_ADDR" VALUE="0x0000000043c0b000"/>
+        <PARAMETER NAME="M02_A06_BASE_ADDR" VALUE="0x0000000043c0c000"/>
+        <PARAMETER NAME="M02_A07_BASE_ADDR" VALUE="0x0000000043c11000"/>
         <PARAMETER NAME="M02_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -8703,7 +8654,7 @@
         <PARAMETER NAME="M00_A04_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M00_A05_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M00_A06_ADDR_WIDTH" VALUE="12"/>
-        <PARAMETER NAME="M00_A07_ADDR_WIDTH" VALUE="12"/>
+        <PARAMETER NAME="M00_A07_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M00_A08_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M00_A09_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M00_A10_ADDR_WIDTH" VALUE="0"/>
@@ -8719,7 +8670,7 @@
         <PARAMETER NAME="M01_A04_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M01_A05_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M01_A06_ADDR_WIDTH" VALUE="12"/>
-        <PARAMETER NAME="M01_A07_ADDR_WIDTH" VALUE="12"/>
+        <PARAMETER NAME="M01_A07_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M01_A08_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M01_A09_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M01_A10_ADDR_WIDTH" VALUE="0"/>
@@ -8735,7 +8686,7 @@
         <PARAMETER NAME="M02_A04_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A05_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A06_ADDR_WIDTH" VALUE="12"/>
-        <PARAMETER NAME="M02_A07_ADDR_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="M02_A07_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A08_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M02_A09_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M02_A10_ADDR_WIDTH" VALUE="0"/>
@@ -9289,7 +9240,10 @@
         </PORT>
         <PORT DIR="O" NAME="burst_trigout" SIGIS="undef" SIGNAME="burstTrigger_0_burst_trigout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="trigin0"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -9436,7 +9390,10 @@
       <PORTS>
         <PORT DIR="O" NAME="button_trigger_out" SIGIS="undef" SIGNAME="buttonTrigger_0_button_trigger_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="trigin3"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -9740,7 +9697,10 @@
         </PORT>
         <PORT DIR="O" NAME="combo_trigout" SIGIS="undef" SIGNAME="comboTrigger_0_combo_trigout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="trigin1"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -11397,9 +11357,9 @@
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C0FFFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="pulse_i" SIGIS="undef" SIGNAME="triggers_0_counter">
+        <PORT DIR="I" NAME="pulse_i" SIGIS="undef" SIGNAME="util_reduced_logic_2_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="counter"/>
+            <CONNECTION INSTANCE="util_reduced_logic_2" PORT="Res"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="pulse_o" SIGIS="undef" SIGNAME="oneshot_pulse_1_pulse_o">
@@ -11556,7 +11516,10 @@
         </PORT>
         <PORT DIR="O" NAME="prescale_trigout" SIGIS="undef" SIGNAME="prescaleTrigger_0_prescale_trigout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="trigin2"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -11709,7 +11672,10 @@
         <PORT DIR="O" NAME="pulse_out" SIGIS="undef" SIGNAME="smellieDelay_pulse_out">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="smellie_delay_out"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="smellie_trig_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
@@ -12009,7 +11975,10 @@
         <PORT DIR="O" NAME="pulse_out" SIGIS="undef" SIGNAME="tellieDelay_pulse_out">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="tellie_delay_out"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="tellie_trig_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
@@ -12291,39 +12260,90 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE FULLNAME="/triggerSplit_0" HWVERSION="1.0" INSTANCE="triggerSplit_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="triggerCombine" VLNV="xilinx.com:user:triggerCombine:1.0">
+    <MODULE FULLNAME="/triggers_0" HWVERSION="1.0" INSTANCE="triggers_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="triggers" VLNV="xilinx.com:user:triggers:1.0">
       <PARAMETERS>
         <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="4"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_triggerSplit_0_0"/>
+        <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="5"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_triggers_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-        <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C14000"/>
-        <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C14FFF"/>
+        <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C09000"/>
+        <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C09FFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="trigin0" SIGIS="undef" SIGNAME="burstTrigger_0_burst_trigout">
+        <PORT DIR="I" NAME="trigs_in" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; prescaleTrigger_0_prescale_trigout &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="trigin1" SIGIS="undef" SIGNAME="comboTrigger_0_combo_trigout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="trigin2" SIGIS="undef" SIGNAME="prescaleTrigger_0_prescale_trigout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="trigin3" SIGIS="undef" SIGNAME="buttonTrigger_0_button_trigger_out">
-          <CONNECTIONS>
+            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
+            <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigout"/>
+            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="trigout" SIGIS="undef" SIGNAME="triggerSplit_0_trigout">
+        <PORT DIR="O" NAME="trigger_mask" SIGIS="undef" SIGNAME="triggers_0_trigger_mask">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="int_trig_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="speaker_mask" SIGIS="undef" SIGNAME="triggers_0_speaker_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="counter_mask" SIGIS="undef" SIGNAME="triggers_0_counter_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="gtrig" SIGIS="undef" SIGNAME="External_Ports_gt_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="gtid_in" SIGIS="undef" SIGNAME="implement_gtid_0_gtid_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="implement_gtid_0" PORT="gtid_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="gtid_out" SIGIS="undef" SIGNAME="triggers_0_gtid_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="implement_gtid_0" PORT="gtid_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="gtrigout" SIGIS="undef" SIGNAME="triggers_0_gtrigout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Outtt"/>
+            <CONNECTION INSTANCE="gtDelay" PORT="pulse_in"/>
+            <CONNECTION INSTANCE="fifo_generator_0" PORT="wr_en"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="m_axi_aclk"/>
+            <CONNECTION INSTANCE="implement_gtid_0" PORT="s00_axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="synci" SIGIS="undef" SIGNAME="External_Ports_sync">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="sync"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="sync24i" SIGIS="undef" SIGNAME="External_Ports_sync24">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="sync24"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="trig_word" SIGIS="undef" SIGNAME="triggers_0_trig_word">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordin"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="dtrig_word" SIGIS="undef" SIGNAME="TrigWordDelay_0_wordout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="tubii_word" SIGIS="undef" SIGNAME="triggers_0_tubii_word">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_generator_0" PORT="din"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -12458,237 +12478,170 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE FULLNAME="/triggers_0" HWVERSION="1.0" INSTANCE="triggers_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="triggers" VLNV="xilinx.com:user:triggers:1.0">
+    <MODULE FULLNAME="/util_reduced_logic_0" HWVERSION="1.0" INSTANCE="util_reduced_logic_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_reduced_logic" VLNV="xilinx.com:ip:util_reduced_logic:1.0">
       <PARAMETERS>
-        <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="5"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_triggers_0_0"/>
+        <PARAMETER NAME="C_OPERATION" VALUE="or"/>
+        <PARAMETER NAME="C_SIZE" VALUE="24"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_reduced_logic_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-        <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C09000"/>
-        <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C09FFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="ext_trig_in" SIGIS="undef" SIGNAME="External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Res"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="mtca_mimic_in" SIGIS="undef" SIGNAME="External_Ports_mtca_mimic_in">
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="int_trig_in" SIGIS="undef" SIGNAME="triggerSplit_0_trigout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggerSplit_0" PORT="trigout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="tellie_trig_in" SIGIS="undef" SIGNAME="tellieDelay_pulse_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="smellie_trig_in" SIGIS="undef" SIGNAME="smellieDelay_pulse_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="gtrig" SIGIS="undef" SIGNAME="External_Ports_gt_in">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="gtid_in" SIGIS="undef" SIGNAME="implement_gtid_0_gtid_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="gtid_out"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="gtid_out" SIGIS="undef" SIGNAME="triggers_0_gtid_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="gtid_in"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="gtrigout" SIGIS="undef" SIGNAME="triggers_0_gtrigout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="Outtt"/>
-            <CONNECTION INSTANCE="gtDelay" PORT="pulse_in"/>
-            <CONNECTION INSTANCE="fifo_generator_0" PORT="wr_en"/>
-            <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="m_axi_aclk"/>
-            <CONNECTION INSTANCE="implement_gtid_0" PORT="s00_axi_aclk"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="synci" SIGIS="undef" SIGNAME="External_Ports_sync">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="sync"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="sync24i" SIGIS="undef" SIGNAME="External_Ports_sync24">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="sync24"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="trig_word" SIGIS="undef" SIGNAME="triggers_0_trig_word">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordin"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="dtrig_word" SIGIS="undef" SIGNAME="TrigWordDelay_0_wordout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="tubii_word" SIGIS="undef" SIGNAME="triggers_0_tubii_word">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_generator_0" PORT="din"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="triggers_0_trig_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
             <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="speaker" SIGIS="undef" SIGNAME="triggers_0_speaker">
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_reduced_logic_1" HWVERSION="1.0" INSTANCE="util_reduced_logic_1" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_reduced_logic" VLNV="xilinx.com:ip:util_reduced_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="or"/>
+        <PARAMETER NAME="C_SIZE" VALUE="25"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_reduced_logic_1_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_1_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_1_Res">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="speaker"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="counter" SIGIS="undef" SIGNAME="triggers_0_counter">
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_reduced_logic_2" HWVERSION="1.0" INSTANCE="util_reduced_logic_2" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_reduced_logic" VLNV="xilinx.com:ip:util_reduced_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="or"/>
+        <PARAMETER NAME="C_SIZE" VALUE="25"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_reduced_logic_2_2"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_2_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_2_Res">
           <CONNECTIONS>
             <CONNECTION INSTANCE="oneshot_pulse_1" PORT="pulse_i"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_0" HWVERSION="1.0" INSTANCE="util_vector_logic_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="24"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; prescaleTrigger_0_prescale_trigout &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
+            <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigout"/>
+            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="triggers_0_trigger_mask">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigger_mask"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awaddr">
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rready"/>
+            <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Op1"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
-      <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="axi_interconnect_0_tier2_xbar_0" NAME="S00_AXI" TYPE="SLAVE">
-          <PORTMAPS>
-            <PORTMAP PHYSICAL="s00_axi_awaddr"/>
-            <PORTMAP PHYSICAL="s00_axi_awprot"/>
-            <PORTMAP PHYSICAL="s00_axi_awvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_awready"/>
-            <PORTMAP PHYSICAL="s00_axi_wdata"/>
-            <PORTMAP PHYSICAL="s00_axi_wstrb"/>
-            <PORTMAP PHYSICAL="s00_axi_wvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_wready"/>
-            <PORTMAP PHYSICAL="s00_axi_bresp"/>
-            <PORTMAP PHYSICAL="s00_axi_bvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_bready"/>
-            <PORTMAP PHYSICAL="s00_axi_araddr"/>
-            <PORTMAP PHYSICAL="s00_axi_arprot"/>
-            <PORTMAP PHYSICAL="s00_axi_arvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_arready"/>
-            <PORTMAP PHYSICAL="s00_axi_rdata"/>
-            <PORTMAP PHYSICAL="s00_axi_rresp"/>
-            <PORTMAP PHYSICAL="s00_axi_rvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_rready"/>
-          </PORTMAPS>
-        </BUSINTERFACE>
-      </BUSINTERFACES>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_1" HWVERSION="1.0" INSTANCE="util_vector_logic_1" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="25"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_1_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; prescaleTrigger_0_prescale_trigout &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
+            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
+            <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigout"/>
+            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="triggers_0_speaker_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="speaker_mask"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_1_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_reduced_logic_1" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_2" HWVERSION="1.0" INSTANCE="util_vector_logic_2" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="25"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_2_2"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; prescaleTrigger_0_prescale_trigout &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
+            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
+            <CONNECTION INSTANCE="prescaleTrigger_0" PORT="prescale_trigout"/>
+            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="triggers_0_counter_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="counter_mask"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_2_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_reduced_logic_2" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
     </MODULE>
     <MODULE FULLNAME="/xadc_wiz_0" HWVERSION="3.0" INSTANCE="xadc_wiz_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="xadc_wiz" VLNV="xilinx.com:ip:xadc_wiz:3.0">
       <PARAMETERS>
@@ -14714,9 +14667,10 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C06000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C06FFF" INSTANCE="ShiftRegisters_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -14732,10 +14686,8 @@
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C08000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C08FFF" INSTANCE="smelliePulser" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C07000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C07FFF" INSTANCE="genericPulser" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C10000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C10FFF" INSTANCE="MZ_Happy" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C04000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C04FFF" INSTANCE="comboTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C05000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C05FFF" INSTANCE="countDisplay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="triggerSplit_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C03000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C03FFF" INSTANCE="clockLogic_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
       </MEMORYMAP>
       <PERIPHERALS>
@@ -14770,9 +14722,10 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
+        <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
+        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
-        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>
         <PERIPHERAL INSTANCE="ShiftRegisters_0"/>
         <PERIPHERAL INSTANCE="burstTrigger_0"/>
@@ -14788,10 +14741,8 @@
         <PERIPHERAL INSTANCE="smelliePulser"/>
         <PERIPHERAL INSTANCE="genericPulser"/>
         <PERIPHERAL INSTANCE="MZ_Happy"/>
-        <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
         <PERIPHERAL INSTANCE="comboTrigger_0"/>
         <PERIPHERAL INSTANCE="countDisplay_0"/>
-        <PERIPHERAL INSTANCE="triggerSplit_0"/>
         <PERIPHERAL INSTANCE="clockLogic_0"/>
       </PERIPHERALS>
     </MODULE>
@@ -14975,9 +14926,10 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C06000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C06FFF" INSTANCE="ShiftRegisters_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -14993,10 +14945,8 @@
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C08000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C08FFF" INSTANCE="smelliePulser" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C07000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C07FFF" INSTANCE="genericPulser" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C10000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C10FFF" INSTANCE="MZ_Happy" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C04000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C04FFF" INSTANCE="comboTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C05000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C05FFF" INSTANCE="countDisplay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="triggerSplit_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C03000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C03FFF" INSTANCE="clockLogic_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
       </MEMORYMAP>
       <PERIPHERALS>
@@ -15031,9 +14981,10 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
+        <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
+        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
-        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>
         <PERIPHERAL INSTANCE="ShiftRegisters_0"/>
         <PERIPHERAL INSTANCE="burstTrigger_0"/>
@@ -15049,10 +15000,8 @@
         <PERIPHERAL INSTANCE="smelliePulser"/>
         <PERIPHERAL INSTANCE="genericPulser"/>
         <PERIPHERAL INSTANCE="MZ_Happy"/>
-        <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
         <PERIPHERAL INSTANCE="comboTrigger_0"/>
         <PERIPHERAL INSTANCE="countDisplay_0"/>
-        <PERIPHERAL INSTANCE="triggerSplit_0"/>
         <PERIPHERAL INSTANCE="clockLogic_0"/>
       </PERIPHERALS>
     </MODULE>

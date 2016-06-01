@@ -99,6 +99,12 @@ int auto_init()
   DACThresholds(4095);
   //Set Control Reg Value
   ControlReg(58);
+  // Speaker mask to GT
+  speakerMask(0x1000000);
+  // Counter mask to GT
+  counterMask(0x1000000);
+  // Trigger mask to 0
+  triggerMask("0");
 
   return 0;
 }
@@ -662,7 +668,7 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
 	}
 
 	// Renew the MZHappy Pulser
-	Pulser(1,0.5,100,MappedHappyBaseAddress);
+	//Pulser(1,0.5,100,MappedHappyBaseAddress);
 
 	/* Sends TUBii status record to the data stream */
     struct GenericRecordHeader header;
@@ -767,8 +773,8 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     PGresult *res = NULL;
     char command[10000];
 
-    char* dbname="test", dbhost="", dbuser="", dbpass="";
-    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbname, dbhost, dbuser, dbpass);
+    //char* dbname="test", dbhost="", dbuser="", dbpass="";
+    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbconfig.name, dbconfig.host, dbconfig.user, dbconfig.password);
 
     /* Now we update the database */
     conn = PQconnectdb(conninfo);
@@ -779,13 +785,31 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     }
 
     sprintf(command, "insert into TUBii ("
-                     "control_register"
-                     ") "
+                     "control_reg, trigger_mask, speaker_mask, counter_mask"
+    				 "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg"
+    				 "combo_enable_mask, combo_mask, counter_mode, clock_status"
+    				 "prescale_value, prescale_channel, burst_rate, burst_channel"
+    				 ") "
                      "VALUES ("
-                     "%u"
+                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u"
                      ") "
                      "RETURNING key",
-                     mReadReg((u32) MappedRegsBaseAddress, RegOffset10));
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
+                     getTriggerMask(), getSpeakerMask(), getCounterMask(),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset12),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset14),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset15),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset13),
+                     mReadReg((u32) MappedComboBaseAddress, RegOffset2),
+    				 mReadReg((u32) MappedComboBaseAddress, RegOffset3),
+    				 counter_mode, clockStatus(),
+    				 mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
+    				 mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+    				 mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
+    				 mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
+                     );
+
 
     res = PQexec(conn, command);
 
@@ -818,92 +842,6 @@ err:
 pq_error:
     if (res) PQclear(res);
     PQfinish(conn);
-}
-
-void PostGresNonsense()
-{
-	const char *conninfo = "dbname = postgres";
-	PGconn     *conn;
-	PGresult   *res;
-	int         nFields, i, j;
-
-	/* Make a connection to the database */
-	conn = PQconnectdb(conninfo);
-
-	/* Check to see that the backend connection was successfully made */
-	if (PQstatus(conn) != CONNECTION_OK)
-	{
-		printf("Connection to database failed: %s", PQerrorMessage(conn));
-	    PQfinish(conn);
-	    exit(1);
-	}
-
-	/* Our test case here involves using a cursor, for which we must be inside
-	 * a transaction block.  We could do the whole thing with a single
-	 * PQexec() of "select * from pg_database", but that's too trivial to make
-	 * a good example. */
-
-	/* Start a transaction block */
-	res = PQexec(conn, "BEGIN");
-	if (PQresultStatus(res) != PGRES_COMMAND_OK)
-	{
-		printf("BEGIN command failed: %s", PQerrorMessage(conn));
-		PQclear(res);
-		PQfinish(conn);
-		exit(1);
-	}
-
-	/* Should PQclear PGresult whenever it is no longer needed to avoid memory leaks */
-	PQclear(res);
-
-	/* Fetch rows from pg_database, the system catalog of databases */
-	res = PQexec(conn, "DECLARE myportal CURSOR FOR select * from pg_database");
-	if (PQresultStatus(res) != PGRES_COMMAND_OK)
-	{
-		printf("DECLARE CURSOR failed: %s", PQerrorMessage(conn));
-		PQclear(res);
-	    PQfinish(conn);
-	    exit(1);
-	}
-	PQclear(res);
-
-	res = PQexec(conn, "FETCH ALL in myportal");
-	if (PQresultStatus(res) != PGRES_TUPLES_OK)
-	{
-		printf("FETCH ALL failed: %s", PQerrorMessage(conn));
-	    PQclear(res);
-	    PQfinish(conn);
-	    exit(1);
-	}
-
-	/* first, print out the attribute names */
-	nFields = PQnfields(res);
-	for (i = 0; i < nFields; i++)
-		printf("%-15s", PQfname(res, i));
-	printf("\n\n");
-
-	/* next, print out the rows */
-	for (i = 0; i < PQntuples(res); i++)
-	{
-		for (j = 0; j < nFields; j++)
-			printf("%-15s", PQgetvalue(res, i, j));
-	    printf("\n");
-	}
-
-	PQclear(res);
-
-	/* close the portal ... we don't bother to check for errors ... */
-	res = PQexec(conn, "CLOSE myportal");
-	PQclear(res);
-
-	/* end the transaction */
-	res = PQexec(conn, "END");
-	PQclear(res);
-
-	/* close the connection to the database and cleanup */
-	PQfinish(conn);
-
-	return 0;
 }
 
 static XAdcPs XADCMonInst;
@@ -959,13 +897,13 @@ void xadc(client *c, int argc, sds *argv)
       addReplyStatus(c, "+NOT OK");
     }
 
-    /*printf("Self-test\n");
+    printf("Self-test\n");
     //self test
     Status_ADC = XAdcPs_SelfTest(XADCInstPtr);
  	if (Status_ADC != XST_SUCCESS) {
  	  printf("Failed Self-test!\n");
  		addReplyStatus(c, "+NOT OK");
- 	}*/
+ 	}
 
 	printf("Set squencer\n");
  	//stop sequencer

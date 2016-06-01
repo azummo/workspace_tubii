@@ -100,4 +100,14 @@ int start_tubii_readout(long long milliseconds);
 // XADC
 void xadc(client *c, int argc, sds *argv);
 
+// DB
+void save_TUBii_command(client *c, int argc, sds *argv);
+
+extern struct DBconfig {
+	char user[255];
+	char password[255];
+	char host[255];
+	char name[255];
+} dbconfig;
+
 #endif

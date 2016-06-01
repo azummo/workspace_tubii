@@ -24,6 +24,8 @@ static struct config {
     int loglevel;
 } config;
 
+struct DBconfig dbconfig;
+
 /*------------------------------------------------------------------------------
  * User interface
  *--------------------------------------------------------------------------- */
@@ -62,6 +64,20 @@ static int parseOptions(int argc, char **argv)
             config.dataserver = argv[++i];
         } else if (!strcmp(argv[i],"--logfile") && !lastarg) {
             config.logfile = argv[++i];
+        } else if (!strcmp(argv[i],"--config") && !lastarg){
+        	printf("%s\n", argv[++i]);
+        	FILE *fp=fopen(argv[i],"r");
+        	if(fp!=0){
+            	char call[255];
+            	while(fscanf(fp,"%s",call)!=EOF){
+            		if(strcmp(call,"user")==0) fscanf(fp,"%s",dbconfig.user);//=response;
+            		else if(strcmp(call,"pass")==0) fscanf(fp,"%s",dbconfig.password);//=response;
+            		else if(strcmp(call,"dbname")==0) fscanf(fp,"%s",dbconfig.name);//=response;
+            		else if(strcmp(call,"dbhost")==0) fscanf(fp,"%s",dbconfig.host);//=response;
+            		else printf("TUBii: Unrecognised data type in config file, %s\n\n",call);//, response);
+            	}
+        	}
+        	fclose(fp);
         } else if (!strcmp(argv[i],"-v")) {
             config.loglevel--;
         } else if (!strcmp(argv[i],"-q")) {
@@ -151,7 +167,9 @@ struct command commandTable[] = {
 		{"getDACThreshold", GetDACThreshold, 1},
 		{"setAllowableClockMisses", SetAllowableClockMisses, 2},
 		// XADC
-		{"xadc", xadc, 1}
+		{"xadc", xadc, 1},
+		//DB
+		{"saveToDB", save_TUBii_command, 1}
 };
 
 void sigint_handler(int dummy)

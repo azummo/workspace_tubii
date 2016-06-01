@@ -375,8 +375,8 @@ void XAdcPs_WriteInternalReg(XAdcPs *InstancePtr, u32 RegOffset, u32 Data)
 	RegData = XAdcPs_FormatWriteData(RegOffset, Data, 1);
 
 	printf("WRITEF\n");
-	XAdcPs_WriteFifo(InstancePtr, RegData);
-	printf("%x \t %x \n", RegData, mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET));
+	mWriteReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET, RegData);
+	printf("%x \t %x \t @ %x\n", RegData, mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET), InstancePtr->Config.BaseAddress+XADCPS_CMDFIFO_OFFSET);
 
 	/* Read the Read FIFO after any write since for each write one location of Read FIFO gets updated */
 	printf("READF\n");
@@ -387,18 +387,22 @@ u32 XAdcPs_ReadInternalReg(XAdcPs *InstancePtr, u32 RegOffset)
 {
 	u32 RegData;
 
+	printf("ReadInternal\n");
 	RegData = XAdcPs_FormatWriteData(RegOffset, 0x0, 0);
+	printf("Formatted %x\n", RegData);
 	/* Read cmd to FIFO*/
-	XAdcPs_WriteFifo(InstancePtr, RegData);
+	mWriteReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET, RegData);
+	printf("WroteFIFO %x\n", mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET));
 
 	/* Do a Dummy read */
-	RegData = XAdcPs_ReadFifo(InstancePtr);
+	RegData = mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_RDFIFO_OFFSET);
+	printf("ReadFIFO %x\n", RegData);
 
 	/* Do a Dummy write to get the actual read */
-	XAdcPs_WriteFifo(InstancePtr, RegData);
+	mWriteReg((InstancePtr)->Config.BaseAddress, XADCPS_CMDFIFO_OFFSET, RegData);
 
 	/* Do the Actual read */
-	RegData = XAdcPs_ReadFifo(InstancePtr);
+	RegData = mReadReg((InstancePtr)->Config.BaseAddress, XADCPS_RDFIFO_OFFSET);
 
 	return RegData;
 }
@@ -472,10 +476,14 @@ void XAdcPs_SetSequencerMode(XAdcPs *InstancePtr, u8 SequencerMode)
 	Xil_AssertVoid((SequencerMode <= XADCPS_SEQ_MODE_SIMUL_SAMPLING) || (SequencerMode == XADCPS_SEQ_MODE_INDEPENDENT));
 
 	/* Set the specified sequencer mode in the Configuration Register 1. */
+	printf("In the Sequencer\n");
 	RegValue = XAdcPs_ReadInternalReg(InstancePtr, XADCPS_CFR1_OFFSET);
+	printf("Reg %x\n",RegValue);
 	RegValue &= (~ XADCPS_CFR1_SEQ_VALID_MASK);
 	RegValue |= ((SequencerMode  << XADCPS_CFR1_SEQ_SHIFT) & XADCPS_CFR1_SEQ_VALID_MASK);
+	printf("Reg2 %x\n",RegValue);
 	XAdcPs_WriteInternalReg(InstancePtr, XADCPS_CFR1_OFFSET, RegValue);
+	printf("Reg3 %x\n",	XAdcPs_ReadInternalReg(InstancePtr, XADCPS_CFR1_OFFSET));
 }
 
 u8 XAdcPs_GetSequencerMode(XAdcPs *InstancePtr)

@@ -832,7 +832,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     PQclear(res);
     PQfinish(conn);
 
-    addReply(c, "%u", key);
+    addReply(c, ":%u", key);
     return;
 
 err:

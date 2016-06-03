@@ -785,9 +785,9 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     }
 
     sprintf(command, "insert into TUBii ("
-                     "control_reg, trigger_mask, speaker_mask, counter_mask"
-    				 "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg"
-    				 "combo_enable_mask, combo_mask, counter_mode, clock_status"
+                     "control_reg, trigger_mask, speaker_mask, counter_mask,"
+    				 "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg,"
+    				 "combo_enable_mask, combo_mask, counter_mode, clock_status,"
     				 "prescale_value, prescale_channel, burst_rate, burst_channel"
     				 ") "
                      "VALUES ("

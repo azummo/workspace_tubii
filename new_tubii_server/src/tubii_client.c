@@ -104,7 +104,7 @@ int auto_init()
   // Counter mask to GT
   counterMask(0x1000000);
   // Trigger mask to 0
-  triggerMask("0");
+  triggerMask(0);
 
   return 0;
 }
@@ -523,7 +523,9 @@ void GetSpeakerMask(client *c, int argc, sds *argv)
 
 void SetTriggerMask(client *c, int argc, sds *argv)
 {
-  triggerMask(argv[1]);
+  uint32_t mask;
+  safe_strtoul(argv[1],&mask);
+  triggerMask(mask);
   addReplyStatus(c, "+OK");
 }
 
@@ -838,6 +840,124 @@ void save_TUBii_command(client *c, int argc, sds *argv)
 err:
     addReplyError(c, tubii_err);
     return;
+
+pq_error:
+    if (res) PQclear(res);
+    PQfinish(conn);
+}
+
+void load_TUBii_command(client *c, int argc, sds *argv)
+{
+    /* Load CAEN hardware settings from the database. */
+    uint32_t key;
+    PGconn *conn;
+    PGresult *res = NULL;
+    char conninfo[1024];
+    char command[10000];
+    char *name, *value_str;
+    uint32_t value;
+    int i;
+    int rows;
+
+    if (safe_strtoul(argv[1], &key)) {
+        addReplyErrorFormat(c, "'%s' is not a valid uint32_t", argv[1]);
+        return;
+    }
+
+    sprintf(command, "select * from TUBii where key = %i", key);
+
+    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbconfig.name, dbconfig.host, dbconfig.user, dbconfig.password);
+
+    /* Request row from the database. */
+    conn = PQconnectdb(conninfo);
+
+    if (PQstatus(conn) != CONNECTION_OK) {
+        addReplyErrorFormat(c, "connection to database failed: %s",
+                            PQerrorMessage(conn));
+        goto pq_error;
+    }
+
+    res = PQexec(conn, command);
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        addReplyErrorFormat(c, "select command failed: %s",
+                            PQerrorMessage(conn));
+        goto pq_error;
+    }
+
+    rows = PQntuples(res);
+    if (rows != 1) {
+        if (rows == 0) {
+            addReplyErrorFormat(c, "no database row with key = %i", key);
+        } else {
+            addReplyError(c, "this should never happen. Call Tony");
+        }
+        goto pq_error;
+    }
+
+    for (i = 0; i < PQnfields(res); i++) {
+        name = PQfname(res, i);
+
+        if (!strcmp(name, "key") || !strcmp(name, "timestamp")) continue;
+
+        value_str = PQgetvalue(res, 0, i);
+
+        if (safe_strtoul(value_str, &value)) {
+            addReplyErrorFormat(c, "unable to convert value '%s' for field %s",
+                                value_str, name);
+            goto pq_error;
+        }
+
+        if (!strcmp(name, "control_reg")) {
+        	ControlReg(value);
+        } else if (!strcmp(name, "trigger_mask")) {
+        	triggerMask(value);
+        } else if (!strcmp(name, "speaker_mask")) {
+            speakerMask(value);
+        } else if (!strcmp(name, "counter_mask")) {
+            counterMask(value);
+        } else if (!strcmp(name, "caen_gain_reg")) {
+        	CAENWords(value, mReadReg((u32) MappedRegsBaseAddress, RegOffset12));
+        } else if (!strcmp(name, "caen_channel_reg")) {
+        	CAENWords(mReadReg((u32) MappedRegsBaseAddress, RegOffset11), value);
+        } else if (!strcmp(name, "lockout_reg")) {
+        	GTDelays(value, mReadReg((u32) MappedRegsBaseAddress, RegOffset15));
+        } else if (!strcmp(name, "dgt_reg")) {
+        	GTDelays(mReadReg((u32) MappedRegsBaseAddress, RegOffset14), value);
+        } else if (!strcmp(name, "dac_reg")) {
+        	DACThresholds(value);
+        } else if (!strcmp(name, "counter_mode")) {
+        	counterMode(value);
+        } else if (!strcmp(name, "clock_status")) {
+        	// Do Nowt
+        } else if (!strcmp(name, "combo_enable_mask")) {
+        	mWriteReg((u32) MappedComboBaseAddress, RegOffset2, value);
+        } else if (!strcmp(name, "combo_mask")) {
+        	mWriteReg((u32) MappedComboBaseAddress, RegOffset3, value);
+        } else if (!strcmp(name, "prescale_value")) {
+        	mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset2, value);
+        } else if (!strcmp(name, "prescale_channel")) {
+        	mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset3, value);
+        } else if (!strcmp(name, "burst_rate")) {
+        	mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, value);
+        } else if (!strcmp(name, "burst_channel")) {
+        	mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, value);
+        } else {
+            addReplyErrorFormat(c, "got unknown field '%s'", name);
+            goto pq_error;
+        }
+    }
+
+    addReplyStatus(c, "OK");
+
+    PQclear(res);
+    PQfinish(conn);
+
+    return;
+
+err:
+ 	addReplyError(c, tubii_err);
+ 	return;
 
 pq_error:
     if (res) PQclear(res);

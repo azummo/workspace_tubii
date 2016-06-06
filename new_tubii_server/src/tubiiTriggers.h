@@ -136,16 +136,13 @@ int getSpeakerMask()
   return mReadReg((u32) MappedTrigBaseAddress, RegOffset2);
 }
 
-u32 triggerMask(char* mask)
+int triggerMask(u32 mask)
 {
-  uint32_t imask;
-  safe_strtoul(mask,&imask);
-  mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,imask);
-
-  return imask;
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,mask);
+  return mask;
 }
 
-u32 getTriggerMask()
+int getTriggerMask()
 {
   return mReadReg((u32) MappedTrigBaseAddress,RegOffset3);
 }

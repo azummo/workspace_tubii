@@ -169,7 +169,8 @@ struct command commandTable[] = {
 		// XADC
 		{"xadc", xadc, 1},
 		//DB
-		{"save", save_TUBii_command, 1}
+		{"save", save_TUBii_command, 1},
+		{"load", load_TUBii_command, 1}
 };
 
 void sigint_handler(int dummy)

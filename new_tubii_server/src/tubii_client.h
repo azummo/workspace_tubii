@@ -102,6 +102,7 @@ void xadc(client *c, int argc, sds *argv);
 
 // DB
 void save_TUBii_command(client *c, int argc, sds *argv);
+void load_TUBii_command(client *c, int argc, sds *argv);
 
 extern struct DBconfig {
 	char user[255];

@@ -72,6 +72,7 @@ void GetTellieDelay(client *c, int argc, sds *argv);
 void SetCounterMask(client *c, int argc, sds *argv);
 void GetCounterMask(client *c, int argc, sds *argv);
 void SetSpeakerMask(client *c, int argc, sds *argv);
+void SetSpeakerScale(client *c, int argc, sds *argv);
 void GetSpeakerMask(client *c, int argc, sds *argv);
 void SetTriggerMask(client *c, int argc, sds *argv);
 void GetTriggerMask(client *c, int argc, sds *argv);

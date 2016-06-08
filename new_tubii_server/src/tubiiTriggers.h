@@ -26,6 +26,7 @@ void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
 void* MappedTrigWordDelayBaseAddress;
 void* MappedGTIDBaseAddress;
+void* MappedSpeakerScaleAddress;
 
 /////// Internal Triggers
 int burstTrig(float rate, int bit)
@@ -129,6 +130,13 @@ int speakerMask(u32 mask)
 {
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset2,mask);
   return mask;
+}
+
+int speakerScale(u32 rate)
+{
+  Log(VERBOSE, "TUBii: Scaling the speaker by a factor of %d",rate);
+  mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset2, rate);
+  return 0;
 }
 
 int getSpeakerMask()

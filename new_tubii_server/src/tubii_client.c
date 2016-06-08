@@ -53,6 +53,7 @@ int InitMapping()
   MappedTrigBaseAddress= MemoryMapping(TRIGGEROUT_BASEADDR,TRIGGEROUT_HIGHADDR);
   MappedGTIDBaseAddress= MemoryMapping(GTID_BASEADDR,GTID_HIGHADDR);
   MappedFifoBaseAddress= MemoryMapping(FIFOREADOUT_BASEADDR,FIFOREADOUT_HIGHADDR);
+  MappedSpeakerScaleAddress= MemoryMapping(SPEAKERSCALE_BASEADDR,SPEAKERSCALE_HIGHADDR);
 
   // Meta-Triggers
   MappedBurstBaseAddress= MemoryMapping(BURSTTRIG_BASEADDR,BURSTTRIG_HIGHADDR);
@@ -105,6 +106,9 @@ int auto_init()
   counterMask(0x1000000);
   // Trigger mask to 0
   triggerMask(0);
+
+  // Set Speaker pre-scale to 1
+  speakerScale(1);
 
   return 0;
 }
@@ -515,6 +519,15 @@ void SetSpeakerMask(client *c, int argc, sds *argv)
   speakerMask(mask);
   addReplyStatus(c, "+OK");
 }
+
+void SetSpeakerScale(client *c, int argc, sds *argv)
+{
+  uint32_t rate;
+  safe_strtoul(argv[1],&rate);
+  speakerScale(rate);
+  addReplyStatus(c, "+OK");
+}
+
 
 void GetSpeakerMask(client *c, int argc, sds *argv)
 {

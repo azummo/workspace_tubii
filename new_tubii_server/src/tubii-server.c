@@ -170,7 +170,8 @@ struct command commandTable[] = {
 		{"xadc", xadc, 1},
 		//DB
 		{"save", save_TUBii_command, 1},
-		{"load", load_TUBii_command, 1}
+		{"load", load_TUBii_command, 1},
+		{"loadConfig", load_new_config, 2}
 };
 
 void sigint_handler(int dummy)

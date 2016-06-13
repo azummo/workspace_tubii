@@ -779,6 +779,24 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
     return 1;
 }
 
+void load_new_config(client *c, int argc, sds *argv)
+{
+	FILE *fp=fopen(argv[1],"r");
+	if(fp!=0){
+    	char call[255];
+    	while(fscanf(fp,"%s",call)!=EOF){
+    		if(strcmp(call,"user")==0) fscanf(fp,"%s",dbconfig.user);//=response;
+    		else if(strcmp(call,"pass")==0) fscanf(fp,"%s",dbconfig.password);//=response;
+    		else if(strcmp(call,"dbname")==0) fscanf(fp,"%s",dbconfig.name);//=response;
+    		else if(strcmp(call,"dbhost")==0) fscanf(fp,"%s",dbconfig.host);//=response;
+    		else printf("TUBii: Unrecognised data type in config file, %s\n\n",call);//, response);
+    	}
+	}
+
+	fclose(fp);
+    addReplyStatus(c, "+OK");
+}
+
 void save_TUBii_command(client *c, int argc, sds *argv)
 {
     /* Update the TUBii state. */

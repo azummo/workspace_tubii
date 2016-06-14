@@ -135,6 +135,7 @@ struct command commandTable[] = {
 		{"getCounterMask", 	GetCounterMask, 1},
 		{"setSpeakerMask", 	SetSpeakerMask, 2},
 		{"getSpeakerMask", 	GetSpeakerMask, 1},
+		{"setSpeakerScale", SetSpeakerScale, 2},
 		{"setTriggerMask", 	SetTriggerMask, 2},
 		{"getTriggerMask", 	GetTriggerMask, 1},
 		{"softGT", 		   	SoftGT, 		1},

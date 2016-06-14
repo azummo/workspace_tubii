@@ -170,7 +170,7 @@ struct command commandTable[] = {
 		{"xadc", xadc, 1},
 		//DB
 		{"save", save_TUBii_command, 1},
-		{"load", load_TUBii_command, 1},
+		{"load", load_TUBii_command, 2},
 		{"loadConfig", load_new_config, 2}
 };
 

@@ -24,6 +24,7 @@ void *MappedButtonBaseAddress;
 void *MappedComboBaseAddress;
 void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
+void *MappedSpeakLengthenBaseAddress;
 void* MappedTrigWordDelayBaseAddress;
 void* MappedGTIDBaseAddress;
 void* MappedSpeakerScaleAddress;
@@ -128,6 +129,8 @@ int getCounterMask()
 
 int speakerMask(u32 mask)
 {
+  mWriteReg((u32) MappedSpeakLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
+  mWriteReg((u32) MappedSpeakLengthenBaseAddress, RegOffset2,400); // And deadtime
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset2,mask);
   return mask;
 }

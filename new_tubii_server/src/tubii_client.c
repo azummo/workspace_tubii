@@ -48,6 +48,7 @@ int InitMapping()
   // Counter Latch & Reset
   MappedCountBaseAddress= MemoryMapping(COUNTDISP_BASEADDR,COUNTDISP_HIGHADDR);
   MappedCountLengthenBaseAddress= MemoryMapping(COUNTLENGTHEN_BASEADDR,COUNTLENGTHEN_HIGHADDR);
+  MappedSpeakLengthenBaseAddress= MemoryMapping(SPEAKLENGTHEN_BASEADDR,SPEAKLENGTHEN_HIGHADDR);
 
   // Trigger, Counter & Speaker Masks
   MappedTrigBaseAddress= MemoryMapping(TRIGGEROUT_BASEADDR,TRIGGEROUT_HIGHADDR);

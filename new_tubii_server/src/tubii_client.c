@@ -54,7 +54,7 @@ int InitMapping()
   MappedTrigBaseAddress= MemoryMapping(TRIGGEROUT_BASEADDR,TRIGGEROUT_HIGHADDR);
   MappedGTIDBaseAddress= MemoryMapping(GTID_BASEADDR,GTID_HIGHADDR);
   MappedFifoBaseAddress= MemoryMapping(FIFOREADOUT_BASEADDR,FIFOREADOUT_HIGHADDR);
-  MappedSpeakerScaleAddress= MemoryMapping(SPEAKERSCALE_BASEADDR,SPEAKERSCALE_HIGHADDR);
+  MappedSpeakerScaleBaseAddress= MemoryMapping(SPEAKERSCALE_BASEADDR,SPEAKERSCALE_HIGHADDR);
 
   // Meta-Triggers
   MappedBurstBaseAddress= MemoryMapping(BURSTTRIG_BASEADDR,BURSTTRIG_HIGHADDR);

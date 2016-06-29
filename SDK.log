@@ -12357,3 +12357,67 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 16:10:01.283 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+18:08:38.598 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+18:09:56.310 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+18:09:56.374 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+18:09:56.499 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+18:09:56.543 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+18:09:56.589 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+18:09:56.609 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+18:09:58.016 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+18:10:31.407 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+18:10:34.546 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+18:10:34.548 INFO  - Clearing existing target manager status. 
+18:10:57.767 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+18:10:57.774 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+18:10:58.018 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+18:10:58.041 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+18:10:59.331 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+18:14:31.213 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+18:14:31.218 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+11:25:35.354 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+11:27:23.994 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+11:27:24.118 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+11:27:30.046 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+11:27:30.062 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+11:27:30.187 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+11:27:30.187 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+11:27:31.326 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+11:27:34.758 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+11:27:35.787 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+11:27:35.787 INFO  - Clearing existing target manager status. 
+11:27:38.721 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+11:27:38.737 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+11:27:38.861 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+11:27:38.861 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+11:27:39.891 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+11:38:01.249 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+11:38:01.250 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+18:13:52.064 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+18:14:06.245 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+18:14:06.245 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+18:14:06.323 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+18:14:06.323 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+18:14:06.339 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+18:14:06.339 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+18:14:07.181 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+18:14:12.220 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+18:14:13.359 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+18:14:13.359 INFO  - Clearing existing target manager status. 
+18:14:16.355 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+18:14:16.370 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+18:14:21.097 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+18:14:21.113 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+18:14:21.128 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 

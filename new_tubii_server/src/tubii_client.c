@@ -640,7 +640,7 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     struct MegaRecord mega;
 	struct GenericRecordHeader header;
 
-    mega.size=0;
+    int size=0;
     int loop=0;
 	while(loop<1000){ //empty==0){
 	//usleep(100);
@@ -656,17 +656,17 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     last_gtid=trec.GTID;
     printf("GTID %i Word %i\n",trec.GTID,trec.TrigWord);
 
-    mega.array[mega.size]=trec;
-    mega.size = mega.size+1;
+    mega.array[size]=trec;
+    size = size+1;
     }
 	}
 
-	if(mega.size>0){
+	if(size>0){
     printf("Bundle!\n");
-    printf("%i events!\n",mega.size);
+    printf("%i events!\n",size);
 
     header.RecordID = htonl(MEGA_RECORD);
-    header.RecordLength = htonl(sizeof(u32)*(2*mega.size+1));
+    header.RecordLength = htonl(sizeof(u32)*(2*size));
     header.RecordVersion = htonl(RECORD_VERSION);
 
     write_to_data_stream(&header, &mega);
@@ -748,7 +748,7 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 	struct MegaRecord mega;
 	struct GenericRecordHeader header;
 
-    mega.size=0;
+    int size=0;
     int loop=0;
     struct TubiiRecord trec;
 	for(loop=0; loop<1000; loop++){
@@ -763,15 +763,16 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 
 			last_gtid=trec.GTID;
 
-			mega.array[mega.size]=trec;
-			mega.size = mega.size+1;
+			mega.array[size]=trec;
+			//printf("%i \t %i\n",mega.size, last_gtid);
+			size=size+1;
 		}
 	}
 
-	if(mega.size>0){
+	if(size>0){
 		//printf("Bundle! %i events!\n",mega.size);
 		header.RecordID = htonl(MEGA_RECORD);
-		header.RecordLength = htonl(sizeof(mega));
+		header.RecordLength = htonl(sizeof(u32)*(2*size));
 		header.RecordVersion = htonl(RECORD_VERSION);
 
 		write_to_data_stream(&header, &mega);

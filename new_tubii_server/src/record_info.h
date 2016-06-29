@@ -17,7 +17,7 @@ struct TubiiRecord {
 };
 
 struct MegaRecord {
-	uint32_t size;
+	//uint32_t size;
 	struct TubiiRecord array[1000];
 };
 

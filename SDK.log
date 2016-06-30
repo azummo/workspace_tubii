@@ -12421,3 +12421,8 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 18:14:21.097 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
 18:14:21.113 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
 18:14:21.128 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+18:27:32.695 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+18:27:32.695 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 

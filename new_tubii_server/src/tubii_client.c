@@ -656,6 +656,11 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     last_gtid=trec.GTID;
     printf("GTID %i Word %i\n",trec.GTID,trec.TrigWord);
 
+	/* convert to big endian */
+    int i;
+    for (i = 0; i < sizeof(trec)/4; i++) {
+      ((uint32_t *)&trec)[i] = htonl(((uint32_t *)&trec)[i]);
+    }
     mega.array[size]=trec;
     size = size+1;
     }
@@ -762,6 +767,12 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 				Log(WARNING, "TUBII: FIFO skipped a GTID from %i to %i\n",last_gtid,trec.GTID);
 
 			last_gtid=trec.GTID;
+
+			/* convert to big endian */
+		    int i;
+		    for (i = 0; i < sizeof(trec)/4; i++) {
+		      ((uint32_t *)&trec)[i] = htonl(((uint32_t *)&trec)[i]);
+		    }
 
 			mega.array[size]=trec;
 			//printf("%i \t %i\n",mega.size, last_gtid);

@@ -109,7 +109,7 @@ int auto_init()
   triggerMask(0);
 
   // Set Speaker pre-scale to 1
-  speakerScale(1);
+  //speakerScale(1);
 
   return 0;
 }

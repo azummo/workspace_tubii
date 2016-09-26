@@ -138,7 +138,7 @@ int speakerMask(u32 mask)
 int speakerScale(u32 rate)
 {
   Log(VERBOSE, "TUBii: Scaling the speaker by a factor of %d",rate);
-  mWriteReg((u32) MappedSpeakerScaleBaseAddress, RegOffset2, rate);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset5, rate);
   return 0;
 }
 

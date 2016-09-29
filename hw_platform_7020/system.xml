@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Sep 26 14:00:01 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Sep 29 15:36:20 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,12 +25,12 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
@@ -223,6 +223,11 @@
         <CONNECTION INSTANCE="util_vector_logic_3" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
+    <PORT DIR="O" NAME="control_rdy_II" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="ShiftRegisters_0" PORT="control_rdy"/>
+      </CONNECTIONS>
+    </PORT>
   </EXTERNALPORTS>
 
   <MODULES>
@@ -396,6 +401,7 @@
         <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="control_rdy"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="control_rdy_II"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="caen_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_caen_rdy">
@@ -749,7 +755,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_608"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_620"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -997,7 +1003,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_609"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_621"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1245,7 +1251,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_610"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_622"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1493,7 +1499,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_611"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_623"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1741,7 +1747,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_612"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_624"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1989,7 +1995,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_613"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_625"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2235,7 +2241,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_117"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_119"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3766,7 +3772,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1433"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1439"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5595,7 +5601,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1434"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1440"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7430,7 +7436,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1435"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1441"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -12955,8 +12961,8 @@
         </PORT>
         <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
             <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

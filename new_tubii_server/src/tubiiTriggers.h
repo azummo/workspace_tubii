@@ -147,15 +147,17 @@ int getSpeakerMask()
   return mReadReg((u32) MappedTrigBaseAddress, RegOffset2);
 }
 
-int triggerMask(u32 mask)
+int triggerMask(u32 mask, u32 mask_async)
 {
+  if((mask & mask_async)!=0) return -1;
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,mask);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset8,mask_async);
   return mask;
 }
 
 int getTriggerMask()
 {
-  return mReadReg((u32) MappedTrigBaseAddress,RegOffset3);
+  return (mReadReg((u32) MappedTrigBaseAddress,RegOffset3) | mReadReg((u32) MappedTrigBaseAddress,RegOffset8));
 }
 
 void softGT()

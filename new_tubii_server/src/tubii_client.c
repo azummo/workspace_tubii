@@ -106,7 +106,7 @@ int auto_init()
   // Counter mask to GT
   counterMask(0x1000000);
   // Trigger mask to 0
-  triggerMask(0);
+  triggerMask(0,0);
 
   // Set Speaker pre-scale to 1
   //speakerScale(1);
@@ -537,9 +537,10 @@ void GetSpeakerMask(client *c, int argc, sds *argv)
 
 void SetTriggerMask(client *c, int argc, sds *argv)
 {
-  uint32_t mask;
+  uint32_t mask, mask_async;
   safe_strtoul(argv[1],&mask);
-  triggerMask(mask);
+  safe_strtoul(argv[2],&mask_async);
+  triggerMask(mask,mask_async);
   addReplyStatus(c, "+OK");
 }
 
@@ -955,7 +956,7 @@ void load_TUBii_command(client *c, int argc, sds *argv)
         if (!strcmp(name, "control_reg")) {
         	ControlReg(value);
         } else if (!strcmp(name, "trigger_mask")) {
-        	triggerMask(value);
+        	triggerMask(value,0);
         } else if (!strcmp(name, "speaker_mask")) {
             speakerMask(value);
         } else if (!strcmp(name, "counter_mask")) {

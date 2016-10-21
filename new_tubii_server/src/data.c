@@ -52,11 +52,13 @@ static void retry_connect()
 static void check_connect(aeEventLoop *el, int fd, void *data, int mask)
 {
     int err = 0;
-    socklen_t len;
+    socklen_t optlen;
+    char errstr[ANET_ERR_LEN];
 
     aeDeleteFileEvent(el, fd, AE_WRITABLE);
 
-    if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &err, &len) == -1) {
+    optlen = sizeof(err);
+    if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &err, &optlen) == -1) {
         Log(WARNING, "getsockopt: %s", strerror(errno));
         close(fd);
         retry_connect();
@@ -68,6 +70,10 @@ static void check_connect(aeEventLoop *el, int fd, void *data, int mask)
         close(fd);
         retry_connect();
         return;
+    }
+
+    if (anetEnableTcpNoDelay(errstr, fd) == ANET_ERR) {
+        Log(WARNING, "anetEnableTcpNoDelay: %s", errstr);
     }
 
     data_stream = sock_init(fd, BUFSIZE, 0);

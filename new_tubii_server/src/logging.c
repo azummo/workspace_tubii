@@ -15,6 +15,14 @@
 #include "adapters_ae.h"
 #include "read.h"
 
+#define MAX_LOGMSG_LEN 2048
+#define LOG_SKIPPED_CHECK 10
+#define MAX_LOGS 100
+
+char logfile[256] = "\0";
+int verbosity = 1;
+int syslog_enabled = 0;
+
 /* set to 1 if the log server connection was successful */
 static int connected = 0;
 
@@ -22,8 +30,10 @@ redisAsyncContext *log_server;
 
 extern aeEventLoop *el;
 
+loggingFunction *logger = LogRaw;
+
 static void connectCallback(redisAsyncContext *c, int status);
-static void disconnectCallback(redisAsyncContext *c, int status);
+static void disconnectCallback(const redisAsyncContext *c, int status);
 static int connectLogServer(aeEventLoop *el, long long id, void *privdata);
 static int ping(struct aeEventLoop *el, long long id, void *clientData);
 
@@ -91,7 +101,7 @@ static void connectCallback(redisAsyncContext *c, int status)
     Log(NOTICE, "connected to log server");
 }
 
-static void disconnectCallback(redisAsyncContext *c, int status)
+static void disconnectCallback(const redisAsyncContext *c, int status)
 {
     /* make sure we don't try to log statements since we are disconnected */
     connected = 0;
@@ -126,12 +136,6 @@ static int connectLogServer(aeEventLoop *el, long long id, void *privdata)
 
     return AE_NOMORE;
 }
-
-#define MAX_LOGMSG_LEN 1024
-
-char logfile[256] = "\0";
-int verbosity = 1;
-int syslog_enabled = 0;
 
 /* Low level logging. To use only for very big messages, otherwise
  * Log() is to prefer. */
@@ -206,6 +210,11 @@ int printSkipped(aeEventLoop *el, long long id, void *_)
     return 1000;
 }
 
+void setLogger(loggingFunction *f)
+{
+    logger = f;
+}
+
 /* Like redisLogRaw() but with printf-alike support. This is the function that
  * is used across the code. The raw version is only used in order to dump
  * the INFO output on crash. */
@@ -217,13 +226,13 @@ void Log(int level, const char *fmt, ...) {
 
     time_t now = time(NULL);
 
-    if (now > last_time + 10) {
+    if (now > last_time + LOG_SKIPPED_CHECK) {
         last_time = now;
 
-        if (count > 10) {
+        if (count > MAX_LOGS) {
             char skipped[MAX_LOGMSG_LEN];
             sprintf(skipped, "[ skipped %d messages ]", count-10);
-            LogRaw(WARNING,skipped);
+            logger(WARNING,skipped);
             if (connected) redisAsyncCommand(log_server, logCallback, NULL, "log %i %s", WARNING, skipped);
         }
 
@@ -236,9 +245,9 @@ void Log(int level, const char *fmt, ...) {
 
     count += 1;
 
-    if (count > 10) {
-        if (count == 11) {
-            LogRaw(WARNING, "[ skipping messages... ]");
+    if (count > MAX_LOGS) {
+        if (count == MAX_LOGS + 1) {
+            logger(WARNING, "[ skipping messages... ]");
             if (connected) redisAsyncCommand(log_server, logCallback, NULL, "log %i %s", WARNING, "[ skipping messages... ]");
         }
         return;
@@ -248,7 +257,7 @@ void Log(int level, const char *fmt, ...) {
     vsnprintf(msg, sizeof(msg), fmt, ap);
     va_end(ap);
 
-    LogRaw(level,msg);
+    logger(level,msg);
 
     if (connected) {
         redisAsyncCommand(log_server, logCallback, NULL, "log %i %s", level, msg);

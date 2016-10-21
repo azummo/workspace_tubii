@@ -631,9 +631,14 @@ void gtdelay(client *c, int argc, sds *argv)
 }
 
 // Data readout
-void GetCurrentTrigger(client *c, int argc, sds *argv)
+void GetTrigger(client *c, int argc, sds *argv)
 {
   addReply(c, ":%u", currentTrigger());
+}
+
+void GetGTID(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", currentgtid());
 }
 
 void GetFifoTrigger(client *c, int argc, sds *argv)

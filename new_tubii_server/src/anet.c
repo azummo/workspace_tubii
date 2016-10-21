@@ -179,6 +179,19 @@ int anetTcpKeepAlive(char *err, int fd)
     return ANET_OK;
 }
 
+/* Set the socket receive timeout (SO_RCVTIMEO socket option) to the specified
+ * number of milliseconds, or disable it if the 'ms' argument is zero. */
+int anetReceiveTimeout(char *err, int fd, long long ms) {
+    struct timeval tv;
+
+    tv.tv_sec = ms/1000;
+    tv.tv_usec = (ms%1000)*1000;
+    if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) == -1) {
+        anetSetError(err, "setsockopt SO_RCVTIMEO: %s", strerror(errno));
+        return ANET_ERR;
+    }
+    return ANET_OK;
+}
 /* Set the socket send timeout (SO_SNDTIMEO socket option) to the specified
  * number of milliseconds, or disable it if the 'ms' argument is zero. */
 int anetSendTimeout(char *err, int fd, long long ms) {
@@ -208,7 +221,7 @@ int anetGenericResolve(char *err, char *host, char *ipbuf, size_t ipbuf_len,
 
     memset(&hints,0,sizeof(hints));
     if (flags & ANET_IP_ONLY) hints.ai_flags = AI_NUMERICHOST;
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;  /* specify socktype to avoid dups */
 
     if ((rv = getaddrinfo(host, NULL, &hints, &info)) != 0) {
@@ -273,7 +286,8 @@ static int anetTcpGenericConnect(char *err, char *addr, int port,
 
     snprintf(portstr,sizeof(portstr),"%d",port);
     memset(&hints,0,sizeof(hints));
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET;
+    //NOTE THE PRECEDING LINE USED TO USE AF_UNSPEC RATHER THAN AF_INET #SNO+_HACKS
     hints.ai_socktype = SOCK_STREAM;
 
     if ((rv = getaddrinfo(addr,portstr,&hints,&servinfo)) != 0) {
@@ -287,7 +301,7 @@ static int anetTcpGenericConnect(char *err, char *addr, int port,
         if ((s = socket(p->ai_family,p->ai_socktype,p->ai_protocol)) == -1)
             continue;
         if (anetSetReuseAddr(err,s) == ANET_ERR) goto error;
-        if (flags & ANET_CONNECT_NONBLOCK && anetNonBlock(err,s) != ANET_OK)
+        if ((flags & ANET_CONNECT_NONBLOCK) && anetNonBlock(err,s) != ANET_OK)
             goto error;
         if (source_addr) {
             int bound = 0;
@@ -345,7 +359,55 @@ int anetTcpNonBlockConnect(char *err, char *addr, int port)
 {
     return anetTcpGenericConnect(err,addr,port,NULL,ANET_CONNECT_NONBLOCK);
 }
+int anetTcpTimeoutConnect(char *err, char *addr, int port, long long ms)
+{
+    int fd;
+    fd_set check_set;
+    socklen_t len;
+    struct timeval tv;
+    int sel_result;
+    int sock_err;
+    fd = anetTcpGenericConnect(err,addr,port,NULL,ANET_CONNECT_NONBLOCK);
 
+    if (fd <= 0)
+    {
+        return ANET_ERR;
+    }
+
+    tv.tv_sec = ms/1000;
+    tv.tv_usec = (ms%1000)*1000;
+    FD_ZERO(&check_set);
+    FD_SET(fd,&check_set);
+    sel_result = select(fd+1,NULL,&check_set,NULL,&tv);
+    if(sel_result <=0)
+    {
+        anetSetError(err,"select: %s",strerror(errno));
+        goto error;
+    }
+    len = sizeof(sock_err);
+    if(getsockopt(fd,SOL_SOCKET,SO_ERROR,(void*)&sock_err,&len))
+    {
+        anetSetError(err,"getsockopt: %s",strerror(errno));
+        goto error;
+    }
+    if(sock_err)
+    {
+        anetSetError(err,"SO_ERROR: %s",strerror(sock_err));
+        goto error;
+    }
+    if(anetBlock(err,fd))
+    {
+        goto error;
+    }
+    goto end;
+error:
+    if (fd != ANET_ERR) {
+        close(fd);
+        fd = ANET_ERR;
+    }
+end:
+    return fd;
+}
 int anetTcpNonBlockBindConnect(char *err, char *addr, int port, char *source_addr)
 {
     return anetTcpGenericConnect(err,addr,port,source_addr,ANET_CONNECT_NONBLOCK);

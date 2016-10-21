@@ -18,10 +18,16 @@ extern char logfile[256];
 extern int verbosity;
 extern int syslog_enabled;
 
+/* Function signature for a low level logging function. This allows programs
+ * to customize the logging messages used by the rest of the code by creating
+ * a function with this signature and then calling setLogger(). */
+typedef void loggingFunction(int level, const char *msg);
+
 void startLogServer(char *host, char *name);
 
 int printSkipped(aeEventLoop *el, long long id, void *_);
 
+void setLogger(loggingFunction *f);
 void LogRawName(int level, const char *msg, const char *name);
 void LogRaw(int level, const char *msg);
 void Log(int level, const char *fmt, ...);

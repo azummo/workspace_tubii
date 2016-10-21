@@ -14,6 +14,7 @@ C_SRCS += \
 ../src/hiredis.c \
 ../src/logging.c \
 ../src/net.c \
+../src/networking.c \
 ../src/read.c \
 ../src/sds.c \
 ../src/server.c \
@@ -34,6 +35,7 @@ OBJS += \
 ./src/hiredis.o \
 ./src/logging.o \
 ./src/net.o \
+./src/networking.o \
 ./src/read.o \
 ./src/sds.o \
 ./src/server.o \
@@ -54,6 +56,7 @@ C_DEPS += \
 ./src/hiredis.d \
 ./src/logging.d \
 ./src/net.d \
+./src/networking.d \
 ./src/read.d \
 ./src/sds.d \
 ./src/server.d \

@@ -7,10 +7,13 @@
 #include "dict.h"
 #include "ae.h"
 #include "anet.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h> /* for exit() */
+
+extern struct redisServer server; /* server global state */
 
 typedef long long mstime_t; /* millisecond time type. */
-
-typedef void logFunction(int level, const char *fmt, ...);
 
 /* Error codes */
 #define C_OK                    0
@@ -56,6 +59,13 @@ typedef void logFunction(int level, const char *fmt, ...);
 #define CLIENT_READONLY (1<<17)    /* Cluster client is in read-only state. */
 #define CLIENT_PUBSUB (1<<18)      /* Client is in Pub/Sub mode. */
 #define CLIENT_PREVENT_PROP (1<<19)  /* Don't propagate to AOF / Slaves. */
+#define CLIENT_SUBSCRIBE (1<<20)  /* Client is sent all log messages. */
+
+/* Client block type (btype field in client structure)
+ * if CLIENT_BLOCKED flag is set. */
+#define BLOCKED_NONE 0    /* Not blocked, no CLIENT_BLOCKED flag set. */
+#define BLOCKED_LIST 1    /* BLPOP & co. */
+#define BLOCKED_WAIT 2    /* WAIT for synchronous replication. */
 
 /* Client request types */
 #define PROTO_REQ_INLINE 1
@@ -77,10 +87,24 @@ typedef void logFunction(int level, const char *fmt, ...);
 #define serverAssert(_e) ((_e)?(void)0 : (_serverAssert(#_e,__FILE__,__LINE__),_exit(1)))
 #define serverPanic(_e) _serverPanic(#_e,__FILE__,__LINE__),_exit(1)
 */
-#include <stdio.h>
 #define serverAssertWithInfo(_c,_o,_e) ((_e)?(void)0 : (fprintf(stderr, "blah\n"),exit(1)))
 #define serverAssert(_e) ((_e)?(void)0 : (fprintf(stderr, "blah %s: %d\n", __FILE__, __LINE__),exit(1)))
 #define serverPanic(_e) exit(1)
+
+/* This structure holds the blocking operation state for a client.
+ * The fields used depend on client->btype. */
+typedef struct blockingState {
+    /* Generic fields. */
+    mstime_t timeout;       /* Blocking operation timeout. If UNIX current time
+                             * is > timeout then the operation timed out. */
+
+    void *data;             /* Data passed to a user supplied function called
+                             * if the client disconnects while blocked. */
+} blockingState;
+
+/* Function signature for a function to be called if the client disconnects
+ * while a blocking operation is in progress. */
+typedef void blockingFreeProc(void *data);
 
 typedef struct client {
     uint64_t id;            /* Client incremental unique ID. */
@@ -99,6 +123,11 @@ typedef struct client {
     time_t ctime;           /* Client creation time. */
     time_t lastinteraction; /* Time of the last interaction, used for timeout */
     int flags;              /* Client flags: CLIENT_* macros. */
+
+    int btype;              /* Type of blocking op if CLIENT_BLOCKED. */
+    blockingState bpop;     /* blocking state */
+    blockingFreeProc *bfree; /* function called if client disconnects while
+                             * in a blocking command. */
 
     /* Response buffer */
     int bufpos;
@@ -120,7 +149,6 @@ struct redisServer {
     dict *commands;             /* Command table */
     aeEventLoop *el;
     int cronloops;              /* Number of times the cron function run */
-    logFunction *log;
     /* Networking */
     int port;                   /* TCP listening port */
     int tcp_backlog;            /* TCP listen() backlog */
@@ -146,13 +174,21 @@ struct redisServer {
     size_t client_max_querybuf_len; /* Limit for client query buffer length */
     /* Limits */
     unsigned int maxclients;            /* Max number of simultaneous clients */
+    /* Blocked clients */
+    unsigned int bpop_blocked_clients; /* Number of clients blocked by lists */
+    list *unblocked_clients; /* list of clients to unblock before next loop */
     /* time cache */
     time_t unixtime;        /* Unix time sampled every cron cycle. */
     long long mstime;       /* Like 'unixtime' but with milliseconds resolution. */
 };
 
-void setServerLog(logFunction *log);
+/* Blocked clients */
+void processUnblockedClients(void);
+void blockClient(client *c, blockingFreeProc bfree, void *data);
+void unblockClient(client *c);
+void disconnectAllBlockedClients(void);
 
+void beforeSleep(struct aeEventLoop *eventLoop);
 unsigned int dictSdsHash(const void *key);
 unsigned int dictSdsCaseHash(const void *key);
 long long ustime(void);
@@ -160,6 +196,7 @@ mstime_t mstime(void);
 client *createClient(int fd);
 int prepareClientToWrite(client *c);
 int _addReplyToBuffer(client *c, const char *s, size_t len);
+void addReplySds(client *c, sds s);
 void addReplyString(client *c, const char *s, size_t len);
 void addReply(client *c, const char *fmt, ...);
 void addReplyErrorLength(client *c, const char *s, size_t len);
@@ -168,6 +205,10 @@ void addReplyErrorFormat(client *c, const char *fmt, ...);
 void addReplyStatusLength(client *c, const char *s, size_t len);
 void addReplyStatus(client *c, const char *status);
 void addReplyStatusFormat(client *c, const char *fmt, ...);
+void addReplyDouble(client *c, double d);
+void addReplyLongLong(client *c, long long ll);
+void addReplyBulkCBuffer(client *c, const void *p, size_t len);
+void addReplyBulkCString(client *c, const char *s);
 void acceptTcpHandler(aeEventLoop *el, int fd, void *privdata, int mask);
 void freeClient(client *c);
 void freeClientAsync(client *c);

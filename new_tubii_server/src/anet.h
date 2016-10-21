@@ -51,6 +51,7 @@
 
 int anetTcpConnect(char *err, char *addr, int port);
 int anetTcpNonBlockConnect(char *err, char *addr, int port);
+int anetTcpTimeoutConnect(char *err, char *addr, int port, long long ms);
 int anetTcpNonBlockBindConnect(char *err, char *addr, int port, char *source_addr);
 int anetUnixConnect(char *err, char *path);
 int anetUnixNonBlockConnect(char *err, char *path);
@@ -68,6 +69,7 @@ int anetBlock(char *err, int fd);
 int anetEnableTcpNoDelay(char *err, int fd);
 int anetDisableTcpNoDelay(char *err, int fd);
 int anetTcpKeepAlive(char *err, int fd);
+int anetReceiveTimeout(char *err, int fd, long long ms);
 int anetSendTimeout(char *err, int fd, long long ms);
 int anetPeerToString(int fd, char *ip, size_t ip_len, int *port);
 int anetKeepAlive(char *err, int fd, int interval);

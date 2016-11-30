@@ -12625,3 +12625,96 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 14:18:09.509 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+09:33:45.454 INFO  - Project hw_platform_7020's source hardware specification located at /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+09:33:49.374 INFO  - Project hw_platform_7020's source hardware specification location will not be monitored anymore. 
+09:38:40.827 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml into /hw_platform_7020/system.xml. 
+09:38:40.831 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system_wrapper.bit into /hw_platform_7020/system_wrapper.bit. 
+09:38:40.960 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.c into /hw_platform_7020/ps7_init.c. 
+09:38:40.960 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.h into /hw_platform_7020/ps7_init.h. 
+09:38:40.963 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.html into /hw_platform_7020/ps7_init.html. 
+09:38:40.964 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_summary.html into /hw_platform_7020/ps7_summary.html. 
+09:38:40.964 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.tcl into /hw_platform_7020/ps7_init.tcl. 
+09:38:41.339 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+09:38:42.329 INFO  - Restoring local repository preferences: 
+		 C
+		 \Users\HEP\project_tubii; 
+09:38:43.389 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+09:38:43.581 INFO  - Clearing existing target manager status. 
+09:38:45.638 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.c into /FSBL_tubii/src/ps7_init.c. 
+09:38:45.640 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.h into /FSBL_tubii/src/ps7_init.h. 
+09:38:45.647 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.html into /FSBL_tubii/src/ps7_init.html. 
+09:38:45.647 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_summary.html into /FSBL_tubii/src/ps7_summary.html. 
+09:38:45.648 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
+09:38:46.652 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+10:55:03.263 ERROR - Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  
+11:44:25.086 INFO  - Project hw_platform_7020's source hardware specification located at /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+11:58:59.998 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml into /hw_platform_7020/system.xml. 
+11:59:00.003 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system_wrapper.bit into /hw_platform_7020/system.bit. 
+11:59:00.412 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.c into /hw_platform_7020/ps7_init.c. 
+11:59:00.485 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.h into /hw_platform_7020/ps7_init.h. 
+11:59:00.488 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.html into /hw_platform_7020/ps7_init.html. 
+11:59:00.489 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_summary.html into /hw_platform_7020/ps7_summary.html. 
+11:59:00.489 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.tcl into /hw_platform_7020/ps7_init.tcl. 
+11:59:01.182 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+11:59:02.136 INFO  - Restoring local repository preferences: 
+		 C
+		 \Users\HEP\project_tubii; 
+11:59:02.395 INFO  - Updating MSS for Board Support Package Project: standalone_bsp_7020.
+		 The following new driver assignments were made:
+			Peripheral Instance: prescaleSignal_1, driver: generic_v1_00_a.
+ 
+11:59:03.317 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+11:59:03.651 INFO  - Clearing existing target manager status. 
+11:59:04.807 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.c into /FSBL_tubii/src/ps7_init.c. 
+11:59:04.808 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.h into /FSBL_tubii/src/ps7_init.h. 
+11:59:04.822 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.html into /FSBL_tubii/src/ps7_init.html. 
+11:59:04.823 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_summary.html into /FSBL_tubii/src/ps7_summary.html. 
+11:59:04.824 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
+11:59:05.827 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+12:00:20.161 INFO  - The new hardware specification file contains the same information as the current specification file. No changes were done to the workspace. 
+12:00:40.141 INFO  - The new hardware specification file contains the same information as the current specification file. No changes were done to the workspace. 
+12:08:08.561 ERROR - Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  
+12:48:30.168 INFO  - Project hw_platform_7020's source hardware specification located at /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+12:49:10.080 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml into /hw_platform_7020/system.xml. 
+12:49:10.086 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system_wrapper.bit into /hw_platform_7020/system.bit. 
+12:49:10.229 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.c into /hw_platform_7020/ps7_init.c. 
+12:49:10.230 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.h into /hw_platform_7020/ps7_init.h. 
+12:49:10.233 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.html into /hw_platform_7020/ps7_init.html. 
+12:49:10.234 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_summary.html into /hw_platform_7020/ps7_summary.html. 
+12:49:10.234 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.tcl into /hw_platform_7020/ps7_init.tcl. 
+12:49:10.915 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+12:49:11.884 INFO  - Restoring local repository preferences: 
+		 C
+		 \Users\HEP\project_tubii; 
+12:49:12.834 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+12:49:12.839 INFO  - Clearing existing target manager status. 
+12:49:13.991 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.c into /FSBL_tubii/src/ps7_init.c. 
+12:49:13.992 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.h into /FSBL_tubii/src/ps7_init.h. 
+12:49:14.006 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.html into /FSBL_tubii/src/ps7_init.html. 
+12:49:14.007 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_summary.html into /FSBL_tubii/src/ps7_summary.html. 
+12:49:14.008 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
+12:49:15.011 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+13:24:18.941 INFO  - The new hardware specification file contains the same information as the current specification file. No changes were done to the workspace. 
+13:27:48.731 INFO  - The new hardware specification file contains the same information as the current specification file. No changes were done to the workspace. 
+14:36:41.063 INFO  - Project hw_platform_7020's source hardware specification located at /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+14:39:11.440 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system.xml into /hw_platform_7020/system.xml. 
+14:39:11.445 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/system_wrapper.bit into /hw_platform_7020/system.bit. 
+14:39:11.599 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.c into /hw_platform_7020/ps7_init.c. 
+14:39:11.600 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.h into /hw_platform_7020/ps7_init.h. 
+14:39:11.603 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.html into /hw_platform_7020/ps7_init.html. 
+14:39:11.604 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_summary.html into /hw_platform_7020/ps7_summary.html. 
+14:39:11.604 INFO  - Copied contents of /home/snoperator/project_tubii_7020/project_tubii_7020.sdk/SDK/SDK_Export/hw/ps7_init.tcl into /hw_platform_7020/ps7_init.tcl. 
+14:39:12.133 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+14:39:14.160 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+14:39:14.460 INFO  - Clearing existing target manager status. 
+14:39:14.480 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.c into /FSBL_tubii/src/ps7_init.c. 
+14:39:14.481 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.h into /FSBL_tubii/src/ps7_init.h. 
+14:39:14.486 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.html into /FSBL_tubii/src/ps7_init.html. 
+14:39:14.487 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_summary.html into /FSBL_tubii/src/ps7_summary.html. 
+14:39:14.488 INFO  - Copied contents of /home/snoperator/workspace_tubii/hw_platform_7020/ps7_init.tcl into /FSBL_tubii/src/ps7_init.tcl. 
+14:39:15.489 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+14:49:02.619 ERROR - Unexpected error while parsing XMD response ￿: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  

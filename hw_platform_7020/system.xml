@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Dec  1 08:02:41 2016" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Dec  1 13:58:50 2016" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,12 +25,12 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
@@ -129,8 +129,8 @@
     <PORT DIR="I" NAME="ext_trig_in" SIGIS="undef" SIGNAME="External_Ports_ext_trig_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigin"/>
-        <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigin"/>
         <CONNECTION INSTANCE="util_vector_logic_5" PORT="Op1"/>
+        <CONNECTION INSTANCE="util_vector_logic_7" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
         <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
@@ -148,12 +148,12 @@
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="enablemux"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
+    <PORT DIR="O" NAME="control_rdy_II" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
       <CONNECTIONS>
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="control_rdy"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="control_rdy_II" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
+    <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
       <CONNECTIONS>
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="control_rdy"/>
       </CONNECTIONS>
@@ -404,8 +404,8 @@
         </PORT>
         <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="control_rdy_II"/>
             <CONNECTION INSTANCE="External_Ports" PORT="control_rdy"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="control_rdy_II"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="caen_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_caen_rdy">
@@ -759,7 +759,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_704"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_720"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1007,7 +1007,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_705"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_721"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1255,7 +1255,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_706"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_722"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1503,7 +1503,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_707"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_723"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1751,7 +1751,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_708"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_724"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1999,7 +1999,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_709"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_725"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2247,7 +2247,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_710"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_726"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2495,7 +2495,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_711"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_727"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2741,7 +2741,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_131"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_133"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -4272,7 +4272,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1478"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1484"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -6101,7 +6101,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1479"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1485"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -7936,7 +7936,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1480"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1486"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -10101,18 +10101,24 @@
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C12FFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="burst_trigin" SIGIS="undef" SIGNAME="External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="burst_trigin" SIGIS="undef" SIGNAME="util_reduced_logic_5_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+            <CONNECTION INSTANCE="util_reduced_logic_5" PORT="Res"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="burst_trigout" SIGIS="undef" SIGNAME="burstTrigger_0_burst_trigout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
-            <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
-            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
-            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="burst_master_mask" SIGIS="undef" SIGNAME="burstTrigger_0_burst_master_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_7" PORT="Op2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="burst_slave_mask" SIGIS="undef" SIGNAME="burstTrigger_0_burst_slave_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_8" PORT="Op2"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -13443,14 +13449,14 @@
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C09FFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="trigs_in" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="trigs_in" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
             <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
             <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
@@ -13676,8 +13682,8 @@
         </PORT>
         <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
             <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -13764,8 +13770,50 @@
         <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_4_Res">
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Op1"/>
-            <CONNECTION INSTANCE="prescaleSignal_1" PORT="s00_axi_aclk"/>
             <CONNECTION INSTANCE="axi_interconnect_0_m23_couplers_auto_cc" PORT="m_axi_aclk"/>
+            <CONNECTION INSTANCE="prescaleSignal_1" PORT="s00_axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_reduced_logic_5" HWVERSION="1.0" INSTANCE="util_reduced_logic_5" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_reduced_logic" VLNV="xilinx.com:ip:util_reduced_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="or"/>
+        <PARAMETER NAME="C_SIZE" VALUE="16"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_reduced_logic_5_5"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_7_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_7" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_5_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigin"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_reduced_logic_6" HWVERSION="1.0" INSTANCE="util_reduced_logic_6" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_reduced_logic" VLNV="xilinx.com:ip:util_reduced_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="or"/>
+        <PARAMETER NAME="C_SIZE" VALUE="16"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_reduced_logic_6_6"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_8_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_8" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_6_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Op2"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -13779,14 +13827,14 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
             <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
             <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
@@ -13812,7 +13860,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
             <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
@@ -13820,7 +13868,7 @@
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
             <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
@@ -13846,7 +13894,7 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_gt_in &amp; smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="gt_in"/>
             <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
@@ -13854,7 +13902,7 @@
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
             <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
@@ -13906,14 +13954,14 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; burstTrigger_0_burst_trigout &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; buttonTrigger_0_button_trigger_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
           <CONNECTIONS>
             <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
             <CONNECTION INSTANCE="buttonTrigger_0" PORT="button_trigger_out"/>
             <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
             <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
             <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
           </CONNECTIONS>
@@ -13976,6 +14024,89 @@
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_6_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_7" HWVERSION="1.0" INSTANCE="util_vector_logic_7" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="16"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_7_7"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="External_Ports_ext_trig_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="burstTrigger_0_burst_master_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_master_mask"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_7_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_reduced_logic_5" PORT="Op1"/>
+            <CONNECTION INSTANCE="util_vector_logic_8" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_8" HWVERSION="1.0" INSTANCE="util_vector_logic_8" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="16"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_8_8"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="util_vector_logic_7_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_vector_logic_7" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="burstTrigger_0_burst_slave_mask">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_slave_mask"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_8_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_reduced_logic_6" PORT="Op1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/util_vector_logic_9" HWVERSION="1.0" INSTANCE="util_vector_logic_9" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="util_vector_logic" VLNV="xilinx.com:ip:util_vector_logic:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_OPERATION" VALUE="and"/>
+        <PARAMETER NAME="C_SIZE" VALUE="1"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_util_vector_logic_9_9"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="Op1" SIGIS="undef" SIGNAME="burstTrigger_0_burst_trigout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="burstTrigger_0" PORT="burst_trigout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="Op2" SIGIS="undef" SIGNAME="util_reduced_logic_6_Res">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_reduced_logic_6" PORT="Res"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_vector_logic_9_Res">
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
@@ -16011,17 +16142,17 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="prescaleSignal_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0F000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0FFFF" INSTANCE="oneshot_pulse_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0A000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0AFFF" INSTANCE="oneshot_pulse_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C06000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C06FFF" INSTANCE="ShiftRegisters_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C16000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C16FFF" INSTANCE="buttonTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="TrigWordDelay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0E000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0EFFF" INSTANCE="tellieDelay" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -16068,17 +16199,17 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
+        <PERIPHERAL INSTANCE="burstTrigger_0"/>
         <PERIPHERAL INSTANCE="prescaleSignal_1"/>
+        <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
         <PERIPHERAL INSTANCE="triggers_0"/>
-        <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_1"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>
         <PERIPHERAL INSTANCE="ShiftRegisters_0"/>
-        <PERIPHERAL INSTANCE="burstTrigger_0"/>
         <PERIPHERAL INSTANCE="buttonTrigger_0"/>
         <PERIPHERAL INSTANCE="TrigWordDelay_0"/>
         <PERIPHERAL INSTANCE="tellieDelay"/>
@@ -16274,17 +16405,17 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="prescaleSignal_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0F000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0FFFF" INSTANCE="oneshot_pulse_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0A000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0AFFF" INSTANCE="oneshot_pulse_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C06000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C06FFF" INSTANCE="ShiftRegisters_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C12000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C12FFF" INSTANCE="burstTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C16000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C16FFF" INSTANCE="buttonTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="TrigWordDelay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0E000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0EFFF" INSTANCE="tellieDelay" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -16331,17 +16462,17 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
+        <PERIPHERAL INSTANCE="burstTrigger_0"/>
         <PERIPHERAL INSTANCE="prescaleSignal_1"/>
+        <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
         <PERIPHERAL INSTANCE="triggers_0"/>
-        <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_1"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>
         <PERIPHERAL INSTANCE="ShiftRegisters_0"/>
-        <PERIPHERAL INSTANCE="burstTrigger_0"/>
         <PERIPHERAL INSTANCE="buttonTrigger_0"/>
         <PERIPHERAL INSTANCE="TrigWordDelay_0"/>
         <PERIPHERAL INSTANCE="tellieDelay"/>

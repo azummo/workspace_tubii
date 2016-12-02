@@ -30,18 +30,26 @@ void* MappedGTIDBaseAddress;
 void* MappedSpeakerScaleBaseAddress;
 
 /////// Internal Triggers
-int burstTrig(float rate, int bit)
+int burstTrig(float rate, int masterBit, int slaveBit)
 {
-  if(bit<0 || bit>15){
+  if(masterBit<0 || masterBit>15){
 	  Log(VERBOSE, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  return -1;
   }
 
-  int mask = pow(2,bit);
-  Log(VERBOSE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,bit);
-  mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, rate);
-  mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, mask);
+  if(slaveBit<0 || slaveBit>15){
+	  Log(VERBOSE, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  int masterMask = pow(2,masterBit);
+  int slaveMask = pow(2,slaveBit);
+  Log(VERBOSE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,masterBit);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset0, rate);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, masterMask);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, slaveMask);
   return 0;
 }
 

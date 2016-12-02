@@ -552,11 +552,12 @@ void GetTriggerMask(client *c, int argc, sds *argv)
 void SetBurstTrigger(client *c, int argc, sds *argv)
 {
   float rate;
-  uint32_t bit;
+  uint32_t masterBit, slaveBit;
   safe_strtof(argv[1],&rate);
-  safe_strtoul(argv[2],&bit);
+  safe_strtoul(argv[2],&masterBit);
+  safe_strtoul(argv[3],&slaveBit);
 
-  if(burstTrig(rate,bit) == 0) addReplyStatus(c, "+OK");
+  if(burstTrig(rate,masterBit,slaveBit) == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
 }
 

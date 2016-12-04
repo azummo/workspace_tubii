@@ -163,9 +163,14 @@ int triggerMask(u32 mask, u32 mask_async)
   return mask;
 }
 
-int getTriggerMask()
+int getSyncTriggerMask()
 {
-  return (mReadReg((u32) MappedTrigBaseAddress,RegOffset3) | mReadReg((u32) MappedTrigBaseAddress,RegOffset8));
+  return mReadReg((u32) MappedTrigBaseAddress,RegOffset3);
+}
+
+int getAsyncTriggerMask()
+{
+  return mReadReg((u32) MappedTrigBaseAddress,RegOffset8);
 }
 
 void softGT()

@@ -544,9 +544,14 @@ void SetTriggerMask(client *c, int argc, sds *argv)
   addReplyStatus(c, "+OK");
 }
 
-void GetTriggerMask(client *c, int argc, sds *argv)
+void GetSyncTriggerMask(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getTriggerMask());
+  addReply(c, ":%u", getSyncTriggerMask());
+}
+
+void GetAsyncTriggerMask(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getAsyncTriggerMask());
 }
 
 void SetBurstTrigger(client *c, int argc, sds *argv)
@@ -848,7 +853,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      ") "
                      "RETURNING key",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
-                     getTriggerMask(), getSpeakerMask(), getCounterMask(),
+                     getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset12),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset14),

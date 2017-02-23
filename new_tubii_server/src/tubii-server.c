@@ -1,6 +1,7 @@
 #include "tubii_client.h"
 #include "ae.h"
 #include "anet.h"
+#include "db.h"
 #include <errno.h>
 #include <stdio.h>
 #include "data.h"
@@ -15,6 +16,7 @@
 #include <string.h>
 
 aeEventLoop *el;
+database *detector_db;
 
 static struct config {
     int daemonize;
@@ -239,6 +241,15 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    /* Set up the database connection */
+    auto_load_config("/mnt/config.txt");
+    detector_db = db_connect(el, dbconfig.host, dbconfig.name, dbconfig.user, dbconfig.password);
+    if( detector_db == 0) {
+         Log(WARNING, "failed to set up database connection");
+         return 1;
+    }
+
+    /* Run TUBii's initialisation */
     auto_init();
 
     /* start tubii readout */

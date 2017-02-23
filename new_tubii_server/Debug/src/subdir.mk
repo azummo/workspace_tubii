@@ -9,7 +9,9 @@ C_SRCS += \
 ../src/ae_epoll.c \
 ../src/anet.c \
 ../src/async.c \
+../src/blocked.c \
 ../src/data.c \
+../src/db.c \
 ../src/dict.c \
 ../src/hiredis.c \
 ../src/logging.c \
@@ -30,7 +32,9 @@ OBJS += \
 ./src/ae_epoll.o \
 ./src/anet.o \
 ./src/async.o \
+./src/blocked.o \
 ./src/data.o \
+./src/db.o \
 ./src/dict.o \
 ./src/hiredis.o \
 ./src/logging.o \
@@ -51,7 +55,9 @@ C_DEPS += \
 ./src/ae_epoll.d \
 ./src/anet.d \
 ./src/async.d \
+./src/blocked.d \
 ./src/data.d \
+./src/db.d \
 ./src/dict.d \
 ./src/hiredis.d \
 ./src/logging.d \

@@ -7,6 +7,7 @@
 #include <errno.h>
 #include "ae.h"
 #include "server.h"
+#include "db.h"
 
 // tubii headers
 #include "tubiiAddresses.h"
@@ -20,8 +21,15 @@
 #include "libpq-fe.h"
 
 extern aeEventLoop *el;
+extern database *detector_db;
 long long tubii_readout_id = AE_ERR;
 int last_gtid=0;
+
+static void save_db_callback(PGresult *res, PGconn *conn, void *data);
+static void save_db_client_callback(PGresult *res, PGconn *conn, void *data);
+static void load_db_callback(PGresult *res, PGconn *conn, void *data);
+static void client_disconnect(void *data);
+long long save_tubii_id = -1;
 
 // Initialisation functions
 void initialise(client *c, int argc, sds *argv)
@@ -114,7 +122,6 @@ int auto_init()
   return 0;
 }
 
-
 // Clock commands
 void clockreset(client *c, int argc, sds *argv)
 {
@@ -163,7 +170,8 @@ void SetMZHappyPulser(client *c, int argc, sds *argv)
 
 void ping(client *c, int argc, sds *argv)
 {
-  addReplyStatus(c, "+PING");
+  Log(VERBOSE, "TUBii: Ping!");
+  addReplyStatus(c, "+OK");
 }
 
 // ELLIE commands
@@ -390,6 +398,7 @@ void SetControlReg(client *c, int argc, sds *argv)
   uint32_t cReg;
   safe_strtoul(argv[1],&cReg);
   ControlReg(cReg);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -405,6 +414,7 @@ void SetECalBit(client *c, int argc, sds *argv)
   safe_strtoul(argv[1],&cReg);
   if(cReg==1 || cReg==0){
 	  ControlReg((mReadReg((u32) MappedRegsBaseAddress, RegOffset10) & 4294967291) + 4*cReg);
+	  save_tubii_state();
 	  addReplyStatus(c, "+OK");
   }
   else{
@@ -419,6 +429,7 @@ void SetCaenWords(client *c, int argc, sds *argv)
   safe_strtoul(argv[1],&gPath);
   safe_strtoul(argv[2],&cSelect);
   CAENWords(gPath, cSelect);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -438,6 +449,7 @@ void SetDACThreshold(client *c, int argc, sds *argv)
   uint32_t dacThresh;
   safe_strtoul(argv[1],&dacThresh);
   DACThresholds(dacThresh);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -453,6 +465,7 @@ void SetGTDelays(client *c, int argc, sds *argv)
   safe_strtoul(argv[1],&loDelay);
   safe_strtoul(argv[2],&dgtDelay);
   GTDelays(loDelay, dgtDelay);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -473,7 +486,6 @@ void SetAllowableClockMisses(client *c, int argc, sds *argv)
   ClockMisses(nMisses);
   addReplyStatus(c, "+OK");
 }
-
 
 // Trigger Commands
 void countLatch(client *c, int argc, sds *argv)
@@ -497,6 +509,7 @@ void countMode(client *c, int argc, sds *argv)
   uint32_t mode;
   safe_strtoul(argv[1],&mode);
   counterMode(mode);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -505,6 +518,7 @@ void SetCounterMask(client *c, int argc, sds *argv)
   uint32_t mask;
   safe_strtoul(argv[1],&mask);
   counterMask(mask);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -518,6 +532,7 @@ void SetSpeakerMask(client *c, int argc, sds *argv)
   uint32_t mask;
   safe_strtoul(argv[1],&mask);
   speakerMask(mask);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -526,9 +541,9 @@ void SetSpeakerScale(client *c, int argc, sds *argv)
   uint32_t rate;
   safe_strtoul(argv[1],&rate);
   speakerScale(rate);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
-
 
 void GetSpeakerMask(client *c, int argc, sds *argv)
 {
@@ -541,6 +556,7 @@ void SetTriggerMask(client *c, int argc, sds *argv)
   safe_strtoul(argv[1],&mask);
   safe_strtoul(argv[2],&mask_async);
   triggerMask(mask,mask_async);
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -562,7 +578,10 @@ void SetBurstTrigger(client *c, int argc, sds *argv)
   safe_strtoul(argv[2],&masterBit);
   safe_strtoul(argv[3],&slaveBit);
 
-  if(burstTrig(rate,masterBit,slaveBit) == 0) addReplyStatus(c, "+OK");
+  if(burstTrig(rate,masterBit,slaveBit) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
   else addReplyError(c, tubii_err);
 }
 
@@ -578,7 +597,10 @@ void SetComboTrigger(client *c, int argc, sds *argv)
   safe_strtoul(argv[1],&enableMask);
   safe_strtoul(argv[2],&logicMask);
 
-  if(comboTrig(enableMask,logicMask) == 0) addReplyStatus(c, "+OK");
+  if(comboTrig(enableMask,logicMask) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
   else addReplyError(c, tubii_err);
 }
 
@@ -589,7 +611,10 @@ void SetPrescaleTrigger(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&rate);
   safe_strtoul(argv[2],&bit);
 
-  if(prescaleTrig(rate,bit) == 0) addReplyStatus(c, "+OK");
+  if(prescaleTrig(rate,bit) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
   else addReplyError(c, tubii_err);
 }
 
@@ -604,6 +629,7 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
 	addReplyError(c, tubii_err);
 	return;
   }
+  save_tubii_state();
   addReplyStatus(c, "+OK");
 }
 
@@ -722,7 +748,6 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
     //return AE_NOMORE;
 }
 
-
 void start_data_readout(client *c, int argc, sds *argv)
 {
 	data_readout=1;
@@ -804,54 +829,49 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
     return 1;
 }
 
+// Read the database configuration details from a config file
 void load_new_config(client *c, int argc, sds *argv)
 {
-	FILE *fp=fopen(argv[1],"r");
+	auto_load_config(argv[1]);
+    addReplyStatus(c, "+OK");
+}
+
+void auto_load_config(char* file)
+{
+	FILE *fp=fopen(file,"r");
 	if(fp!=0){
     	char call[255];
     	while(fscanf(fp,"%s",call)!=EOF){
-    		if(strcmp(call,"user")==0) fscanf(fp,"%s",dbconfig.user);//=response;
-    		else if(strcmp(call,"pass")==0) fscanf(fp,"%s",dbconfig.password);//=response;
-    		else if(strcmp(call,"dbname")==0) fscanf(fp,"%s",dbconfig.name);//=response;
-    		else if(strcmp(call,"dbhost")==0) fscanf(fp,"%s",dbconfig.host);//=response;
-    		else printf("TUBii: Unrecognised data type in config file, %s\n\n",call);//, response);
+    		if(strcmp(call,"user")==0) fscanf(fp,"%s",dbconfig.user);
+    		else if(strcmp(call,"pass")==0) fscanf(fp,"%s",dbconfig.password);
+    		else if(strcmp(call,"dbname")==0) fscanf(fp,"%s",dbconfig.name);
+    		else if(strcmp(call,"dbhost")==0) fscanf(fp,"%s",dbconfig.host);
+    		else printf("TUBii: Unrecognised data type in config file, %s\n\n",call);
     	}
 	}
 
 	fclose(fp);
-    addReplyStatus(c, "+OK");
 }
+
+// There are two sets of functions for the database.
+// - One writes to the database on command at the start of a run. This uses the functions:
+//     save_TUBii_command, load_TUBii_command, save_db_client_callback, client disconnect
+// - The second aims to give the current status of TUBii by writing to the row with key=0.
+// This works from by calling the save_tubii_state function in any command which could change
+// a database value. It then waits one second (in case multiple changes are being made) and
+// the writes to the database. It uses the functions:
+//     save_tubii_state, save_tubii, save_db_callback
 
 void save_TUBii_command(client *c, int argc, sds *argv)
 {
     /* Update the TUBii state. */
-    uint32_t key;
-    PGconn *conn;
-    char conninfo[1024];
-    PGresult *res = NULL;
-    char command[10000];
+    char command[2048];// = sdsempty();
 
-    //char* dbname="test", dbhost="", dbuser="", dbpass="";
-    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbconfig.name, dbconfig.host, dbconfig.user, dbconfig.password);
-
-    /* Now we update the database */
-    conn = PQconnectdb(conninfo);
-
-    if (PQstatus(conn) != CONNECTION_OK) {
-        addReplyErrorFormat(c, "connection to database failed: %s", PQerrorMessage(conn));
-        goto pq_error;
-    }
-
-    sprintf(command, "insert into TUBii ("
-                     "control_reg, trigger_mask, speaker_mask, counter_mask,"
-    				 "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg,"
-    				 "combo_enable_mask, combo_mask, counter_mode, clock_status,"
-    				 "prescale_value, prescale_channel, burst_rate, burst_channel"
-    				 ") "
-                     "VALUES ("
+    // SELECT save_tubii
+    // Writes to the next free row or (if settings match previous, returns that instead)
+    sprintf(command, "SELECT save_tubii ("
                      "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u"
-                     ") "
-                     "RETURNING key",
+                     ");",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
@@ -860,60 +880,32 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset15),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset13),
                      mReadReg((u32) MappedComboBaseAddress, RegOffset2),
-    				 mReadReg((u32) MappedComboBaseAddress, RegOffset3),
-    				 counter_mode, clockStatus(),
-    				 mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
-    				 mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
-    				 mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
-    				 mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
+                     mReadReg((u32) MappedComboBaseAddress, RegOffset3),
+                     counter_mode, clockStatus(),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
                      );
 
-
-    res = PQexec(conn, command);
-
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        addReplyErrorFormat(c, "insert command failed: %s",
-                            PQerrorMessage(conn));
-        goto pq_error;
+    if (db_exec_async(detector_db, command, save_db_client_callback, c)) {
+        addReplyError(c, "TUBii: database isn't connected");
+        return;
     }
 
-    if (PQnfields(res) != 1) {
-        addReplyError(c, "failed to get key from insert");
-        goto pq_error;
-    }
-
-    if (safe_strtoul(PQgetvalue(res, 0, 0), &key)) {
-        addReplyErrorFormat(c, "couldn't convert key from '%s' -> int", PQgetvalue(res, 0, 0));
-        goto pq_error;
-    }
-
-    PQclear(res);
-    PQfinish(conn);
-
-    addReply(c, ":%u", key);
+    blockClient(c, client_disconnect, c);
     return;
 
 err:
     addReplyError(c, tubii_err);
     return;
-
-pq_error:
-    if (res) PQclear(res);
-    PQfinish(conn);
 }
 
 void load_TUBii_command(client *c, int argc, sds *argv)
 {
-    /* Load CAEN hardware settings from the database. */
-    uint32_t key;
-    PGconn *conn;
-    PGresult *res = NULL;
-    char conninfo[1024];
-    char command[10000];
-    char *name, *value_str;
-    uint32_t value;
-    int i;
-    int rows;
+    /* Load TUBii hardware settings from the database. */
+	uint32_t key;
+    char command[3072];
 
     if (safe_strtoul(argv[1], &key)) {
         addReplyErrorFormat(c, "'%s' is not a valid uint32_t", argv[1]);
@@ -922,33 +914,61 @@ void load_TUBii_command(client *c, int argc, sds *argv)
 
     sprintf(command, "select * from TUBii where key = %i", key);
 
-    sprintf(conninfo, "dbname=%s host=%s user=%s password=%s", dbconfig.name, dbconfig.host, dbconfig.user, dbconfig.password);
+    load_db_args *args = (load_db_args *) malloc(sizeof(load_db_args));
+    args->c = c;
+    args->key = key;
 
-    /* Request row from the database. */
-    conn = PQconnectdb(conninfo);
-
-    if (PQstatus(conn) != CONNECTION_OK) {
-        addReplyErrorFormat(c, "connection to database failed: %s",
-                            PQerrorMessage(conn));
-        goto pq_error;
+    if (db_exec_async(detector_db, command, load_db_callback, args)) {
+    	addReplyError(c, "database isn't connected");
+    	free(args);
+    	return;
     }
 
-    res = PQexec(conn, command);
+    blockClient(c, client_disconnect, c);
+
+    return;
+}
+
+static void load_db_callback(PGresult *res, PGconn *conn, void *data)
+{
+    int i, j;
+    char *name, *value_str;
+    uint32_t value;
+    int rows;
+    load_db_args *args;
+
+    args = (load_db_args *) data;
+
+    client *c = args->c;
+
+    if (c == NULL) {
+        /* This should only happen if the client disconnects while a database
+         * request was pending. */
+        Log(WARNING, "tubii client got database response but is disconnected!");
+        free(args);
+        return;
+    }
+
+    if (res == NULL) {
+        /* Request failed for some reason. */
+        addReplyError(c, "request timed out or database disconnected");
+        goto err;
+    }
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
         addReplyErrorFormat(c, "select command failed: %s",
                             PQerrorMessage(conn));
-        goto pq_error;
+        goto err;
     }
 
     rows = PQntuples(res);
     if (rows != 1) {
         if (rows == 0) {
-            addReplyErrorFormat(c, "no database row with key = %i", key);
+            addReplyErrorFormat(c, "no database row with key = %i", args->key);
         } else {
             addReplyError(c, "this should never happen. Call Tony");
         }
-        goto pq_error;
+        goto err;
     }
 
     for (i = 0; i < PQnfields(res); i++) {
@@ -956,12 +976,17 @@ void load_TUBii_command(client *c, int argc, sds *argv)
 
         if (!strcmp(name, "key") || !strcmp(name, "timestamp")) continue;
 
+        if (PQgetisnull(res, 0, i)) {
+            addReplyErrorFormat(c, "column %s contains a NULL value", name);
+            goto err;
+        }
+
         value_str = PQgetvalue(res, 0, i);
 
         if (safe_strtoul(value_str, &value)) {
             addReplyErrorFormat(c, "unable to convert value '%s' for field %s",
                                 value_str, name);
-            goto pq_error;
+            goto err;
         }
 
         if (!strcmp(name, "control_reg")) {
@@ -1000,26 +1025,192 @@ void load_TUBii_command(client *c, int argc, sds *argv)
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, value);
         } else {
             addReplyErrorFormat(c, "got unknown field '%s'", name);
-            goto pq_error;
+            goto err;
         }
     }
 
+    save_tubii_state();
+
     addReplyStatus(c, "OK");
 
-    PQclear(res);
-    PQfinish(conn);
+    unblockClient(c);
+    free(args);
 
     return;
 
 err:
- 	addReplyError(c, tubii_err);
- 	return;
-
-pq_error:
-    if (res) PQclear(res);
-    PQfinish(conn);
+    unblockClient(c);
+    free(args);
+    return;
 }
 
+static void save_db_client_callback(PGresult *res, PGconn *conn, void *data)
+{
+    /* Get result of save command. */
+    uint32_t key;
+
+    client *c = (client *) data;
+
+    if (c == NULL) {
+        /* This should only happen if the client disconnects while a database
+         * request was pending. */
+        Log(WARNING, "TUBii: client got database response but is disconnected!");
+        return;
+    }
+
+    if (res == NULL) {
+        /* Request failed for some reason. */
+        addReplyError(c, "TUBii: request timed out or database disconnected");
+        goto err;
+    }
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        addReplyErrorFormat(c, "TUBii: insert command failed: %s",
+                            PQerrorMessage(conn));
+        goto err;
+    }
+
+    if (PQnfields(res) != 1) {
+        addReplyError(c, "TUBii: failed to get key from insert");
+        goto err;
+    }
+
+    if (safe_strtoul(PQgetvalue(res, 0, 0), &key)) {
+        addReplyErrorFormat(c, "TUBii: couldn't convert key from '%s' -> int",
+                            PQgetvalue(res, 0, 0));
+        goto err;
+    }
+
+    addReplyLongLong(c, key);
+    unblockClient(c);
+    return;
+
+err:
+    unblockClient(c);
+    return;
+}
+
+static void client_disconnect(void *data)
+{
+    /* Called when a client disconnects while they are blocked waiting
+     * for a response from the database. Need to clear all requests sent by
+     * this client. */
+    client *c = (client *) data;
+
+    clear_db_requests_from_client(detector_db, c);
+}
+
+static int save_tubii(aeEventLoop *el, long long id, void *data)
+{
+    /* Saves the TUBii hardware settings to the detector database. */
+    char command[3072];
+
+    // Inserts the current state into row 0
+    sprintf(command, "INSERT INTO TUBii ("
+                     "key,control_reg, trigger_mask, speaker_mask, counter_mask,"
+                     "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg,"
+                     "combo_enable_mask, combo_mask, counter_mode, clock_status,"
+                     "prescale_value, prescale_channel, burst_rate, burst_channel"
+                     ") "
+                     "VALUES (0, "
+                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u)"
+                     " ON CONFLICT (key) DO UPDATE SET "
+                     "control_reg = EXCLUDED.control_reg,"
+                     "trigger_mask = EXCLUDED.trigger_mask,"
+                     "speaker_mask = EXCLUDED.speaker_mask,"
+                     "counter_mask = EXCLUDED.counter_mask,"
+                     "caen_gain_reg = EXCLUDED.caen_gain_reg,"
+                     "caen_channel_reg = EXCLUDED.caen_channel_reg,"
+                     "lockout_reg = EXCLUDED.lockout_reg,"
+                     "dgt_reg = EXCLUDED.dgt_reg,"
+                     "dac_reg = EXCLUDED.dac_reg,"
+                     "combo_enable_mask = EXCLUDED.combo_enable_mask,"
+                     "combo_mask = EXCLUDED.combo_mask,"
+                     "counter_mode = EXCLUDED.counter_mode,"
+                     "clock_status = EXCLUDED.clock_status,"
+                     "prescale_value = EXCLUDED.prescale_value,"
+                     "prescale_channel = EXCLUDED.prescale_channel,"
+                     "burst_rate = EXCLUDED.burst_rate,"
+                     "burst_channel = EXCLUDED.burst_channel;",
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
+                     getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset12),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset14),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset15),
+                     mReadReg((u32) MappedRegsBaseAddress, RegOffset13),
+                     mReadReg((u32) MappedComboBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedComboBaseAddress, RegOffset3),
+                     counter_mode, clockStatus(),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
+                     );
+
+    if (db_exec_async(detector_db, command, save_db_callback, NULL)) {
+        Log(WARNING, "database isn't connected to save tubii state");
+        save_tubii_id = -1;
+        return AE_NOMORE;
+    }
+
+    save_tubii_id = -1;
+    return AE_NOMORE;
+
+err:
+    Log(WARNING, "failed to save tubii state");
+    save_tubii_id = -1;
+    return AE_NOMORE;
+}
+
+static void save_db_callback(PGresult *res, PGconn *conn, void *data)
+{
+    /* Get result of save command. */
+    uint32_t key;
+
+    if (res == NULL) {
+        /* Request failed for some reason. */
+        Log(WARNING, "failed to save tubii state: request timed out or database disconnected");
+        goto err;
+    }
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+        Log(WARNING, "failed to save tubii state: insert command failed: %s",
+            PQerrorMessage(conn));
+        goto err;
+    }
+
+    if (PQnfields(res) != 1) {
+        Log(WARNING, "failed to save tubii state: failed to get key from insert");
+        goto err;
+    }
+
+    if (safe_strtoul(PQgetvalue(res, 0, 0), &key)) {
+        Log(WARNING, "failed to save tubii state: couldn't convert key from '%s' -> int",
+            PQgetvalue(res, 0, 0));
+        goto err;
+    }
+
+    return;
+
+err:
+    return;
+}
+
+void save_tubii_state()
+{
+    /* Set up an event to save the current TUBii state to the database in
+     * one second if one isn't already scheduled. */
+
+    if (save_tubii_id == -1) {
+        if ((save_tubii_id = aeCreateTimeEvent(el, 1000, save_tubii, NULL, NULL)) == AE_ERR) {
+            Log(WARNING, "failed to set up timed event to save tubii state to database");
+            save_tubii_id = -1;
+        }
+    }
+}
+
+// Internal XADC functions -- NOT CURRENTLY WORKING. INTENDED TO POLL TEMPERATURE OF TUBII.
 static XAdcPs XADCMonInst;
 
 void xadc(client *c, int argc, sds *argv)
@@ -1136,8 +1327,7 @@ void xadc(client *c, int argc, sds *argv)
 	addReplyStatus(c, "+OK");
 }
 
-
-
+// String to float and int conversions
 int safe_strtof(char *s, float *f)
 {
     /* Convert string s -> float. Returns -1 on error. */

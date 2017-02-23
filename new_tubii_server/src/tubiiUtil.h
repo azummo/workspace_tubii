@@ -13,6 +13,11 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned long u32;
 
+typedef struct {
+    client *c;
+    uint32_t key;
+} load_db_args;
+
 #define REG0_OFFSET 0
 #define REG1_OFFSET 4
 #define REG2_OFFSET 8

@@ -119,6 +119,9 @@ int auto_init()
   // Set Speaker pre-scale to 1
   //speakerScale(1);
 
+  // Switch data readout on by default
+  data_readout=1;
+
   return 0;
 }
 

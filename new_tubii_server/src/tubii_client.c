@@ -29,6 +29,7 @@ static void save_db_callback(PGresult *res, PGconn *conn, void *data);
 static void save_db_client_callback(PGresult *res, PGconn *conn, void *data);
 static void load_db_callback(PGresult *res, PGconn *conn, void *data);
 static void client_disconnect(void *data);
+void save_tubii_state();
 long long save_tubii_id = -1;
 
 // Initialisation functions
@@ -351,6 +352,42 @@ void GetPulserNPulses(client *c, int argc, sds *argv)
 void GetDelay(client *c, int argc, sds *argv)
 {
   addReply(c, ":%d", mReadReg((u32) MappedDelayBaseAddress, RegOffset3));
+}
+
+//// DAQ Connection and emergency stop functions
+int auto_stop_tubii()
+{
+  //RESET THE PULSERS AND TRIGGER MASK
+  Pulser(0,0,0,MappedSPulserBaseAddress);
+  Pulser(0,0,0,MappedTPulserBaseAddress);
+  Pulser(0,0,0,MappedPulserBaseAddress);
+  triggerMask(0,0);
+  return 0;
+}
+
+void StopTUBii(client *c, int argc, sds *argv)
+{
+  auto_stop_tubii();
+  addReplyStatus(c, "+OK");
+}
+
+void KeepAlive(client *c, int argc, sds *argv)
+{
+  dont_die = 1;
+}
+
+int daq_connection(aeEventLoop *el, long long id, void *data)
+{
+	if(dont_die==1){
+		// Good connection with Orca
+		dont_die==0;
+	}
+	else{
+		// No connection with Orca!!
+		auto_stop_tubii();
+	}
+
+    return 1000;
 }
 
 //// Shift Register commands
@@ -833,12 +870,6 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 }
 
 // Read the database configuration details from a config file
-void load_new_config(client *c, int argc, sds *argv)
-{
-	auto_load_config(argv[1]);
-    addReplyStatus(c, "+OK");
-}
-
 void auto_load_config(char* file)
 {
 	FILE *fp=fopen(file,"r");
@@ -855,6 +886,13 @@ void auto_load_config(char* file)
 
 	fclose(fp);
 }
+
+void load_new_config(client *c, int argc, sds *argv)
+{
+	auto_load_config(argv[1]);
+    addReplyStatus(c, "+OK");
+}
+
 
 // There are two sets of functions for the database.
 // - One writes to the database on command at the start of a run. This uses the functions:
@@ -934,7 +972,7 @@ void load_TUBii_command(client *c, int argc, sds *argv)
 
 static void load_db_callback(PGresult *res, PGconn *conn, void *data)
 {
-    int i, j;
+    int i;
     char *name, *value_str;
     uint32_t value;
     int rows;

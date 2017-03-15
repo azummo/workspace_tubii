@@ -68,6 +68,12 @@ void GetTelliePulseWidth(client *c, int argc, sds *argv);
 void GetTellieNPulses(client *c, int argc, sds *argv);
 void GetTellieDelay(client *c, int argc, sds *argv);
 
+// DAQ Connection Commands
+int auto_stop_tubii();
+void StopTUBii(client *c, int argc, sds *argv);
+void KeepAlive(client *c, int argc, sds *argv);
+int daq_connection(aeEventLoop *el, long long id, void *data);
+
 // Trigger Commands
 void SetCounterMask(client *c, int argc, sds *argv);
 void GetCounterMask(client *c, int argc, sds *argv);

@@ -118,4 +118,7 @@ char tubii_err[256];
 float HunMHz = 100000000;
 float ns=0.1;
 
+// Dead man switch
+int dont_die = 0;
+
 #endif /* TUBIIUTIL_H_ */

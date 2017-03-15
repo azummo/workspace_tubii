@@ -25,6 +25,7 @@ static struct config {
     char *logfile;
     int loglevel;
 } config;
+void auto_load_config(char* file);
 
 struct DBconfig dbconfig;
 
@@ -132,6 +133,8 @@ struct command commandTable[] = {
 		{"getTelliePulseWidth", GetTelliePulseWidth, 1},
 		{"getTellieNPulses", 	GetTellieNPulses, 	1},
 		{"getTellieDelay", 		GetTellieDelay, 	1},
+		{"STOP", 				StopTUBii, 			1},
+		{"keepAlive", 			KeepAlive, 			1},
 		// triggers
 		{"setCounterMask", 	SetCounterMask, 2},
 		{"getCounterMask", 	GetCounterMask, 1},
@@ -255,6 +258,12 @@ int main(int argc, char **argv)
     /* start tubii readout */
     if (start_tubii_readout(1000)) {
         //Log(WARNING, tubii_err);
+        return 1;
+    }
+
+    /* check for ORCA connection */
+    if ((aeCreateTimeEvent(el, 1000, daq_connection, NULL, NULL)) == AE_ERR) {
+        Log(WARNING, "failed to check tubii's daq connection");
         return 1;
     }
 

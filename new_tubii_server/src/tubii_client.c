@@ -374,13 +374,14 @@ void StopTUBii(client *c, int argc, sds *argv)
 void KeepAlive(client *c, int argc, sds *argv)
 {
   dont_die = 1;
+  addReplyStatus(c, "+OK");
 }
 
 int daq_connection(aeEventLoop *el, long long id, void *data)
 {
 	if(dont_die==1){
 		// Good connection with Orca
-		dont_die==0;
+		dont_die=0;
 	}
 	else{
 		// No connection with Orca!!

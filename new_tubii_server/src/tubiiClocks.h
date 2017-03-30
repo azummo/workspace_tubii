@@ -17,7 +17,7 @@ int clockReset(int clk_choice)
 	mWriteReg((u32) MappedClocksBaseAddress, RegOffset0, clk_choice);
   }
   else{
-    Log(DEBUG, "TUBii: Invalid clock choice. Choose 0 or 1.");
+    Log(WARNING, "TUBii: Invalid clock choice. Choose 0 or 1.");
 	sprintf(tubii_err, "TUBii: Invalid clock choice. Choose 0 or 1.");
 	return -1;
   }

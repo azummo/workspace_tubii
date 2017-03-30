@@ -22,18 +22,18 @@ void *MappedDelayLengthenBaseAddress;
 int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 {
   if(rate < 0 || rate > 1000000){
-	Log(DEBUG, "TUBii: pulser rate is outside acceptable range.");
+	Log(WARNING, "TUBii: pulser rate is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: pulser rate is outside acceptable range.");
 	return -1;
   }
 
   if(length < 0 ){
-	Log(DEBUG, "TUBii: Pulse width is too short.");
+	Log(WARNING, "TUBii: Pulse width is too short.");
 	sprintf(tubii_err, "Tubii: Pulse width is too short.");
 	return -1;
   }
   else if(rate!=0 && length > 1.0/(rate) ){
-	Log(DEBUG, "TUBii: Pulse width is longer than period.");
+	Log(WARNING, "TUBii: Pulse width is longer than period.");
 	sprintf(tubii_err, "Tubii: Pulse width is longer than period.");
 	return -1;
   }
@@ -53,7 +53,7 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 int Delay(u32 delay, void* MappedBaseAddress)
 {
   if(delay<0){
-	Log(DEBUG, "TUBii: delay length is outside acceptable range.");
+	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
 	return -1;
   }

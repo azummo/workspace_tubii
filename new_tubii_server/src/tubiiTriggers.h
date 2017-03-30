@@ -33,13 +33,13 @@ void* MappedSpeakerScaleBaseAddress;
 int burstTrig(float rate, int masterBit, int slaveBit)
 {
   if(masterBit<0 || masterBit>15){
-	  Log(VERBOSE, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  return -1;
   }
 
   if(slaveBit<0 || slaveBit>15){
-	  Log(VERBOSE, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
 	  return -1;
   }
@@ -63,7 +63,7 @@ int buttonTrig()
 int comboTrig(u32 enableMask, u32 logicMask)
 {
   if(logicMask<0 || logicMask>65535 || enableMask<0 || enableMask>65535){
-	  Log(VERBOSE, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  Log(WARNING, "TUBii: Choose a combo trigger mask between 0 and 65535.");
 	  sprintf(tubii_err, "TUBii: Choose a combo trigger mask between 0 and 65535.");
 	  return -1;
   }
@@ -77,7 +77,7 @@ int comboTrig(u32 enableMask, u32 logicMask)
 int prescaleTrig(float rate, int bit)
 {
   if(bit<0 || bit>15){
-	  Log(VERBOSE, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  Log(WARNING, "TUBii: Choose a prescale trigger bit between 0 and 15.");
 	  sprintf(tubii_err, "TUBii: Choose a prescale trigger bit between 0 and 15.");
 	  return -1;
   }
@@ -194,7 +194,7 @@ u32 currentTrigger()
   u32 trig_mask= mReadReg((u32) MappedTrigBaseAddress, RegOffset3);
   u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
   u32 sync= mReadReg((u32) MappedTrigBaseAddress, RegOffset5);
-  Log(NOTICE, "Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
+  Log(WARNING, "Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
   return current_trig;
 }
 
@@ -236,7 +236,7 @@ void resetFIFO()
 int TrigWordDelay(u32 delay)
 {
   if(delay<0){
-	Log(VERBOSE, "TUBii: delay length is outside acceptable range.");
+	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
 	return -1;
   }

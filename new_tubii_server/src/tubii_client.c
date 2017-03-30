@@ -388,7 +388,7 @@ int daq_connection(aeEventLoop *el, long long id, void *data)
 		auto_stop_tubii();
 	}
 
-    return 1000;
+    return 5000;
 }
 
 //// Shift Register commands

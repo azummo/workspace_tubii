@@ -245,7 +245,7 @@ int main(int argc, char **argv)
     }
 
     /* Set up the database connection */
-    auto_load_config("/mnt/config.txt");
+    //auto_load_config("/mnt/settings.cfg");
     detector_db = db_connect(el, dbconfig.host, dbconfig.name, dbconfig.user, dbconfig.password);
     if( detector_db == 0) {
          Log(WARNING, "failed to set up database connection");
@@ -262,7 +262,7 @@ int main(int argc, char **argv)
     }
 
     /* check for ORCA connection */
-    if ((aeCreateTimeEvent(el, 1000, daq_connection, NULL, NULL)) == AE_ERR) {
+    if ((aeCreateTimeEvent(el, 5000, daq_connection, NULL, NULL)) == AE_ERR) {
         Log(WARNING, "failed to check tubii's daq connection");
         return 1;
     }

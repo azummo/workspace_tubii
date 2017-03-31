@@ -305,7 +305,8 @@ void GetSmellieNPulses(client *c, int argc, sds *argv)
 
 void GetSmellieDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedSDelayBaseAddress, RegOffset3));
+  u32 length = mReadReg((u32) MappedSDelayBaseAddress, RegOffset3)/ns;
+  addReply(c, ":%d", length);
 }
 
 void GetTellieRate(client *c, int argc, sds *argv)
@@ -331,7 +332,8 @@ void GetTellieNPulses(client *c, int argc, sds *argv)
 
 void GetTellieDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedTDelayBaseAddress, RegOffset3));
+  u32 length = mReadReg((u32) MappedTDelayBaseAddress, RegOffset3)/ns;
+  addReply(c, ":%d", length);
 }
 
 void GetPulserRate(client *c, int argc, sds *argv)
@@ -357,7 +359,8 @@ void GetPulserNPulses(client *c, int argc, sds *argv)
 
 void GetDelay(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedDelayBaseAddress, RegOffset3));
+  u32 length = mReadReg((u32) MappedDelayBaseAddress, RegOffset3)/ns;
+  addReply(c, ":%d", length);
 }
 
 //// DAQ Connection and emergency stop functions

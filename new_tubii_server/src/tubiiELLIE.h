@@ -39,6 +39,8 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   }
 
   u32 period = HunMHz/rate;
+  if(rate==0) period=0;
+
   u32 width = period - length*HunMHz; // Due to bad planning, width is length of time pulse is low
   Log(VERBOSE, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
 

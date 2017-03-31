@@ -286,14 +286,16 @@ void GetSmellieRate(client *c, int argc, sds *argv)
 {
   u32 period= mReadReg((u32) MappedSPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
+  if(period==0) rate=0;
 
-  addReply(c, ":%d", rate);
+  addReplyDouble(c, rate);
 }
 
 void GetSmelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedSPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedSPulserBaseAddress, RegOffset0))*HunMHz;
-  addReply(c, ":%d", width);
+  float width= (mReadReg((u32) MappedSPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedSPulserBaseAddress, RegOffset0));
+  width *= 1/HunMHz;
+  addReplyDouble(c, width);
 }
 
 void GetSmellieNPulses(client *c, int argc, sds *argv)
@@ -310,14 +312,16 @@ void GetTellieRate(client *c, int argc, sds *argv)
 {
   u32 period= mReadReg((u32) MappedTPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
+  if(period==0) rate=0;
 
-  addReply(c, ":%d", rate);
+  addReplyDouble(c, rate);
 }
 
 void GetTelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedTPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedTPulserBaseAddress, RegOffset0))*HunMHz;
-  addReply(c, ":%d", width);
+  float width= (mReadReg((u32) MappedTPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedTPulserBaseAddress, RegOffset0));
+  width *= 1/HunMHz;
+  addReplyDouble(c, width);
 }
 
 void GetTellieNPulses(client *c, int argc, sds *argv)
@@ -334,14 +338,16 @@ void GetPulserRate(client *c, int argc, sds *argv)
 {
   u32 period= mReadReg((u32) MappedPulserBaseAddress, RegOffset1);
   float rate= HunMHz/period;
+  if(period==0) rate=0;
 
-  addReply(c, ":%d", rate);
+  addReplyDouble(c, rate);
 }
 
 void GetPulserWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedPulserBaseAddress, RegOffset0))*HunMHz;
-  addReply(c, ":%d", width);
+  float width= (mReadReg((u32) MappedPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedPulserBaseAddress, RegOffset0));
+  width *= 1/HunMHz;
+  addReplyDouble(c, width);
 }
 
 void GetPulserNPulses(client *c, int argc, sds *argv)

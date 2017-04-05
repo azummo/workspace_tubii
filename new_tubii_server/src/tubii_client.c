@@ -67,7 +67,7 @@ int InitMapping()
 
   // Meta-Triggers
   MappedBurstBaseAddress= MemoryMapping(BURSTTRIG_BASEADDR,BURSTTRIG_HIGHADDR);
-  MappedButtonBaseAddress= MemoryMapping(BUTTONTRIG_BASEADDR,BUTTONTRIG_HIGHADDR);
+  MappedTUBiiPGTBaseAddress= MemoryMapping(TUBIIPGT_BASEADDR,TUBIIPGT_HIGHADDR);
   MappedComboBaseAddress= MemoryMapping(COMBOTRIG_BASEADDR,COMBOTRIG_HIGHADDR);
   MappedPrescaleBaseAddress= MemoryMapping(PRESCALETRIG_BASEADDR,PRESCALETRIG_HIGHADDR);
 
@@ -635,10 +635,17 @@ void SetBurstTrigger(client *c, int argc, sds *argv)
   else addReplyError(c, tubii_err);
 }
 
-void SetButtonTrigger(client *c, int argc, sds *argv)
+void SetTUBiiPGT(client *c, int argc, sds *argv)
 {
-  buttonTrig();
-  addReplyStatus(c, "+OK");
+  float rate=0;
+  uint32_t nPulse=0;
+  safe_strtof(argv[1],&rate);
+  safe_strtof(argv[2],&nPulse);
+
+  int ret= Pulser(rate,0.00000005,nPulse,MappedTUBiiPGTBaseAddress);
+
+  if(ret == 0) addReplyStatus(c, "+OK");
+  else addReplyError(c, tubii_err);
 }
 
 void SetComboTrigger(client *c, int argc, sds *argv)

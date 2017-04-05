@@ -1,2 +1,2 @@
    text	   data	    bss	    dec	    hex	filename
-  56500	  11432	  68340	 136272	  21450	FSBL_tubii.elf
+  56500	  11400	  68340	 136240	  21430	FSBL_tubii.elf

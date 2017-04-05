@@ -20,7 +20,7 @@ void *MappedCountBaseAddress;
 void *MappedTrigBaseAddress;
 void *MappedFifoBaseAddress;
 void *MappedBurstBaseAddress;
-void *MappedButtonBaseAddress;
+void *MappedTUBiiPGTBaseAddress;
 void *MappedComboBaseAddress;
 void *MappedPrescaleBaseAddress;
 void *MappedCountLengthenBaseAddress;
@@ -50,13 +50,6 @@ int burstTrig(float rate, int masterBit, int slaveBit)
   mWriteReg((u32) MappedBurstBaseAddress, RegOffset0, rate);
   mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, masterMask);
   mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, slaveMask);
-  return 0;
-}
-
-int buttonTrig()
-{
-  Log(VERBOSE, "TUBii: Fire the button trigger.");
-  mWriteReg((u32) MappedButtonBaseAddress, RegOffset0, 1);
   return 0;
 }
 

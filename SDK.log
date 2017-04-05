@@ -12781,3 +12781,32 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 12:45:37.321 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
 12:45:37.341 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
 12:47:41.448 ERROR - Unexpected error while parsing XMD response ?: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  
+15:31:54.462 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+15:33:14.322 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+15:33:14.376 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+15:33:14.539 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+15:33:14.594 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+15:33:14.615 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+15:33:14.620 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+15:33:15.726 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+15:33:22.966 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+15:33:24.709 INFO  - Updating MSS for Board Support Package Project: standalone_bsp_7020.
+		 The following driver assignments were removed:
+			Peripheral Instance: buttonTrigger_0, driver: generic_v1_00_a.
+		 The following new driver assignments were made:
+			Peripheral Instance: testPulser_0, driver: generic_v1_00_a.
+ 
+15:33:25.516 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+15:33:25.659 INFO  - Clearing existing target manager status. 
+15:34:30.288 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+15:34:30.318 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+15:34:30.558 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+15:34:30.568 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+15:34:31.658 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+16:35:48.553 ERROR - Unexpected error while fetching XMD's response:  java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+
+16:35:48.553 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 

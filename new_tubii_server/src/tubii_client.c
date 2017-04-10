@@ -641,6 +641,7 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   uint32_t nPulse=0;
   safe_strtof(argv[1],&rate);
   safe_strtof(argv[2],&nPulse);
+  rate *= 2.0; // IC: Correction to account for TUBii's clock bug
 
   int ret= Pulser(rate,0.00000005,nPulse,MappedTUBiiPGTBaseAddress);
 

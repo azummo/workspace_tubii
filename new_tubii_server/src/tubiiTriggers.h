@@ -228,6 +228,7 @@ void resetFIFO()
 
 int TrigWordDelay(u32 delay)
 {
+  delay *= ns;
   if(delay<0){
 	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");

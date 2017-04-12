@@ -32,7 +32,7 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 	sprintf(tubii_err, "Tubii: Pulse width is too short.");
 	return -1;
   }
-  else if(rate!=0 && length > 1.0/(rate) ){
+  else if(rate!=0 && length/(1.0e9) > 1.0/(rate) ){
 	Log(WARNING, "TUBii: Pulse width is longer than period.");
 	sprintf(tubii_err, "Tubii: Pulse width is longer than period.");
 	return -1;
@@ -41,8 +41,8 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   u32 period = HunMHz/rate;
   if(rate==0) period=0;
 
-  u32 width = period - length*HunMHz; // Due to bad planning, width is length of time pulse is low
-  Log(VERBOSE, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
+  u32 width = period - length*ns; // Due to bad planning, width is length of time pulse is low
+  Log(WARNING, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
 
   // 0 is pulse width, 1 is period, 3 is no. of pulses
   mWriteReg((u32) MappedBaseAddress, RegOffset0, width);
@@ -54,6 +54,8 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 
 int Delay(u32 delay, void* MappedBaseAddress)
 {
+  delay *= ns;
+
   if(delay<0){
 	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");

@@ -151,7 +151,7 @@ void clockstatus(client *c, int argc, sds *argv)
 void MZHappy(client *c, int argc, sds *argv)
 {
   // Set for 1e9 pulses. Should renew this in the status readout.
-  int ret= Pulser(1,0.5,1e9,MappedHappyBaseAddress);
+  int ret= Pulser(1,500000000,1e9,MappedHappyBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -208,7 +208,7 @@ void SetGenericdelay(client *c, int argc, sds *argv)
   // Something like multiples of 10 go to sync and ones go to async
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length*ns;
+  u32 delay = length;
 
   // 2. Sync part
   int ret1= Delay(delay,MappedDelayBaseAddress);
@@ -250,7 +250,7 @@ void SetSmelliedelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length*ns;
+  u32 delay = length;
   int ret= Delay(delay,MappedSDelayBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
@@ -275,7 +275,7 @@ void SetTelliedelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length*ns;
+  u32 delay = length;
   int ret= Delay(delay,MappedTDelayBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
@@ -294,7 +294,7 @@ void GetSmellieRate(client *c, int argc, sds *argv)
 void GetSmelliePulseWidth(client *c, int argc, sds *argv)
 {
   float width= (mReadReg((u32) MappedSPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedSPulserBaseAddress, RegOffset0));
-  width *= 1/HunMHz;
+  width *= 1/ns;
   addReplyDouble(c, width);
 }
 
@@ -321,7 +321,7 @@ void GetTellieRate(client *c, int argc, sds *argv)
 void GetTelliePulseWidth(client *c, int argc, sds *argv)
 {
   float width= (mReadReg((u32) MappedTPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedTPulserBaseAddress, RegOffset0));
-  width *= 1/HunMHz;
+  width *= 1/ns;
   addReplyDouble(c, width);
 }
 
@@ -348,7 +348,7 @@ void GetPulserRate(client *c, int argc, sds *argv)
 void GetPulserWidth(client *c, int argc, sds *argv)
 {
   float width= (mReadReg((u32) MappedPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedPulserBaseAddress, RegOffset0));
-  width *= 1/HunMHz;
+  width *= 1/ns;
   addReplyDouble(c, width);
 }
 
@@ -642,8 +642,7 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&rate);
   rate *= 2.0; // IC: Correction to account for TUBii's clock bug
 
-  // Send many pulses of 50ns width
-  int ret= Pulser(rate,0.00000005,2147483647,MappedTUBiiPGTBaseAddress);
+  int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -651,7 +650,7 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
 
 void SetComboTrigger(client *c, int argc, sds *argv)
 {
-  u32 enableMask, logicMask;
+  uint32_t enableMask, logicMask;
   safe_strtoul(argv[1],&enableMask);
   safe_strtoul(argv[2],&logicMask);
 
@@ -680,7 +679,7 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length*ns;
+  u32 delay = length;
 
   int ret= TrigWordDelay(delay);
   if(ret!=0){
@@ -713,7 +712,7 @@ void gtdelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length*ns;
+  u32 delay = length;
   int ret= Delay(delay,MappedGTDelayBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
@@ -953,10 +952,6 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     }
 
     blockClient(c, client_disconnect, c);
-    return;
-
-err:
-    addReplyError(c, tubii_err);
     return;
 }
 
@@ -1213,11 +1208,6 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
         return AE_NOMORE;
     }
 
-    save_tubii_id = -1;
-    return AE_NOMORE;
-
-err:
-    Log(WARNING, "failed to save tubii state");
     save_tubii_id = -1;
     return AE_NOMORE;
 }

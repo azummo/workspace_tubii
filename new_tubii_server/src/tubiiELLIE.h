@@ -42,7 +42,7 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   if(rate==0) period=0;
 
   u32 width = period - length*ns; // Due to bad planning, width is length of time pulse is low
-  Log(WARNING, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
+  Log(VERBOSE, "TUBii: rate is %f Hz for %d pulses.", rate, nPulse);
 
   // 0 is pulse width, 1 is period, 3 is no. of pulses
   mWriteReg((u32) MappedBaseAddress, RegOffset0, width);

@@ -352,6 +352,8 @@ void GetPulserWidth(client *c, int argc, sds *argv)
   addReplyDouble(c, width);
 }
 
+//fake
+
 void GetPulserNPulses(client *c, int argc, sds *argv)
 {
   addReply(c, ":%d", mReadReg((u32) MappedPulserBaseAddress, RegOffset3));

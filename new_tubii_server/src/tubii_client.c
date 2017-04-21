@@ -394,7 +394,7 @@ int daq_connection(aeEventLoop *el, long long id, void *data)
 	}
 	else{
 		// No connection with Orca!!
-		auto_stop_tubii();
+		//auto_stop_tubii();
 	}
 
     return 5000;
@@ -638,7 +638,6 @@ void SetBurstTrigger(client *c, int argc, sds *argv)
 void SetTUBiiPGT(client *c, int argc, sds *argv)
 {
   float rate=0;
-  uint32_t nPulse=0;
   safe_strtof(argv[1],&rate);
 
   int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
@@ -1195,8 +1194,8 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      mReadReg((u32) MappedComboBaseAddress, RegOffset2),
                      mReadReg((u32) MappedComboBaseAddress, RegOffset3),
                      counter_mode, clockStatus(),
-                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
-                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     //mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
+                     //mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
                      );

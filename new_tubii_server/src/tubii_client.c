@@ -394,7 +394,7 @@ int daq_connection(aeEventLoop *el, long long id, void *data)
 	}
 	else{
 		// No connection with Orca!!
-		//auto_stop_tubii();
+		auto_stop_tubii();
 	}
 
     return 5000;
@@ -1194,8 +1194,8 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      mReadReg((u32) MappedComboBaseAddress, RegOffset2),
                      mReadReg((u32) MappedComboBaseAddress, RegOffset3),
                      counter_mode, clockStatus(),
-                     //mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
-                     //mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
+                     mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
                      );

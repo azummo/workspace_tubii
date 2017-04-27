@@ -397,7 +397,7 @@ int daq_connection(aeEventLoop *el, long long id, void *data)
 		auto_stop_tubii();
 	}
 
-    return 5000;
+    return 30000;
 }
 
 //// Shift Register commands
@@ -1183,7 +1183,8 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      "prescale_value = EXCLUDED.prescale_value,"
                      "prescale_channel = EXCLUDED.prescale_channel,"
                      "burst_rate = EXCLUDED.burst_rate,"
-                     "burst_channel = EXCLUDED.burst_channel;",
+                     "burst_channel = EXCLUDED.burst_channel"
+                     " RETURNING key;",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset11),

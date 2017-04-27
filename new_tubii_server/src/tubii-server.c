@@ -262,7 +262,7 @@ int main(int argc, char **argv)
     }
 
     /* check for ORCA connection */
-    if ((aeCreateTimeEvent(el, 5000, daq_connection, NULL, NULL)) == AE_ERR) {
+    if ((aeCreateTimeEvent(el, 30000, daq_connection, NULL, NULL)) == AE_ERR) {
         Log(WARNING, "failed to check tubii's daq connection");
         return 1;
     }

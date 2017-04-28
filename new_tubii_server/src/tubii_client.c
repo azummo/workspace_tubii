@@ -943,6 +943,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
                      );
+    printf("1--%s\n",command);
 
     if (db_exec_async(detector_db, command, save_db_client_callback, c)) {
         addReplyError(c, "TUBii: database isn't connected");
@@ -1132,6 +1133,7 @@ static void save_db_client_callback(PGresult *res, PGconn *conn, void *data)
                             PQgetvalue(res, 0, 0));
         goto err;
     }
+    printf("2--%i\n",key);
 
     addReplyLongLong(c, key);
     unblockClient(c);

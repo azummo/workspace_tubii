@@ -245,7 +245,7 @@ int main(int argc, char **argv)
     }
 
     /* Set up the database connection */
-    //auto_load_config("/mnt/settings.cfg");
+    auto_load_config("/mnt/settings.cfg");
     detector_db = db_connect(el, dbconfig.host, dbconfig.name, dbconfig.user, dbconfig.password);
     if( detector_db == 0) {
          Log(WARNING, "failed to set up database connection");

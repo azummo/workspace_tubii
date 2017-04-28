@@ -1202,6 +1202,7 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
                      );
+    printf("1*--%s\n",command);
 
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {
         Log(WARNING, "database isn't connected to save tubii state");
@@ -1240,6 +1241,7 @@ static void save_db_callback(PGresult *res, PGconn *conn, void *data)
             PQgetvalue(res, 0, 0));
         goto err;
     }
+    printf("2*--%i\n",key);
 
     return;
 

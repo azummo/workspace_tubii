@@ -284,83 +284,62 @@ void SetTelliedelay(client *c, int argc, sds *argv)
 
 void GetSmellieRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg((u32) MappedSPulserBaseAddress, RegOffset1);
-  float rate= HunMHz/period;
-  if(period==0) rate=0;
-
-  addReplyDouble(c, rate);
+  addReplyDouble(c, GetRate(MappedSPulserBaseAddress));
 }
 
 void GetSmelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedSPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedSPulserBaseAddress, RegOffset0));
-  width *= 1/ns;
-  addReplyDouble(c, width);
+  addReplyDouble(c, GetWidth(MappedSPulserBaseAddress));
 }
 
 void GetSmellieNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedSPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", GetNPulses(MappedSPulserBaseAddress));
 }
 
 void GetSmellieDelay(client *c, int argc, sds *argv)
 {
-  u32 length = mReadReg((u32) MappedSDelayBaseAddress, RegOffset3)/ns;
-  addReply(c, ":%d", length);
+  addReply(c, ":%d", GetDelayLength(MappedSDelayBaseAddress));
 }
 
 void GetTellieRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg((u32) MappedTPulserBaseAddress, RegOffset1);
-  float rate= HunMHz/period;
-  if(period==0) rate=0;
-
-  addReplyDouble(c, rate);
+  addReplyDouble(c, GetRate(MappedTPulserBaseAddress));
 }
 
 void GetTelliePulseWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedTPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedTPulserBaseAddress, RegOffset0));
-  width *= 1/ns;
-  addReplyDouble(c, width);
+  addReplyDouble(c, GetWidth(MappedTPulserBaseAddress));
 }
 
 void GetTellieNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedTPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", GetNPulses(MappedTPulserBaseAddress));
 }
 
 void GetTellieDelay(client *c, int argc, sds *argv)
 {
-  u32 length = mReadReg((u32) MappedTDelayBaseAddress, RegOffset3)/ns;
-  addReply(c, ":%d", length);
+  addReply(c, ":%d", GetDelayLength(MappedTDelayBaseAddress));
 }
 
 void GetPulserRate(client *c, int argc, sds *argv)
 {
-  u32 period= mReadReg((u32) MappedPulserBaseAddress, RegOffset1);
-  float rate= HunMHz/period;
-  if(period==0) rate=0;
-
-  addReplyDouble(c, rate);
+  addReplyDouble(c, GetRate(MappedPulserBaseAddress));
 }
 
 void GetPulserWidth(client *c, int argc, sds *argv)
 {
-  float width= (mReadReg((u32) MappedPulserBaseAddress, RegOffset1) - mReadReg((u32) MappedPulserBaseAddress, RegOffset0));
-  width *= 1/ns;
-  addReplyDouble(c, width);
+  addReplyDouble(c, GetWidth(MappedPulserBaseAddress));
 }
 
 void GetPulserNPulses(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%d", mReadReg((u32) MappedPulserBaseAddress, RegOffset3));
+  addReply(c, ":%d", GetNPulses(MappedPulserBaseAddress));
 }
 
 void GetDelay(client *c, int argc, sds *argv)
 {
-  u32 length = mReadReg((u32) MappedDelayBaseAddress, RegOffset3)/ns;
-  addReply(c, ":%d", length);
+  addReply(c, ":%d", GetDelayLength(MappedDelayBaseAddress));
 }
 
 //// DAQ Connection and emergency stop functions
@@ -777,7 +756,7 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
     // Check if we are in rate mode
 	if(counter_mode == 1){
 	  // Toggle latchs
-	  GetRate();
+	  GetCounterRate();
 	}
 
 	// Renew the MZHappy Pulser
@@ -1043,7 +1022,7 @@ static void load_db_callback(PGresult *res, PGconn *conn, void *data)
         if (!strcmp(name, "control_reg")) {
         	ControlReg(value);
         } else if (!strcmp(name, "trigger_mask")) {
-        	triggerMask(value,0);
+        	individualTriggerMask(value,"sync");
         } else if (!strcmp(name, "speaker_mask")) {
             speakerMask(value);
         } else if (!strcmp(name, "counter_mask")) {

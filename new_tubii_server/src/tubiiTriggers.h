@@ -102,7 +102,7 @@ int counterMode(int mode)
   return counter_mode;
 }
 
-void GetRate()
+void GetCounterRate()
 {
   // Toggle Latch
   counterLatch(0);
@@ -153,6 +153,24 @@ int triggerMask(u32 mask, u32 mask_async)
   if((mask & mask_async)!=0) return -1;
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,mask);
   mWriteReg((u32) MappedTrigBaseAddress, RegOffset8,mask_async);
+  return mask;
+}
+
+int individualTriggerMask(u32 mask, char* type)
+{
+  if(type=="sync"){
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset3, mask);
+    u32 async= mReadReg((u32) MappedTrigBaseAddress, RegOffset8);
+    async = async - (async & mask);
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset8, async);
+  }
+  else if(type=="async"){
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset8, mask);
+    u32 sync= mReadReg((u32) MappedTrigBaseAddress, RegOffset3);
+    sync = sync - (sync & mask);
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset3, sync);
+  }
+
   return mask;
 }
 

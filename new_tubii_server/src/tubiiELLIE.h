@@ -52,6 +52,28 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   return 0;
 }
 
+double GetRate(void* MappedBaseAddress)
+{
+  u32 period= mReadReg((u32) MappedBaseAddress, RegOffset1);
+  float rate= HunMHz/period;
+  if(period==0) rate=0;
+
+  return rate;
+}
+
+double GetWidth(void* MappedBaseAddress)
+{
+  float width= (mReadReg((u32) MappedBaseAddress, RegOffset1) - mReadReg((u32) MappedBaseAddress, RegOffset0));
+  width *= 1/ns;
+
+  return width;
+}
+
+int GetNPulses(void* MappedBaseAddress)
+{
+  return mReadReg((u32) MappedBaseAddress, RegOffset3);
+}
+
 int Delay(u32 delay, void* MappedBaseAddress)
 {
   delay *= ns;
@@ -67,6 +89,11 @@ int Delay(u32 delay, void* MappedBaseAddress)
   Log(VERBOSE, "TUBii: delay length is %d ns.", delay);
 
   return 0;
+}
+
+int GetDelayLength(void* MappedBaseAddress)
+{
+  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3)/ns;
 }
 
 int Lengthen(char* dArg)

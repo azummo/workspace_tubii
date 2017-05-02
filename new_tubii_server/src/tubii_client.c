@@ -366,11 +366,10 @@ void GetDelay(client *c, int argc, sds *argv)
 //// DAQ Connection and emergency stop functions
 int auto_stop_tubii()
 {
-  //RESET THE PULSERS AND TRIGGER MASK
+  //RESET THE PULSERS
   Pulser(0,0,0,MappedSPulserBaseAddress);
   Pulser(0,0,0,MappedTPulserBaseAddress);
   Pulser(0,0,0,MappedPulserBaseAddress);
-  triggerMask(0,0);
   return 0;
 }
 

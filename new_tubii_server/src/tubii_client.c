@@ -333,6 +333,7 @@ void GetTellieDelay(client *c, int argc, sds *argv)
 {
   Log(WARNING,"T--   D  %d",GetDelayLength(MappedTDelayBaseAddress));
   Log(WARNING,"T--   D  %d",GetDelayLength(MappedTDelayBaseAddress));
+  Log(WARNING, "TUBii: delay length is still %d.", mReadReg((u32) MappedTDelayBaseAddress, RegOffset3));
   addReply(c, ":%d", GetDelayLength(MappedTDelayBaseAddress));
 }
 

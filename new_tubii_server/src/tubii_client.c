@@ -1238,7 +1238,6 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      );
 
     Log(WARNING, "---- %s\n", command);
-    Log(WARNING, "---fdff\n");
     Log(WARNING, "--\n");
 
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {

@@ -55,7 +55,9 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 double GetRate(void* MappedBaseAddress)
 {
   u32 period= mReadReg((u32) MappedBaseAddress, RegOffset1);
+  Log(WARNING,"period %d\n",period);
   float rate= HunMHz/period;
+  Log(WARNING,"rate %f\n",rate);
   if(period==0) rate=0;
 
   return rate;
@@ -86,14 +88,11 @@ int Delay(u32 delay, void* MappedBaseAddress)
 
   // Set Delay
   mWriteReg((u32) MappedBaseAddress, RegOffset3, delay);
-  Log(WARNING, "TUBii: delay length is %d ns. %d ticks.", delay, mReadReg((u32) MappedBaseAddress, RegOffset3));
-
   return 0;
 }
 
 int GetDelayLength(void* MappedBaseAddress)
 {
-  Log(WARNING,"%d\n",mReadReg((u32) MappedBaseAddress, RegOffset3));
   return mReadReg((u32) MappedBaseAddress, RegOffset3)/ns;
 }
 

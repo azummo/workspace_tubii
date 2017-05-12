@@ -331,7 +331,7 @@ void GetTellieNPulses(client *c, int argc, sds *argv)
 
 void GetTellieDelay(client *c, int argc, sds *argv)
 {
-  Log(WARNING,"T-D  %d",GetDelayLength(MappedTDelayBaseAddress));
+  Log(WARNING,"TD  %d",GetDelayLength(MappedTDelayBaseAddress));
   addReply(c, ":%d", GetDelayLength(MappedTDelayBaseAddress));
 }
 

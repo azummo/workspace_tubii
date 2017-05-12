@@ -86,7 +86,7 @@ int Delay(u32 delay, void* MappedBaseAddress)
 
   // Set Delay
   mWriteReg((u32) MappedBaseAddress, RegOffset3, delay);
-  Log(VERBOSE, "TUBii: delay length is %d ns.", delay);
+  Log(WARNING, "TUBii: delay length is %d ns.", delay);
 
   return 0;
 }

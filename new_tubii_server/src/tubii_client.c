@@ -631,7 +631,7 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
 
   int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
   Log(WARNING,"%f\n",GetRate(MappedTUBiiPGTBaseAddress));
-  Log(WARNING,"Why\n");
+  Log(WARNING,"Why is this happening\n");
 
   save_tubii_state();
 

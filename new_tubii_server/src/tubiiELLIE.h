@@ -55,9 +55,7 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 
 double GetRate(void* MappedBaseAddress)
 {
-  Log(WARNING,"horse %d\n",mReadReg((u32) MappedBaseAddress, RegOffset1));
   u32 period= mReadReg((u32) MappedBaseAddress, RegOffset1);
-  Log(WARNING,"period %d\n",period);
   float rate= HunMHz/period;
   Log(WARNING,"rate %f\n",rate);
   if(period==0) rate=0;

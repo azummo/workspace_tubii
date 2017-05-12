@@ -199,6 +199,8 @@ void SetGenericpulser(client *c, int argc, sds *argv)
   /*int ret2= Muxer("4");
   int ret3= LoadShift(argv[1]);
   */
+  save_tubii_state();
+
   addReplyStatus(c, "+OK");
 }
 
@@ -221,6 +223,8 @@ void SetGenericdelay(client *c, int argc, sds *argv)
   //int ret2= Muxer("5");
   //int ret3= LoadShift(argv[1]);
 
+  save_tubii_state();
+
   addReplyStatus(c, "+OK");
 }
 
@@ -242,6 +246,8 @@ void SetSmelliepulser(client *c, int argc, sds *argv)
 
   int ret= Pulser(rate,length,nPulse,MappedSPulserBaseAddress);
 
+  save_tubii_state();
+
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
 }
@@ -252,6 +258,8 @@ void SetSmelliedelay(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&length);
   u32 delay = length;
   int ret= Delay(delay,MappedSDelayBaseAddress);
+
+  save_tubii_state();
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -267,6 +275,8 @@ void SetTelliepulser(client *c, int argc, sds *argv)
 
   int ret= Pulser(rate,length,nPulse,MappedTPulserBaseAddress);
 
+  save_tubii_state();
+
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);;
 }
@@ -277,6 +287,8 @@ void SetTelliedelay(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&length);
   u32 delay = length;
   int ret= Delay(delay,MappedTDelayBaseAddress);
+
+  save_tubii_state();
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -619,6 +631,8 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&rate);
 
   int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
+
+  save_tubii_state();
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);

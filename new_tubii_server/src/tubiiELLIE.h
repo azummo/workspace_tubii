@@ -93,7 +93,8 @@ int Delay(u32 delay, void* MappedBaseAddress)
 
 int GetDelayLength(void* MappedBaseAddress)
 {
-  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3)*(1.0/ns);
+  Log(WARNING, "TUBii: what? %d", mReadReg((u32) MappedBaseAddress, RegOffset3));
+  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3);
 }
 
 int Lengthen(char* dArg)

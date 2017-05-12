@@ -630,8 +630,6 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   safe_strtof(argv[1],&rate);
 
   int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
-  Log(WARNING,"%f\n",GetRate(MappedTUBiiPGTBaseAddress));
-  Log(WARNING,"Why is this happening\n");
 
   save_tubii_state();
 
@@ -1229,7 +1227,7 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset0),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset3),
-                     GetRate(MappedPulserBaseAddress),
+                     GetRate(MappedTUBiiPGTBaseAddress),
                      GetRate(MappedSPulserBaseAddress),GetWidth(MappedSPulserBaseAddress),
                      GetNPulses(MappedSPulserBaseAddress),GetDelayLength(MappedSDelayBaseAddress),
                      GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),

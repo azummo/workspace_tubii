@@ -93,8 +93,8 @@ int Delay(u32 delay, void* MappedBaseAddress)
 
 int GetDelayLength(void* MappedBaseAddress)
 {
-  Log(WARNING,"%d\n",mReadReg((u32) MappedDelayBaseAddress, RegOffset3));
-  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3)/ns;
+  Log(WARNING,"%d\n",mReadReg((u32) MappedBaseAddress, RegOffset3));
+  return mReadReg((u32) MappedBaseAddress, RegOffset3)/ns;
 }
 
 int Lengthen(char* dArg)

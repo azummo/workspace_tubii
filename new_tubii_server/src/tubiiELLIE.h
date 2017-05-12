@@ -86,14 +86,14 @@ int Delay(u32 delay, void* MappedBaseAddress)
 
   // Set Delay
   mWriteReg((u32) MappedBaseAddress, RegOffset3, delay);
-  Log(WARNING, "TUBii: delay length is %d ns.", delay);
+  Log(WARNING, "TUBii: delay length is %d ns. %d ticks.", delay, mReadReg((u32) MappedBaseAddress, RegOffset3));
 
   return 0;
 }
 
 int GetDelayLength(void* MappedBaseAddress)
 {
-  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3)/ns;
+  return mReadReg((u32) MappedDelayBaseAddress, RegOffset3)*(1.0/ns);
 }
 
 int Lengthen(char* dArg)

@@ -47,6 +47,7 @@ int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
   // 0 is pulse width, 1 is period, 3 is no. of pulses
   mWriteReg((u32) MappedBaseAddress, RegOffset0, width);
   mWriteReg((u32) MappedBaseAddress, RegOffset1, period);
+  Log(WARNING,"period %d\n",mReadReg((u32) MappedBaseAddress, RegOffset1));
   mWriteReg((u32) MappedBaseAddress, RegOffset3, nPulse);
 
   return 0;

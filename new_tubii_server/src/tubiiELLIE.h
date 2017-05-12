@@ -57,9 +57,9 @@ double GetRate(void* MappedBaseAddress)
 {
   u32 period= mReadReg((u32) MappedBaseAddress, RegOffset1);
   float rate= HunMHz/period;
-  Log(WARNING,"rate %f\n",rate);
   if(period==0) rate=0;
 
+  Log(WARNING,"rate %f\n",rate);
   return rate;
 }
 

@@ -1237,6 +1237,9 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
                      );
 
+    Log(WARNING, "%s\n", command);
+    printf("%s\n", command);
+
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {
         Log(WARNING, "database isn't connected to save tubii state");
         save_tubii_id = -1;

@@ -904,10 +904,12 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     // SELECT save_tubii
     // Writes to the next free row or (if settings match previous, returns that instead)
     sprintf(command, "SELECT save_tubii ("
-                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u"
-                     ");",
+                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
+                     "%u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u"
+           	         ");",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
-                     getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
+                     getSyncTriggerMask(), getAsyncTriggerMask(),
+                     getSpeakerMask(), getCounterMask(),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset12),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset14),
@@ -918,8 +920,16 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      counter_mode, clockStatus(),
                      mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
                      mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset0),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
-                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3),
+                     GetRate(MappedTUBiiPGTBaseAddress),
+                     GetRate(MappedSPulserBaseAddress),GetWidth(MappedSPulserBaseAddress),
+                     GetNPulses(MappedSPulserBaseAddress),GetDelayLength(MappedSDelayBaseAddress),
+                     GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
+                     GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
+                     GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
                      );
 
     if (db_exec_async(detector_db, command, save_db_client_callback, c)) {
@@ -1023,6 +1033,8 @@ static void load_db_callback(PGresult *res, PGconn *conn, void *data)
         	ControlReg(value);
         } else if (!strcmp(name, "trigger_mask")) {
         	individualTriggerMask(value,"sync");
+        } else if (!strcmp(name, "async_trigger_mask")) {
+        	individualTriggerMask(value,"async");
         } else if (!strcmp(name, "speaker_mask")) {
             speakerMask(value);
         } else if (!strcmp(name, "counter_mask")) {
@@ -1050,8 +1062,10 @@ static void load_db_callback(PGresult *res, PGconn *conn, void *data)
         } else if (!strcmp(name, "prescale_channel")) {
         	mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset3, value);
         } else if (!strcmp(name, "burst_rate")) {
-        	mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, value);
+        	mWriteReg((u32) MappedBurstBaseAddress, RegOffset0, value);
         } else if (!strcmp(name, "burst_channel")) {
+        	mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, value);
+        } else if (!strcmp(name, "burst_slave")) {
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, value);
         } else {
             addReplyErrorFormat(c, "got unknown field '%s'", name);
@@ -1137,16 +1151,23 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
 
     // Inserts the current state into row 0
     sprintf(command, "INSERT INTO TUBii ("
-                     "key,control_reg, trigger_mask, speaker_mask, counter_mask,"
+                     "key,control_reg, trigger_mask, async_trigger_mask,"
+                     "speaker_mask, counter_mask,"
                      "caen_gain_reg, caen_channel_reg, lockout_reg, dgt_reg, dac_reg,"
                      "combo_enable_mask, combo_mask, counter_mode, clock_status,"
-                     "prescale_value, prescale_channel, burst_rate, burst_channel"
+                     "prescale_value, prescale_channel,"
+                     "burst_rate, burst_channel, burst_slave, pgt_rate,"
+                     "smellie_pulse_rate, smellie_pulse_width, smellie_npulses, smellie_delay_length,"
+                     "tellie_pulse_rate, tellie_pulse_width, tellie_npulses, tellie_delay_length,"
+                     "pulse_rate, pulse_width, npulses, delay_length"
                      ") "
                      "VALUES (0, "
-                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u)"
+                     "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
+                     " %u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u)"
                      " ON CONFLICT (key) DO UPDATE SET "
                      "control_reg = EXCLUDED.control_reg,"
                      "trigger_mask = EXCLUDED.trigger_mask,"
+                     "async_trigger_mask = EXCLUDED.async_trigger_mask,"
                      "speaker_mask = EXCLUDED.speaker_mask,"
                      "counter_mask = EXCLUDED.counter_mask,"
                      "caen_gain_reg = EXCLUDED.caen_gain_reg,"
@@ -1161,10 +1182,25 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      "prescale_value = EXCLUDED.prescale_value,"
                      "prescale_channel = EXCLUDED.prescale_channel,"
                      "burst_rate = EXCLUDED.burst_rate,"
-                     "burst_channel = EXCLUDED.burst_channel"
+                     "burst_channel = EXCLUDED.burst_channel,"
+                     "burst_slave = EXCLUDED.burst_slave,"
+                     "pgt_rate = EXCLUDED.pgt_rate,"
+                     "smellie_pulse_rate = EXCLUDED.smellie_pulse_rate,"
+                     "smellie_pulse_width = EXCLUDED.smellie_pulse_width,"
+                     "smellie_npulses = EXCLUDED.smellie_npulses,"
+                     "smellie_delay_length = EXCLUDED.smellie_delay_length,"
+                     "tellie_pulse_rate = EXCLUDED.tellie_pulse_rate,"
+                     "tellie_pulse_width = EXCLUDED.tellie_pulse_width,"
+                     "tellie_npulses = EXCLUDED.tellie_npulses,"
+                     "tellie_delay_length = EXCLUDED.tellie_delay_length,"
+                     "pulse_rate = EXCLUDED.pulse_rate,"
+                     "pulse_width = EXCLUDED.pulse_width,"
+                     "npulses = EXCLUDED.npulses,"
+                     "delay_length = EXCLUDED.delay_length"
                      " RETURNING key;",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
-                     getSyncTriggerMask(), getSpeakerMask(), getCounterMask(),
+                     getSyncTriggerMask(), getAsyncTriggerMask(),
+                     getSpeakerMask(), getCounterMask(),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset11),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset12),
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset14),
@@ -1175,8 +1211,16 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      counter_mode, clockStatus(),
                      mReadReg((u32) MappedPrescaleBaseAddress, RegOffset2),
                      mReadReg((u32) MappedPrescaleBaseAddress, RegOffset3),
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset0),
                      mReadReg((u32) MappedBurstBaseAddress, RegOffset2),
-                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3)
+                     mReadReg((u32) MappedBurstBaseAddress, RegOffset3),
+                     GetRate(MappedPulserBaseAddress),
+                     GetRate(MappedSPulserBaseAddress),GetWidth(MappedSPulserBaseAddress),
+                     GetNPulses(MappedSPulserBaseAddress),GetDelayLength(MappedSDelayBaseAddress),
+                     GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
+                     GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
+                     GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
                      );
 
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {

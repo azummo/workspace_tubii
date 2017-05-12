@@ -288,7 +288,8 @@ void SetTelliedelay(client *c, int argc, sds *argv)
   u32 delay = length;
   int ret= Delay(delay,MappedTDelayBaseAddress);
   save_tubii_state();
-//comment
+  Log(WARNING, "state");
+
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
 }

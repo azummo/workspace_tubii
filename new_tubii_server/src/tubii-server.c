@@ -224,7 +224,7 @@ int main(int argc, char **argv)
     signal(SIGPIPE, SIG_IGN);
     signal(SIGINT, sigint_handler);
 
-    Log(WARNING, "tubii server started");
+    Log(NOTICE, "tubii server started");
 
     el = aeCreateEventLoop(100);
 

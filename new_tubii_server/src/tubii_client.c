@@ -637,6 +637,11 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   else addReplyError(c, tubii_err);
 }
 
+void GetTUBiiPGT(client *c, int argc, sds *argv)
+{
+  addReplyDouble(c, GetRate(MappedTUBiiPGTBaseAddress));
+}
+
 void SetComboTrigger(client *c, int argc, sds *argv)
 {
   uint32_t enableMask, logicMask;

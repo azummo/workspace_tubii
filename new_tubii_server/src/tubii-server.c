@@ -154,6 +154,7 @@ struct command commandTable[] = {
 		{"stopReadout",	   		stop_data_readout,  1},
 		{"setBurstTrigger",	    SetBurstTrigger,    4},
 		{"setTUBiiPGT",         SetTUBiiPGT,        2},
+		{"getTUBiiPGT",         GetTUBiiPGT,        1},
 		{"setComboTrigger",    	SetComboTrigger,    3},
 		{"setPrescaleTrigger", 	SetPrescaleTrigger, 3},
 		{"GetTrigger",  		GetTrigger,  1},

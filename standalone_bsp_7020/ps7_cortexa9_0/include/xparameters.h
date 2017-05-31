@@ -230,9 +230,9 @@
 #define XPAR_TRIGGERS_0_S00_AXI_HIGHADDR 0x43C09FFF
 
 
-/* Definitions for peripheral TRIGWORDDELAY_0 */
-#define XPAR_TRIGWORDDELAY_0_S00_AXI_BASEADDR 0x43C13000
-#define XPAR_TRIGWORDDELAY_0_S00_AXI_HIGHADDR 0x43C13FFF
+/* Definitions for peripheral TRIGWORDFIFO_0 */
+#define XPAR_TRIGWORDFIFO_0_S00_AXI_BASEADDR 0x43C13000
+#define XPAR_TRIGWORDFIFO_0_S00_AXI_HIGHADDR 0x43C13FFF
 
 
 /******************************************************************/

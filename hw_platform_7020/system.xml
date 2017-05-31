@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Apr 21 17:37:13 2017" VIVADOVERSION="2013.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue May 30 16:58:13 2017" VIVADOVERSION="2013.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:zynq:microzed:e" DEVICE="7z020" NAME="system_imp" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,12 +25,12 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="trig_out" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
+    <PORT DIR="O" NAME="Outt" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_reduced_logic_0" PORT="Res"/>
       </CONNECTIONS>
@@ -111,7 +111,7 @@
       <CONNECTIONS>
         <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-        <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+        <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
         <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
       </CONNECTIONS>
@@ -133,7 +133,7 @@
         <CONNECTION INSTANCE="util_vector_logic_7" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-        <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+        <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
         <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
         <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
       </CONNECTIONS>
@@ -148,12 +148,12 @@
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="enablemux"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
+    <PORT DIR="O" NAME="control_rdy_II" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
       <CONNECTIONS>
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="control_rdy"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" NAME="control_rdy_II" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
+    <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
       <CONNECTIONS>
         <CONNECTION INSTANCE="ShiftRegisters_0" PORT="control_rdy"/>
       </CONNECTIONS>
@@ -206,7 +206,6 @@
         <CONNECTION INSTANCE="genericPulser" PORT="s00_axi_aclk"/>
         <CONNECTION INSTANCE="telliePulser" PORT="s00_axi_aclk"/>
         <CONNECTION INSTANCE="smelliePulser" PORT="s00_axi_aclk"/>
-        <CONNECTION INSTANCE="tellieDelay" PORT="s00_axi_aclk"/>
         <CONNECTION INSTANCE="smellieDelay" PORT="s00_axi_aclk"/>
         <CONNECTION INSTANCE="genericDelay" PORT="s00_axi_aclk"/>
         <CONNECTION INSTANCE="axi_interconnect_0_m22_couplers_auto_cc" PORT="m_axi_aclk"/>
@@ -216,6 +215,15 @@
         <CONNECTION INSTANCE="axi_interconnect_0_m15_couplers_auto_cc" PORT="m_axi_aclk"/>
         <CONNECTION INSTANCE="axi_interconnect_0_m14_couplers_auto_cc" PORT="m_axi_aclk"/>
         <CONNECTION INSTANCE="axi_interconnect_0_m12_couplers_auto_cc" PORT="m_axi_aclk"/>
+        <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_aclk"/>
+        <CONNECTION INSTANCE="fifo_generator_0" PORT="wr_clk"/>
+        <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_aclk"/>
+        <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_aclk"/>
+        <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_aclk"/>
+        <CONNECTION INSTANCE="tellieDelay" PORT="s00_axi_aclk"/>
+        <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_aclk"/>
+        <CONNECTION INSTANCE="fifo_generator_1" PORT="clk"/>
+        <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_aclk"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="O" NAME="Outtt" SIGIS="undef" SIGNAME="triggers_0_gtrigout">
@@ -410,8 +418,8 @@
         </PORT>
         <PORT DIR="O" NAME="control_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_control_rdy">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="control_rdy_II"/>
             <CONNECTION INSTANCE="External_Ports" PORT="control_rdy"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="control_rdy_II"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="caen_rdy" SIGIS="undef" SIGNAME="ShiftRegisters_0_caen_rdy">
@@ -581,158 +589,6 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE FULLNAME="/TrigWordDelay_0" HWVERSION="1.0" INSTANCE="TrigWordDelay_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="TrigWordDelay" VLNV="xilinx.com:user:TrigWordDelay:1.0">
-      <PARAMETERS>
-        <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="4"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_TrigWordDelay_0_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-        <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C13000"/>
-        <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C13FFF"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="I" NAME="wordin" SIGIS="undef" SIGNAME="triggers_0_trig_word">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="trig_word"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="wordout" SIGIS="undef" SIGNAME="TrigWordDelay_0_wordout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="dtrig_word"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_awprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_wstrb">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wstrb"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_arprot">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arprot"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="TrigWordDelay_0_s00_axi_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rready"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="axi_interconnect_0_tier2_xbar_2" NAME="S00_AXI" TYPE="SLAVE">
-          <PORTMAPS>
-            <PORTMAP PHYSICAL="s00_axi_awaddr"/>
-            <PORTMAP PHYSICAL="s00_axi_awprot"/>
-            <PORTMAP PHYSICAL="s00_axi_awvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_awready"/>
-            <PORTMAP PHYSICAL="s00_axi_wdata"/>
-            <PORTMAP PHYSICAL="s00_axi_wstrb"/>
-            <PORTMAP PHYSICAL="s00_axi_wvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_wready"/>
-            <PORTMAP PHYSICAL="s00_axi_bresp"/>
-            <PORTMAP PHYSICAL="s00_axi_bvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_bready"/>
-            <PORTMAP PHYSICAL="s00_axi_araddr"/>
-            <PORTMAP PHYSICAL="s00_axi_arprot"/>
-            <PORTMAP PHYSICAL="s00_axi_arvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_arready"/>
-            <PORTMAP PHYSICAL="s00_axi_rdata"/>
-            <PORTMAP PHYSICAL="s00_axi_rresp"/>
-            <PORTMAP PHYSICAL="s00_axi_rvalid"/>
-            <PORTMAP PHYSICAL="s00_axi_rready"/>
-          </PORTMAPS>
-        </BUSINTERFACE>
-      </BUSINTERFACES>
-    </MODULE>
     <MODULE FULLNAME="/axi_interconnect_0/m02_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m02_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
       <PARAMETERS>
         <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
@@ -765,7 +621,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_787"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_977"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1013,7 +869,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_788"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_978"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1229,6 +1085,502 @@
         </PORT>
       </PORTS>
     </MODULE>
+    <MODULE FULLNAME="/axi_interconnect_0/m04_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
+        <PARAMETER NAME="C_AXI_ID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_S_AXI_ACLK_RATIO" VALUE="1"/>
+        <PARAMETER NAME="C_M_AXI_ACLK_RATIO" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_IS_ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_AWUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ARUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_WUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_RUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_BUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_WRITE" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_READ" VALUE="1"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="3"/>
+        <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
+        <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+        <PARAMETER NAME="ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ARUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_979"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="m_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+    </MODULE>
+    <MODULE FULLNAME="/axi_interconnect_0/m05_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
+        <PARAMETER NAME="C_AXI_ID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_S_AXI_ACLK_RATIO" VALUE="1"/>
+        <PARAMETER NAME="C_M_AXI_ACLK_RATIO" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_IS_ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_AWUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ARUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_WUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_RUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_BUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_WRITE" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_READ" VALUE="1"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="3"/>
+        <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
+        <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+        <PARAMETER NAME="ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ARUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_980"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="m_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+    </MODULE>
     <MODULE FULLNAME="/axi_interconnect_0/m12_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m12_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
       <PARAMETERS>
         <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
@@ -1261,7 +1613,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_789"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_981"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1509,7 +1861,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_790"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_982"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -1757,7 +2109,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_791"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_983"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2005,7 +2357,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_792"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_984"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2253,7 +2605,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_793"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_985"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2501,7 +2853,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_794"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_986"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2717,6 +3069,254 @@
         </PORT>
       </PORTS>
     </MODULE>
+    <MODULE FULLNAME="/axi_interconnect_0/m20_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
+        <PARAMETER NAME="C_AXI_ID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_S_AXI_ACLK_RATIO" VALUE="1"/>
+        <PARAMETER NAME="C_M_AXI_ACLK_RATIO" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_IS_ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_AWUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ARUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_WUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_RUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_BUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_WRITE" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_SUPPORTS_READ" VALUE="1"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="3"/>
+        <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
+        <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+        <PARAMETER NAME="ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ARUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_987"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_2" PORT="m_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="m_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="s00_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+    </MODULE>
     <MODULE FULLNAME="/axi_interconnect_0/m21_couplers/auto_cc" HWVERSION="2.1" INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" IPTYPE="BUS" MODCLASS="BUS" MODTYPE="axi_clock_converter" VLNV="xilinx.com:ip:axi_clock_converter:2.1">
       <PARAMETERS>
         <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
@@ -2749,7 +3349,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_795"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_988"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2997,7 +3597,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_796"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_989"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3245,7 +3845,7 @@
         <PARAMETER NAME="ACLK_ASYNC" VALUE="1"/>
         <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
         <PARAMETER NAME="ACLK_RATIO" VALUE="1:2"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_797"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_cc_990"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -3491,7 +4091,7 @@
         <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
         <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_146"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_auto_pc_160"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5022,7 +5622,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1523"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_0_1565"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -5139,16 +5739,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_awaddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awaddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_awaddr"/>
@@ -5165,16 +5765,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_awprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_awprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_awprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="oneshot_pulse_1" PORT="s00_axi_awprot"/>
@@ -5188,16 +5788,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_awvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_awvalid"/>
@@ -5214,16 +5814,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_awready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_awready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_awready"/>
@@ -5240,16 +5840,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_wdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_wdata"/>
@@ -5266,16 +5866,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_wstrb"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wstrb"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_wstrb"/>
@@ -5292,16 +5892,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_wvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_wvalid"/>
@@ -5318,16 +5918,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_wready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_wready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_wready"/>
@@ -5344,16 +5944,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_bresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_bresp"/>
@@ -5370,16 +5970,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_bvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_bvalid"/>
@@ -5396,16 +5996,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_bready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_bready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_bready"/>
@@ -5422,16 +6022,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_araddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_araddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_araddr"/>
@@ -5448,16 +6048,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_arprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_arprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_arprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="oneshot_pulse_1" PORT="s00_axi_arprot"/>
@@ -5471,16 +6071,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_arvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_arvalid"/>
@@ -5497,16 +6097,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_arready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_arready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_arready"/>
@@ -5523,16 +6123,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_rdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_rdata"/>
@@ -5549,16 +6149,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_rresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_rresp"/>
@@ -5575,16 +6175,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_rvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_rvalid"/>
@@ -5601,16 +6201,16 @@
             <CONNECTION INSTANCE="axi_interconnect_0_m03_couplers_auto_cc" PORT="s_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
             <CONNECTION INSTANCE="burstTrigger_0" PORT="s00_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="comboTrigger_0" PORT="s00_axi_rready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="triggers_0" PORT="s00_axi_rready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="fifo_readout_0" PORT="s00_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="s_axi_rready"/>
@@ -6851,7 +7451,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1524"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_1_1566"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -8686,7 +9286,7 @@
         <PARAMETER NAME="M15_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M15_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1525"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_tier2_xbar_2_1567"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -8800,9 +9400,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_awaddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8810,6 +9407,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_awaddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_awaddr"/>
@@ -8826,9 +9426,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_awprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8836,6 +9433,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_awprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_awprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_awprot"/>
@@ -8852,9 +9452,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_awvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8862,6 +9459,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_awvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_awvalid"/>
@@ -8878,9 +9478,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_awready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8888,6 +9485,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_awready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_awready"/>
@@ -8904,9 +9504,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_wdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8914,6 +9511,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_wdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_wdata"/>
@@ -8930,9 +9530,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_wstrb"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8940,6 +9537,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_wstrb"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_wstrb"/>
@@ -8956,9 +9556,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_wvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8966,6 +9563,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_wvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_wvalid"/>
@@ -8982,9 +9582,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_wready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -8992,6 +9589,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_wready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_wready"/>
@@ -9008,9 +9608,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_bresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9018,6 +9615,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_bresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_bresp"/>
@@ -9034,9 +9634,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_bvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9044,6 +9641,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_bvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_bvalid"/>
@@ -9060,9 +9660,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_bready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9070,6 +9667,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_bready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_bready"/>
@@ -9086,9 +9686,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_araddr"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9096,6 +9693,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_araddr"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_araddr"/>
@@ -9112,9 +9712,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_arprot"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9122,6 +9719,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_arprot"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_arprot"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_arprot"/>
@@ -9138,9 +9738,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_arvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9148,6 +9745,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_arvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_arvalid"/>
@@ -9164,9 +9764,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_arready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9174,6 +9771,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_arready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_arready"/>
@@ -9190,9 +9790,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_rdata"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9200,6 +9797,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_rdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_rdata"/>
@@ -9216,9 +9816,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_rresp"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9226,6 +9823,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_rresp"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_rresp"/>
@@ -9242,9 +9842,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_rvalid"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9252,6 +9849,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_rvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_rvalid"/>
@@ -9268,9 +9868,6 @@
             <CONNECTION INSTANCE="MZ_Happy" PORT="s00_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="s00_axi_rready"/>
-          </CONNECTIONS>
-          <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m16_couplers_auto_cc" PORT="s_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
@@ -9278,6 +9875,9 @@
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m19_couplers_auto_cc" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="s_axi_rready"/>
           </CONNECTIONS>
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_interconnect_0_m21_couplers_auto_cc" PORT="s_axi_rready"/>
@@ -9301,8 +9901,8 @@
         <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_AXI_PROTOCOL" VALUE="2"/>
         <PARAMETER NAME="C_NUM_ADDR_RANGES" VALUE="8"/>
-        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0x0000000043c120000000000043c0f0000000000043c090000000000043c040000000000043c020000000000043c010000000000043c000000000000043c200000000000043c160000000000043c150000000000043c140000000000043c130000000000043c100000000000043c0e0000000000043c0d0000000000043c080000000000043c110000000000043c0c0000000000043c0b0000000000043c0a0000000000043c070000000000043c060000000000043c050000000000043c03000"/>
-        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x0000000c0000000c0000000c0000000c0000000c0000000c0000000c000000100000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c"/>
+        <PARAMETER NAME="C_M_AXI_BASE_ADDR" VALUE="0x0000000043c160000000000043c150000000000043c140000000000043c130000000000043c100000000000043c0e0000000000043c0d0000000000043c080000000000043c110000000000043c0c0000000000043c0b0000000000043c0a0000000000043c070000000000043c060000000000043c050000000000043c030000000000043c120000000000043c0f0000000000043c090000000000043c040000000000043c020000000000043c010000000000043c000000000000043c20000"/>
+        <PARAMETER NAME="C_M_AXI_ADDR_WIDTH" VALUE="0x0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c0000000c00000010"/>
         <PARAMETER NAME="C_S_AXI_BASE_ID" VALUE="0x00000000"/>
         <PARAMETER NAME="C_S_AXI_THREAD_ID_WIDTH" VALUE="0x0000000c"/>
         <PARAMETER NAME="C_AXI_SUPPORTS_USER_SIGNALS" VALUE="0"/>
@@ -10009,14 +10609,14 @@
         <PARAMETER NAME="S13_BASE_ID" VALUE="0x0000d000"/>
         <PARAMETER NAME="S14_BASE_ID" VALUE="0x0000e000"/>
         <PARAMETER NAME="S15_BASE_ID" VALUE="0x0000f000"/>
-        <PARAMETER NAME="M00_A00_BASE_ADDR" VALUE="0x0000000043c03000"/>
-        <PARAMETER NAME="M00_A01_BASE_ADDR" VALUE="0x0000000043c05000"/>
-        <PARAMETER NAME="M00_A02_BASE_ADDR" VALUE="0x0000000043c06000"/>
-        <PARAMETER NAME="M00_A03_BASE_ADDR" VALUE="0x0000000043c07000"/>
-        <PARAMETER NAME="M00_A04_BASE_ADDR" VALUE="0x0000000043c0a000"/>
-        <PARAMETER NAME="M00_A05_BASE_ADDR" VALUE="0x0000000043c0b000"/>
-        <PARAMETER NAME="M00_A06_BASE_ADDR" VALUE="0x0000000043c0c000"/>
-        <PARAMETER NAME="M00_A07_BASE_ADDR" VALUE="0x0000000043c11000"/>
+        <PARAMETER NAME="M00_A00_BASE_ADDR" VALUE="0x0000000043c20000"/>
+        <PARAMETER NAME="M00_A01_BASE_ADDR" VALUE="0x0000000043c00000"/>
+        <PARAMETER NAME="M00_A02_BASE_ADDR" VALUE="0x0000000043c01000"/>
+        <PARAMETER NAME="M00_A03_BASE_ADDR" VALUE="0x0000000043c02000"/>
+        <PARAMETER NAME="M00_A04_BASE_ADDR" VALUE="0x0000000043c04000"/>
+        <PARAMETER NAME="M00_A05_BASE_ADDR" VALUE="0x0000000043c09000"/>
+        <PARAMETER NAME="M00_A06_BASE_ADDR" VALUE="0x0000000043c0f000"/>
+        <PARAMETER NAME="M00_A07_BASE_ADDR" VALUE="0x0000000043c12000"/>
         <PARAMETER NAME="M00_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -10025,14 +10625,14 @@
         <PARAMETER NAME="M00_A13_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A14_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M00_A15_BASE_ADDR" VALUE="0xffffffffffffffff"/>
-        <PARAMETER NAME="M01_A00_BASE_ADDR" VALUE="0x0000000043c08000"/>
-        <PARAMETER NAME="M01_A01_BASE_ADDR" VALUE="0x0000000043c0d000"/>
-        <PARAMETER NAME="M01_A02_BASE_ADDR" VALUE="0x0000000043c0e000"/>
-        <PARAMETER NAME="M01_A03_BASE_ADDR" VALUE="0x0000000043c10000"/>
-        <PARAMETER NAME="M01_A04_BASE_ADDR" VALUE="0x0000000043c13000"/>
-        <PARAMETER NAME="M01_A05_BASE_ADDR" VALUE="0x0000000043c14000"/>
-        <PARAMETER NAME="M01_A06_BASE_ADDR" VALUE="0x0000000043c15000"/>
-        <PARAMETER NAME="M01_A07_BASE_ADDR" VALUE="0x0000000043c16000"/>
+        <PARAMETER NAME="M01_A00_BASE_ADDR" VALUE="0x0000000043c03000"/>
+        <PARAMETER NAME="M01_A01_BASE_ADDR" VALUE="0x0000000043c05000"/>
+        <PARAMETER NAME="M01_A02_BASE_ADDR" VALUE="0x0000000043c06000"/>
+        <PARAMETER NAME="M01_A03_BASE_ADDR" VALUE="0x0000000043c07000"/>
+        <PARAMETER NAME="M01_A04_BASE_ADDR" VALUE="0x0000000043c0a000"/>
+        <PARAMETER NAME="M01_A05_BASE_ADDR" VALUE="0x0000000043c0b000"/>
+        <PARAMETER NAME="M01_A06_BASE_ADDR" VALUE="0x0000000043c0c000"/>
+        <PARAMETER NAME="M01_A07_BASE_ADDR" VALUE="0x0000000043c11000"/>
         <PARAMETER NAME="M01_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -10041,14 +10641,14 @@
         <PARAMETER NAME="M01_A13_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A14_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M01_A15_BASE_ADDR" VALUE="0xffffffffffffffff"/>
-        <PARAMETER NAME="M02_A00_BASE_ADDR" VALUE="0x0000000043c20000"/>
-        <PARAMETER NAME="M02_A01_BASE_ADDR" VALUE="0x0000000043c00000"/>
-        <PARAMETER NAME="M02_A02_BASE_ADDR" VALUE="0x0000000043c01000"/>
-        <PARAMETER NAME="M02_A03_BASE_ADDR" VALUE="0x0000000043c02000"/>
-        <PARAMETER NAME="M02_A04_BASE_ADDR" VALUE="0x0000000043c04000"/>
-        <PARAMETER NAME="M02_A05_BASE_ADDR" VALUE="0x0000000043c09000"/>
-        <PARAMETER NAME="M02_A06_BASE_ADDR" VALUE="0x0000000043c0f000"/>
-        <PARAMETER NAME="M02_A07_BASE_ADDR" VALUE="0x0000000043c12000"/>
+        <PARAMETER NAME="M02_A00_BASE_ADDR" VALUE="0x0000000043c08000"/>
+        <PARAMETER NAME="M02_A01_BASE_ADDR" VALUE="0x0000000043c0d000"/>
+        <PARAMETER NAME="M02_A02_BASE_ADDR" VALUE="0x0000000043c0e000"/>
+        <PARAMETER NAME="M02_A03_BASE_ADDR" VALUE="0x0000000043c10000"/>
+        <PARAMETER NAME="M02_A04_BASE_ADDR" VALUE="0x0000000043c13000"/>
+        <PARAMETER NAME="M02_A05_BASE_ADDR" VALUE="0x0000000043c14000"/>
+        <PARAMETER NAME="M02_A06_BASE_ADDR" VALUE="0x0000000043c15000"/>
+        <PARAMETER NAME="M02_A07_BASE_ADDR" VALUE="0x0000000043c16000"/>
         <PARAMETER NAME="M02_A08_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A09_BASE_ADDR" VALUE="0xffffffffffffffff"/>
         <PARAMETER NAME="M02_A10_BASE_ADDR" VALUE="0xffffffffffffffff"/>
@@ -10265,7 +10865,7 @@
         <PARAMETER NAME="M15_A13_BASE_ADDR" VALUE="0xFFFFFFFFFFFFFFFF"/>
         <PARAMETER NAME="M15_A14_BASE_ADDR" VALUE="0xFFFFFFFFFFFFFFFF"/>
         <PARAMETER NAME="M15_A15_BASE_ADDR" VALUE="0xFFFFFFFFFFFFFFFF"/>
-        <PARAMETER NAME="M00_A00_ADDR_WIDTH" VALUE="12"/>
+        <PARAMETER NAME="M00_A00_ADDR_WIDTH" VALUE="16"/>
         <PARAMETER NAME="M00_A01_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M00_A02_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M00_A03_ADDR_WIDTH" VALUE="12"/>
@@ -10297,7 +10897,7 @@
         <PARAMETER NAME="M01_A13_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M01_A14_ADDR_WIDTH" VALUE="0"/>
         <PARAMETER NAME="M01_A15_ADDR_WIDTH" VALUE="0"/>
-        <PARAMETER NAME="M02_A00_ADDR_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="M02_A00_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A01_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A02_ADDR_WIDTH" VALUE="12"/>
         <PARAMETER NAME="M02_A03_ADDR_WIDTH" VALUE="12"/>
@@ -11174,7 +11774,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -11838,9 +12438,9 @@
             <CONNECTION INSTANCE="fifo_readout_0" PORT="reset"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="wr_clk" SIGIS="undef" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT DIR="I" NAME="wr_clk" SIGIS="undef" SIGNAME="External_Ports_Clk_in">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="rd_clk" SIGIS="undef" SIGNAME="fifo_readout_0_read">
@@ -11878,6 +12478,423 @@
             <CONNECTION INSTANCE="fifo_readout_0" PORT="empty"/>
           </CONNECTIONS>
         </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="FIFO_WRITE" TYPE="TARGET">
+          <PORTMAPS>
+            <PORTMAP PHYSICAL="din"/>
+            <PORTMAP PHYSICAL="wr_en"/>
+            <PORTMAP PHYSICAL="full"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="FIFO_READ" TYPE="TARGET">
+          <PORTMAPS>
+            <PORTMAP PHYSICAL="rd_en"/>
+            <PORTMAP PHYSICAL="dout"/>
+            <PORTMAP PHYSICAL="empty"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE FULLNAME="/fifo_generator_1" HWVERSION="11.0" INSTANCE="fifo_generator_1" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="fifo_generator" VLNV="xilinx.com:ip:fifo_generator:11.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_COMMON_CLOCK" VALUE="1"/>
+        <PARAMETER NAME="C_COUNT_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_DATA_COUNT_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_DEFAULT_VALUE" VALUE="BlankString"/>
+        <PARAMETER NAME="C_DIN_WIDTH" VALUE="24"/>
+        <PARAMETER NAME="C_DOUT_RST_VAL" VALUE="0"/>
+        <PARAMETER NAME="C_DOUT_WIDTH" VALUE="24"/>
+        <PARAMETER NAME="C_ENABLE_RLOCS" VALUE="0"/>
+        <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
+        <PARAMETER NAME="C_FULL_FLAGS_RST_VAL" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_ALMOST_EMPTY" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_ALMOST_FULL" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_BACKUP" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_INT_CLK" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_MEMINIT_FILE" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_OVERFLOW" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_RD_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_RD_RST" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_RST" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_SRST" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_UNDERFLOW" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_VALID" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_WR_ACK" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_WR_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_WR_RST" VALUE="0"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_INIT_WR_PNTR_VAL" VALUE="0"/>
+        <PARAMETER NAME="C_MEMORY_TYPE" VALUE="1"/>
+        <PARAMETER NAME="C_MIF_FILE_NAME" VALUE="BlankString"/>
+        <PARAMETER NAME="C_OPTIMIZATION_MODE" VALUE="0"/>
+        <PARAMETER NAME="C_OVERFLOW_LOW" VALUE="0"/>
+        <PARAMETER NAME="C_PRELOAD_LATENCY" VALUE="1"/>
+        <PARAMETER NAME="C_PRELOAD_REGS" VALUE="0"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE" VALUE="512x36"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL" VALUE="2"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_NEGATE_VAL" VALUE="3"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL" VALUE="510"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_NEGATE_VAL" VALUE="509"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_RD_DATA_COUNT_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_RD_DEPTH" VALUE="512"/>
+        <PARAMETER NAME="C_RD_FREQ" VALUE="1"/>
+        <PARAMETER NAME="C_RD_PNTR_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_UNDERFLOW_LOW" VALUE="0"/>
+        <PARAMETER NAME="C_USE_DOUT_RST" VALUE="1"/>
+        <PARAMETER NAME="C_USE_ECC" VALUE="0"/>
+        <PARAMETER NAME="C_USE_EMBEDDED_REG" VALUE="0"/>
+        <PARAMETER NAME="C_USE_FIFO16_FLAGS" VALUE="0"/>
+        <PARAMETER NAME="C_USE_FWFT_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="C_VALID_LOW" VALUE="0"/>
+        <PARAMETER NAME="C_WR_ACK_LOW" VALUE="0"/>
+        <PARAMETER NAME="C_WR_DATA_COUNT_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_WR_DEPTH" VALUE="512"/>
+        <PARAMETER NAME="C_WR_FREQ" VALUE="1"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_WR_RESPONSE_LATENCY" VALUE="1"/>
+        <PARAMETER NAME="C_MSGON_VAL" VALUE="1"/>
+        <PARAMETER NAME="C_ENABLE_RST_SYNC" VALUE="1"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="2"/>
+        <PARAMETER NAME="C_INTERFACE_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_TYPE" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXI_WR_CHANNEL" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXI_RD_CHANNEL" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_SLAVE_CE" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_MASTER_CE" VALUE="0"/>
+        <PARAMETER NAME="C_ADD_NGC_CONSTRAINT" VALUE="0"/>
+        <PARAMETER NAME="C_USE_COMMON_OVERFLOW" VALUE="0"/>
+        <PARAMETER NAME="C_USE_COMMON_UNDERFLOW" VALUE="0"/>
+        <PARAMETER NAME="C_USE_DEFAULT_SETTINGS" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_ID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_ADDR_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_AXI_DATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="C_HAS_AXI_AWUSER" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXI_WUSER" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXI_BUSER" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXI_ARUSER" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXI_RUSER" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_ARUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_AWUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_WUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_BUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXI_RUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXI_ID" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXIS_TDATA" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXIS_TID" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXIS_TDEST" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXIS_TUSER" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXIS_TREADY" VALUE="1"/>
+        <PARAMETER NAME="C_HAS_AXIS_TLAST" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXIS_TSTRB" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_AXIS_TKEEP" VALUE="0"/>
+        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="C_AXIS_TID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TDEST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TUSER_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="C_AXIS_TSTRB_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TKEEP_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_WACH_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_WDCH_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_WRCH_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_RACH_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_RDCH_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_AXIS_TYPE" VALUE="0"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_WACH" VALUE="1"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_WDCH" VALUE="1"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_WRCH" VALUE="1"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_RACH" VALUE="1"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_RDCH" VALUE="1"/>
+        <PARAMETER NAME="C_IMPLEMENTATION_TYPE_AXIS" VALUE="1"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_APPLICATION_TYPE_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_WACH" VALUE="512x36"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_WDCH" VALUE="1kx36"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_WRCH" VALUE="512x36"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_RACH" VALUE="512x36"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_RDCH" VALUE="1kx36"/>
+        <PARAMETER NAME="C_PRIM_FIFO_TYPE_AXIS" VALUE="1kx18"/>
+        <PARAMETER NAME="C_USE_ECC_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_USE_ECC_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_USE_ECC_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_USE_ECC_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_USE_ECC_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_USE_ECC_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_ERROR_INJECTION_TYPE_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_DIN_WIDTH_WACH" VALUE="32"/>
+        <PARAMETER NAME="C_DIN_WIDTH_WDCH" VALUE="64"/>
+        <PARAMETER NAME="C_DIN_WIDTH_WRCH" VALUE="2"/>
+        <PARAMETER NAME="C_DIN_WIDTH_RACH" VALUE="32"/>
+        <PARAMETER NAME="C_DIN_WIDTH_RDCH" VALUE="64"/>
+        <PARAMETER NAME="C_DIN_WIDTH_AXIS" VALUE="1"/>
+        <PARAMETER NAME="C_WR_DEPTH_WACH" VALUE="16"/>
+        <PARAMETER NAME="C_WR_DEPTH_WDCH" VALUE="1024"/>
+        <PARAMETER NAME="C_WR_DEPTH_WRCH" VALUE="16"/>
+        <PARAMETER NAME="C_WR_DEPTH_RACH" VALUE="16"/>
+        <PARAMETER NAME="C_WR_DEPTH_RDCH" VALUE="1024"/>
+        <PARAMETER NAME="C_WR_DEPTH_AXIS" VALUE="1024"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_WACH" VALUE="4"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_WDCH" VALUE="10"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_WRCH" VALUE="4"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_RACH" VALUE="4"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_RDCH" VALUE="10"/>
+        <PARAMETER NAME="C_WR_PNTR_WIDTH_AXIS" VALUE="10"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_DATA_COUNTS_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_HAS_PROG_FLAGS_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_TYPE_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_WACH" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_WDCH" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_WRCH" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_RACH" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_RDCH" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH_ASSERT_VAL_AXIS" VALUE="1023"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_TYPE_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_WACH" VALUE="1022"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_WDCH" VALUE="1022"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_WRCH" VALUE="1022"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_RACH" VALUE="1022"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_RDCH" VALUE="1022"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH_ASSERT_VAL_AXIS" VALUE="1022"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_WACH" VALUE="0"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_WDCH" VALUE="0"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_WRCH" VALUE="0"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_RACH" VALUE="0"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_RDCH" VALUE="0"/>
+        <PARAMETER NAME="C_REG_SLICE_MODE_AXIS" VALUE="0"/>
+        <PARAMETER NAME="C_AXI_LEN_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="C_AXI_LOCK_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_fifo_generator_1_1"/>
+        <PARAMETER NAME="Fifo_Implementation" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="synchronization_stages" VALUE="2"/>
+        <PARAMETER NAME="synchronization_stages_axi" VALUE="2"/>
+        <PARAMETER NAME="INTERFACE_TYPE" VALUE="Native"/>
+        <PARAMETER NAME="Performance_Options" VALUE="Standard_FIFO"/>
+        <PARAMETER NAME="Input_Data_Width" VALUE="24"/>
+        <PARAMETER NAME="Input_Depth" VALUE="512"/>
+        <PARAMETER NAME="Output_Data_Width" VALUE="24"/>
+        <PARAMETER NAME="Output_Depth" VALUE="512"/>
+        <PARAMETER NAME="Enable_ECC" VALUE="false"/>
+        <PARAMETER NAME="Use_Embedded_Registers" VALUE="false"/>
+        <PARAMETER NAME="Reset_Pin" VALUE="true"/>
+        <PARAMETER NAME="Enable_Reset_Synchronization" VALUE="true"/>
+        <PARAMETER NAME="Reset_Type" VALUE="Asynchronous_Reset"/>
+        <PARAMETER NAME="Full_Flags_Reset_Value" VALUE="1"/>
+        <PARAMETER NAME="Use_Dout_Reset" VALUE="true"/>
+        <PARAMETER NAME="Dout_Reset_Value" VALUE="0"/>
+        <PARAMETER NAME="Almost_Full_Flag" VALUE="false"/>
+        <PARAMETER NAME="Almost_Empty_Flag" VALUE="false"/>
+        <PARAMETER NAME="Valid_Flag" VALUE="false"/>
+        <PARAMETER NAME="Valid_Sense" VALUE="Active_High"/>
+        <PARAMETER NAME="Underflow_Flag" VALUE="false"/>
+        <PARAMETER NAME="Underflow_Sense" VALUE="Active_High"/>
+        <PARAMETER NAME="Write_Acknowledge_Flag" VALUE="false"/>
+        <PARAMETER NAME="Write_Acknowledge_Sense" VALUE="Active_High"/>
+        <PARAMETER NAME="Overflow_Flag" VALUE="false"/>
+        <PARAMETER NAME="Overflow_Sense" VALUE="Active_High"/>
+        <PARAMETER NAME="Inject_Sbit_Error" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error" VALUE="false"/>
+        <PARAMETER NAME="Use_Extra_Logic" VALUE="false"/>
+        <PARAMETER NAME="Data_Count" VALUE="false"/>
+        <PARAMETER NAME="Data_Count_Width" VALUE="9"/>
+        <PARAMETER NAME="Write_Data_Count" VALUE="false"/>
+        <PARAMETER NAME="Write_Data_Count_Width" VALUE="9"/>
+        <PARAMETER NAME="Read_Data_Count" VALUE="false"/>
+        <PARAMETER NAME="Read_Data_Count_Width" VALUE="9"/>
+        <PARAMETER NAME="Disable_Timing_Violations" VALUE="false"/>
+        <PARAMETER NAME="Read_Clock_Frequency" VALUE="1"/>
+        <PARAMETER NAME="Write_Clock_Frequency" VALUE="1"/>
+        <PARAMETER NAME="Programmable_Full_Type" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value" VALUE="510"/>
+        <PARAMETER NAME="Full_Threshold_Negate_Value" VALUE="509"/>
+        <PARAMETER NAME="Programmable_Empty_Type" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value" VALUE="2"/>
+        <PARAMETER NAME="Empty_Threshold_Negate_Value" VALUE="3"/>
+        <PARAMETER NAME="PROTOCOL" VALUE="AXI4"/>
+        <PARAMETER NAME="Clock_Type_AXI" VALUE="Common_Clock"/>
+        <PARAMETER NAME="HAS_ACLKEN" VALUE="false"/>
+        <PARAMETER NAME="Clock_Enable_Type" VALUE="Slave_Interface_Clock_Enable"/>
+        <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+        <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="ADDRESS_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="DATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="AWUSER_Width" VALUE="0"/>
+        <PARAMETER NAME="WUSER_Width" VALUE="0"/>
+        <PARAMETER NAME="BUSER_Width" VALUE="0"/>
+        <PARAMETER NAME="ARUSER_Width" VALUE="0"/>
+        <PARAMETER NAME="RUSER_Width" VALUE="0"/>
+        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="1"/>
+        <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TUSER_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="Enable_TREADY" VALUE="true"/>
+        <PARAMETER NAME="Enable_TLAST" VALUE="false"/>
+        <PARAMETER NAME="HAS_TSTRB" VALUE="false"/>
+        <PARAMETER NAME="TSTRB_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="HAS_TKEEP" VALUE="false"/>
+        <PARAMETER NAME="TKEEP_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="wach_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_wach" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_wach" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_wach" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_wach" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_wach" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_wach" VALUE="16"/>
+        <PARAMETER NAME="Enable_Data_Counts_wach" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_wach" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_wach" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_wach" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_wach" VALUE="1022"/>
+        <PARAMETER NAME="wdch_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_wdch" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_wdch" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_wdch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_wdch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_wdch" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_wdch" VALUE="1024"/>
+        <PARAMETER NAME="Enable_Data_Counts_wdch" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_wdch" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_wdch" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_wdch" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_wdch" VALUE="1022"/>
+        <PARAMETER NAME="wrch_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_wrch" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_wrch" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_wrch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_wrch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_wrch" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_wrch" VALUE="16"/>
+        <PARAMETER NAME="Enable_Data_Counts_wrch" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_wrch" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_wrch" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_wrch" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_wrch" VALUE="1022"/>
+        <PARAMETER NAME="rach_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_rach" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_rach" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_rach" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_rach" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_rach" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_rach" VALUE="16"/>
+        <PARAMETER NAME="Enable_Data_Counts_rach" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_rach" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_rach" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_rach" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_rach" VALUE="1022"/>
+        <PARAMETER NAME="rdch_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_rdch" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_rdch" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_rdch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_rdch" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_rdch" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_rdch" VALUE="1024"/>
+        <PARAMETER NAME="Enable_Data_Counts_rdch" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_rdch" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_rdch" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_rdch" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_rdch" VALUE="1022"/>
+        <PARAMETER NAME="axis_type" VALUE="FIFO"/>
+        <PARAMETER NAME="FIFO_Implementation_axis" VALUE="Common_Clock_Block_RAM"/>
+        <PARAMETER NAME="FIFO_Application_Type_axis" VALUE="Data_FIFO"/>
+        <PARAMETER NAME="Enable_ECC_axis" VALUE="false"/>
+        <PARAMETER NAME="Inject_Sbit_Error_axis" VALUE="false"/>
+        <PARAMETER NAME="Inject_Dbit_Error_axis" VALUE="false"/>
+        <PARAMETER NAME="Input_Depth_axis" VALUE="1024"/>
+        <PARAMETER NAME="Enable_Data_Counts_axis" VALUE="false"/>
+        <PARAMETER NAME="Programmable_Full_Type_axis" VALUE="No_Programmable_Full_Threshold"/>
+        <PARAMETER NAME="Full_Threshold_Assert_Value_axis" VALUE="1023"/>
+        <PARAMETER NAME="Programmable_Empty_Type_axis" VALUE="No_Programmable_Empty_Threshold"/>
+        <PARAMETER NAME="Empty_Threshold_Assert_Value_axis" VALUE="1022"/>
+        <PARAMETER NAME="Register_Slice_Mode_wach" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Register_Slice_Mode_wdch" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Register_Slice_Mode_wrch" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Register_Slice_Mode_rach" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Register_Slice_Mode_rdch" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Register_Slice_Mode_axis" VALUE="Fully_Registered"/>
+        <PARAMETER NAME="Underflow_Flag_AXI" VALUE="false"/>
+        <PARAMETER NAME="Underflow_Sense_AXI" VALUE="Active_High"/>
+        <PARAMETER NAME="Overflow_Flag_AXI" VALUE="false"/>
+        <PARAMETER NAME="Overflow_Sense_AXI" VALUE="Active_High"/>
+        <PARAMETER NAME="Disable_Timing_Violations_AXI" VALUE="false"/>
+        <PARAMETER NAME="Add_NGC_Constraint_AXI" VALUE="false"/>
+        <PARAMETER NAME="Enable_Common_Underflow" VALUE="false"/>
+        <PARAMETER NAME="Enable_Common_Overflow" VALUE="false"/>
+        <PARAMETER NAME="enable_read_pointer_increment_by2" VALUE="false"/>
+        <PARAMETER NAME="Use_Embedded_Registers_axis" VALUE="false"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="clk" SIGIS="undef" SIGNAME="External_Ports_Clk_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="rst" SIGIS="undef" SIGNAME="trigwordfifo_0_reset">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="reset"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="din" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; testPulser_0_pulser_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
+            <CONNECTION INSTANCE="testPulser_0" PORT="pulser_out"/>
+            <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
+            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
+            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="wr_en" SIGIS="undef" SIGNAME="trigwordfifo_0_wr_enable">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="wr_enable"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="rd_en" SIGIS="undef" SIGNAME="trigwordfifo_0_rd_enable">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="trigwordfifo_0" PORT="rd_enable"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="dout" SIGIS="undef" SIGNAME="fifo_generator_1_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="full" SIGIS="undef"/>
+        <PORT DIR="O" NAME="empty" SIGIS="undef"/>
       </PORTS>
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="__NOC__" NAME="FIFO_WRITE" TYPE="TARGET">
@@ -11936,9 +12953,9 @@
             <CONNECTION INSTANCE="fifo_generator_0" PORT="empty"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
@@ -11946,104 +12963,104 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awaddr">
+        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awaddr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awaddr"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_awaddr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awprot">
+        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awprot">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awprot"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_awprot"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awvalid">
+        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_awvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awready">
+        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_awready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_awready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wdata">
+        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wdata"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_wdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wstrb">
+        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wstrb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wstrb"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_wstrb"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wvalid">
+        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_wvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wready">
+        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_wready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_wready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bresp">
+        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bresp">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bresp"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_bresp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bvalid">
+        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_bvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bready">
+        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_bready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_bready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_araddr">
+        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_araddr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_araddr"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_araddr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arprot">
+        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arprot">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arprot"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_arprot"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arvalid">
+        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_arvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arready">
+        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_arready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_arready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rdata">
+        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rdata"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_rdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rresp">
+        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rresp">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rresp"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_rresp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rvalid">
+        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_rvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rready">
+        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m05_couplers_auto_cc_m_axi_rready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m05_couplers_auto_cc" PORT="m_axi_rready"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="axi_interconnect_0_tier2_xbar_0" NAME="S00_AXI" TYPE="SLAVE">
+        <BUSINTERFACE BUSNAME="axi_interconnect_0_m05_couplers_auto_cc" NAME="S00_AXI" TYPE="SLAVE">
           <PORTMAPS>
             <PORTMAP PHYSICAL="s00_axi_awaddr"/>
             <PORTMAP PHYSICAL="s00_axi_awprot"/>
@@ -13451,7 +14468,7 @@
             <CONNECTION INSTANCE="External_Ports" PORT="smellie_delay_out"/>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -13754,7 +14771,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -14052,7 +15069,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -14199,16 +15216,9 @@
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C09FFF"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" NAME="trigs_in" SIGIS="undef" SIGNAME="smellieDelay_pulse_out &amp; tellieDelay_pulse_out &amp; testPulser_0_pulser_out &amp; util_vector_logic_6_Res &amp; comboTrigger_0_combo_trigout &amp; util_vector_logic_9_Res &amp; External_Ports_mtca_mimic_in &amp; External_Ports_ext_trig_in">
+        <PORT DIR="I" NAME="trigs_in" SIGIS="undef" SIGNAME="fifo_generator_1_dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="smellieDelay" PORT="pulse_out"/>
-            <CONNECTION INSTANCE="tellieDelay" PORT="pulse_out"/>
-            <CONNECTION INSTANCE="testPulser_0" PORT="pulser_out"/>
-            <CONNECTION INSTANCE="util_vector_logic_6" PORT="Res"/>
-            <CONNECTION INSTANCE="comboTrigger_0" PORT="combo_trigout"/>
-            <CONNECTION INSTANCE="util_vector_logic_9" PORT="Res"/>
-            <CONNECTION INSTANCE="External_Ports" PORT="mtca_mimic_in"/>
-            <CONNECTION INSTANCE="External_Ports" PORT="ext_trig_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="dout"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="trigger_mask" SIGIS="undef" SIGNAME="triggers_0_trigger_mask">
@@ -14270,24 +15280,14 @@
             <CONNECTION INSTANCE="External_Ports" PORT="sync24"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="trig_word" SIGIS="undef" SIGNAME="triggers_0_trig_word">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordin"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="dtrig_word" SIGIS="undef" SIGNAME="TrigWordDelay_0_wordout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="TrigWordDelay_0" PORT="wordout"/>
-          </CONNECTIONS>
-        </PORT>
         <PORT DIR="O" NAME="tubii_word" SIGIS="undef" SIGNAME="triggers_0_tubii_word">
           <CONNECTIONS>
             <CONNECTION INSTANCE="fifo_generator_0" PORT="din"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
@@ -14295,104 +15295,261 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awaddr">
+        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awaddr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awaddr"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_awaddr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awprot">
+        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awprot">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awprot"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_awprot"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awvalid">
+        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_awvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_awready">
+        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_awready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_awready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_awready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wdata">
+        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wdata"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_wdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wstrb">
+        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wstrb">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wstrb"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_wstrb"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wvalid">
+        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_wvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_wready">
+        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_wready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_wready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_wready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bresp">
+        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bresp">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bresp"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_bresp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bvalid">
+        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_bvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_bready">
+        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_bready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_bready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_bready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_araddr">
+        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_araddr">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_araddr"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_araddr"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arprot">
+        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arprot">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arprot"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_arprot"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arvalid">
+        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_arvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_arready">
+        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_arready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_arready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_arready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rdata">
+        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rdata"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_rdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rresp">
+        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rresp">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rresp"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_rresp"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rvalid">
+        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rvalid"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_rvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_tier2_xbar_0_m_axi_rready">
+        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m04_couplers_auto_cc_m_axi_rready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_interconnect_0_tier2_xbar_0" PORT="m_axi_rready"/>
+            <CONNECTION INSTANCE="axi_interconnect_0_m04_couplers_auto_cc" PORT="m_axi_rready"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="axi_interconnect_0_tier2_xbar_0" NAME="S00_AXI" TYPE="SLAVE">
+        <BUSINTERFACE BUSNAME="axi_interconnect_0_m04_couplers_auto_cc" NAME="S00_AXI" TYPE="SLAVE">
+          <PORTMAPS>
+            <PORTMAP PHYSICAL="s00_axi_awaddr"/>
+            <PORTMAP PHYSICAL="s00_axi_awprot"/>
+            <PORTMAP PHYSICAL="s00_axi_awvalid"/>
+            <PORTMAP PHYSICAL="s00_axi_awready"/>
+            <PORTMAP PHYSICAL="s00_axi_wdata"/>
+            <PORTMAP PHYSICAL="s00_axi_wstrb"/>
+            <PORTMAP PHYSICAL="s00_axi_wvalid"/>
+            <PORTMAP PHYSICAL="s00_axi_wready"/>
+            <PORTMAP PHYSICAL="s00_axi_bresp"/>
+            <PORTMAP PHYSICAL="s00_axi_bvalid"/>
+            <PORTMAP PHYSICAL="s00_axi_bready"/>
+            <PORTMAP PHYSICAL="s00_axi_araddr"/>
+            <PORTMAP PHYSICAL="s00_axi_arprot"/>
+            <PORTMAP PHYSICAL="s00_axi_arvalid"/>
+            <PORTMAP PHYSICAL="s00_axi_arready"/>
+            <PORTMAP PHYSICAL="s00_axi_rdata"/>
+            <PORTMAP PHYSICAL="s00_axi_rresp"/>
+            <PORTMAP PHYSICAL="s00_axi_rvalid"/>
+            <PORTMAP PHYSICAL="s00_axi_rready"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE FULLNAME="/trigwordfifo_0" HWVERSION="1.0" INSTANCE="trigwordfifo_0" IPTYPE="PERIPHERAL" MODCLASS="PERIPHERAL" MODTYPE="trigwordfifo" VLNV="xilinx.com:user:trigwordfifo:1.0">
+      <PARAMETERS>
+        <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_trigwordfifo_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+        <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C13000"/>
+        <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C13FFF"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" NAME="wr_enable" SIGIS="undef" SIGNAME="trigwordfifo_0_wr_enable">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="wr_en"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="rd_enable" SIGIS="undef" SIGNAME="trigwordfifo_0_rd_enable">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="rd_en"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="reset" SIGIS="undef" SIGNAME="trigwordfifo_0_reset">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="rst"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="External_Ports_Clk_in">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="Clk_in"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_RESET0_N"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_awaddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_awprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_awprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_wdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_wstrb" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_bresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_araddr" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_arprot" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arprot">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_arprot"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_rdata" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_rresp" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s00_axi_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s00_axi_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_m20_couplers_auto_cc_m_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0_m20_couplers_auto_cc" PORT="m_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="axi_interconnect_0_m20_couplers_auto_cc" NAME="S00_AXI" TYPE="SLAVE">
           <PORTMAPS>
             <PORTMAP PHYSICAL="s00_axi_awaddr"/>
             <PORTMAP PHYSICAL="s00_axi_awprot"/>
@@ -14432,8 +15589,8 @@
         </PORT>
         <PORT DIR="O" NAME="Res" SIGIS="undef" SIGNAME="util_reduced_logic_0_Res">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
             <CONNECTION INSTANCE="External_Ports" PORT="Outt"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="trig_out"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -14777,7 +15934,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -14860,7 +16017,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="util_vector_logic_0" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_4" PORT="Op1"/>
-            <CONNECTION INSTANCE="triggers_0" PORT="trigs_in"/>
+            <CONNECTION INSTANCE="fifo_generator_1" PORT="din"/>
             <CONNECTION INSTANCE="util_vector_logic_1" PORT="Op1"/>
             <CONNECTION INSTANCE="util_vector_logic_2" PORT="Op1"/>
           </CONNECTIONS>
@@ -16892,7 +18049,8 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="TrigWordDelay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="trigwordfifo_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0F000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0FFFF" INSTANCE="oneshot_pulse_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0A000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0AFFF" INSTANCE="oneshot_pulse_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C16000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C16FFF" INSTANCE="testPulser_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -16909,7 +18067,6 @@
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="prescaleSignal_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -16949,7 +18106,8 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
-        <PERIPHERAL INSTANCE="TrigWordDelay_0"/>
+        <PERIPHERAL INSTANCE="trigwordfifo_0"/>
+        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_1"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_0"/>
         <PERIPHERAL INSTANCE="testPulser_0"/>
@@ -16966,7 +18124,6 @@
         <PERIPHERAL INSTANCE="prescaleSignal_1"/>
         <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
-        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>
@@ -17155,7 +18312,8 @@
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0001000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0001FFF" INSTANCE="ps7_uart_1" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xE0002000" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xE0002FFF" INSTANCE="ps7_usb_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S_AXI_BASEADDR" BASEVALUE="0xF8007100" HIGHNAME="C_S_AXI_HIGHADDR" HIGHVALUE="0xF8007120" INSTANCE="ps7_xadc_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="TrigWordDelay_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C13000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C13FFF" INSTANCE="trigwordfifo_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
+        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0F000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0FFFF" INSTANCE="oneshot_pulse_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C0A000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C0AFFF" INSTANCE="oneshot_pulse_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C16000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C16FFF" INSTANCE="testPulser_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -17172,7 +18330,6 @@
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C14000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C14FFF" INSTANCE="prescaleSignal_1" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C00000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C00FFF" INSTANCE="prescaleSignal_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C01000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C01FFF" INSTANCE="prescaleTrigger_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
-        <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C09000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C09FFF" INSTANCE="triggers_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_BASEADDR" BASEVALUE="0x43C20000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x43C2FFFF" INSTANCE="xadc_wiz_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C02000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C02FFF" INSTANCE="fifo_readout_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
         <MEMRANGE BASENAME="C_S00_AXI_BASEADDR" BASEVALUE="0x43C15000" HIGHNAME="C_S00_AXI_HIGHADDR" HIGHVALUE="0x43C15FFF" INSTANCE="implement_gtid_0" IS_DATA="TRUE" IS_INSTRUCTION="FALSE" MEMTYPE="REGISTER"/>
@@ -17212,7 +18369,8 @@
         <PERIPHERAL INSTANCE="ps7_uart_1"/>
         <PERIPHERAL INSTANCE="ps7_usb_0"/>
         <PERIPHERAL INSTANCE="ps7_xadc_0"/>
-        <PERIPHERAL INSTANCE="TrigWordDelay_0"/>
+        <PERIPHERAL INSTANCE="trigwordfifo_0"/>
+        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_1"/>
         <PERIPHERAL INSTANCE="oneshot_pulse_0"/>
         <PERIPHERAL INSTANCE="testPulser_0"/>
@@ -17229,7 +18387,6 @@
         <PERIPHERAL INSTANCE="prescaleSignal_1"/>
         <PERIPHERAL INSTANCE="prescaleSignal_0"/>
         <PERIPHERAL INSTANCE="prescaleTrigger_0"/>
-        <PERIPHERAL INSTANCE="triggers_0"/>
         <PERIPHERAL INSTANCE="xadc_wiz_0"/>
         <PERIPHERAL INSTANCE="fifo_readout_0"/>
         <PERIPHERAL INSTANCE="implement_gtid_0"/>

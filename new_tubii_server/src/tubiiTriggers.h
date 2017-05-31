@@ -246,13 +246,17 @@ void resetFIFO()
 
 int TrigWordDelay(u32 delay)
 {
-  delay *= ns;
+  /*delay *= ns;
   if(delay<0){
 	Log(WARNING, "TUBii: delay length is outside acceptable range.");
 	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
 	return -1;
-  }
+  }*/
 
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset1, 1); // Reset
+  usleep(1000);
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset1, 0); // Reset
+  usleep(1000);
   mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset0, delay);
   return 0;
 }

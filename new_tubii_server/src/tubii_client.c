@@ -120,8 +120,13 @@ int auto_init()
   // Set Speaker pre-scale to 1
   //speakerScale(1);
 
+  // Set trig word delay to 90ns
+  TrigWordDelay(9);
+
   // Switch data readout on by default
   data_readout=1;
+
+  save_tubii_state();
 
   return 0;
 }

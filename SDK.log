@@ -12924,3 +12924,5 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
 
 18:40:37.779 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
+17:41:02.859 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 

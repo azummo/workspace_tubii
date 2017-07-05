@@ -62,6 +62,7 @@ void GetSmelliePulseWidth(client *c, int argc, sds *argv);
 void GetSmellieNPulses(client *c, int argc, sds *argv);
 void GetSmellieDelay(client *c, int argc, sds *argv);
 void SetTelliedelay(client *c, int argc, sds *argv);
+void SetTellieMode(client *c, int argc, sds *argv);
 void SetTelliepulser(client *c, int argc, sds *argv);
 void GetTellieRate(client *c, int argc, sds *argv);
 void GetTelliePulseWidth(client *c, int argc, sds *argv);
@@ -106,9 +107,6 @@ void stop_data_readout(client *c, int argc, sds *argv);
 int tubii_status(aeEventLoop *el, long long id, void *data);
 int tubii_readout(aeEventLoop *el, long long id, void *data);
 int start_tubii_readout(long long milliseconds);
-
-// XADC
-void xadc(client *c, int argc, sds *argv);
 
 // DB
 void save_TUBii_command(client *c, int argc, sds *argv);

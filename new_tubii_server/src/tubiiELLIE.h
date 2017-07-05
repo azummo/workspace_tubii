@@ -18,6 +18,7 @@ void *MappedPulserBaseAddress;
 void *MappedSPulserBaseAddress;
 void *MappedTPulserBaseAddress;
 void *MappedDelayLengthenBaseAddress;
+void *MappedEllieControlBaseAddress;
 
 int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
 {
@@ -104,5 +105,9 @@ int Lengthen(char* dArg)
   return 0;
 }
 
+void TellieMode(u32 option)
+{
+  mWriteReg((u32) MappedEllieControlBaseAddress, RegOffset0, option);
+}
 
 #endif /* TUBIIELLIE_H_ */

@@ -40,6 +40,11 @@
 #define XPAR_COUNTDISPLAY_0_S00_AXI_HIGHADDR 0x43C05FFF
 
 
+/* Definitions for peripheral ELLIE_CONTROL_0 */
+#define XPAR_ELLIE_CONTROL_0_S00_AXI_BASEADDR 0x43C17000
+#define XPAR_ELLIE_CONTROL_0_S00_AXI_HIGHADDR 0x43C17FFF
+
+
 /* Definitions for peripheral FIFO_READOUT_0 */
 #define XPAR_FIFO_READOUT_0_S00_AXI_BASEADDR 0x43C02000
 #define XPAR_FIFO_READOUT_0_S00_AXI_HIGHADDR 0x43C02FFF
@@ -458,27 +463,6 @@
 #define XPAR_XUSBPS_0_DEVICE_ID XPAR_PS7_USB_0_DEVICE_ID
 #define XPAR_XUSBPS_0_BASEADDR 0xE0002000
 #define XPAR_XUSBPS_0_HIGHADDR 0xE0002FFF
-
-
-/******************************************************************/
-
-/* Definitions for driver SYSMON */
-#define XPAR_XSYSMON_NUM_INSTANCES 1
-
-/* Definitions for peripheral XADC_WIZ_0 */
-#define XPAR_XADC_WIZ_0_DEVICE_ID 0
-#define XPAR_XADC_WIZ_0_BASEADDR 0x43C20000
-#define XPAR_XADC_WIZ_0_HIGHADDR 0x43C2FFFF
-#define XPAR_XADC_WIZ_0_INCLUDE_INTR 1
-
-
-/******************************************************************/
-
-/* Canonical definitions for peripheral XADC_WIZ_0 */
-#define XPAR_SYSMON_0_DEVICE_ID XPAR_XADC_WIZ_0_DEVICE_ID
-#define XPAR_SYSMON_0_BASEADDR 0x43C20000
-#define XPAR_SYSMON_0_HIGHADDR 0x43C2FFFF
-#define XPAR_SYSMON_0_INCLUDE_INTR 1
 
 
 /******************************************************************/

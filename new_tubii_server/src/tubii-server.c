@@ -128,6 +128,7 @@ struct command commandTable[] = {
 		{"getSmellieNPulses", 	GetSmellieNPulses, 	1},
 		{"getSmellieDelay", 	GetSmellieDelay, 	1},
 		{"setTellieDelay",  	SetTelliedelay,  	2},
+		{"setTellieMode",       SetTellieMode,      2},
 		{"setTelliePulser", 	SetTelliepulser, 	4},
 		{"getTellieRate", 		GetTellieRate, 		1},
 		{"getTelliePulseWidth", GetTelliePulseWidth, 1},
@@ -175,8 +176,6 @@ struct command commandTable[] = {
 		{"setDACThreshold", SetDACThreshold, 2},
 		{"getDACThreshold", GetDACThreshold, 1},
 		{"setAllowableClockMisses", SetAllowableClockMisses, 2},
-		// XADC
-		{"xadc", xadc, 1},
 		//DB
 		{"save", save_TUBii_command, 1},
 		{"load", load_TUBii_command, 2},

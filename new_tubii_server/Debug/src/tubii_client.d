@@ -6,7 +6,7 @@ src/tubii_client.d: ../src/tubii_client.c ../src/tubii_client.h \
  C:\Users\Ian\Documents\GitHub\workspace_tubii\new_tubii_server\src/postgres_ext.h \
  ../src/tubiiAddresses.h ../src/tubiiClocks.h ../src/tubiiUtil.h \
  ../src/tubiiELLIE.h ../src/tubiiRegs.h ../src/tubiiTriggers.h \
- ../src/tubiiXadc.h ../src/libpq-fe.h
+ ../src/libpq-fe.h
 
 ../src/tubii_client.h:
 
@@ -45,7 +45,5 @@ C:\Users\Ian\Documents\GitHub\workspace_tubii\new_tubii_server\src/postgres_ext.
 ../src/tubiiRegs.h:
 
 ../src/tubiiTriggers.h:
-
-../src/tubiiXadc.h:
 
 ../src/libpq-fe.h:

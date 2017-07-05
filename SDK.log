@@ -12926,3 +12926,28 @@ We recommend that you create a new BSP project pointing to a valid hardware proj
 18:40:37.779 ERROR - Zero sized response read from XMD. This indicates a communication error or a programming error. 
 17:41:02.859 INFO  - Restoring local repository preferences: 
 		 C:\Users\HEP\project_tubii 
+16:23:05.932 INFO  - Project hw_platform_7020's source hardware specification located at C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated. 
+16:23:13.942 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system.xml into \hw_platform_7020\system.xml. 
+16:23:14.049 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\system_wrapper.bit into \hw_platform_7020\system.bit. 
+16:23:21.170 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.c into \hw_platform_7020\ps7_init.c. 
+16:23:21.214 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.h into \hw_platform_7020\ps7_init.h. 
+16:23:21.240 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.html into \hw_platform_7020\ps7_init.html. 
+16:23:21.242 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\project_tubii_7020\project_tubii_7020.sdk\SDK\SDK_Export\hw\ps7_init.tcl into \hw_platform_7020\ps7_init.tcl. 
+16:23:22.553 INFO  - Synchronizing projects in the workspace with the hardware platform specification changes. 
+16:23:30.230 INFO  - Restoring local repository preferences: 
+		 C:\Users\HEP\project_tubii 
+16:23:37.369 INFO  - Updating MSS for Board Support Package Project: standalone_bsp_7020.
+		 The following driver assignments were removed:
+			Peripheral Instance: xadc_wiz_0, driver: sysmon_v5_03_a.
+		 The following new driver assignments were made:
+			Peripheral Instance: ellie_control_0, driver: generic_v1_00_a.
+ 
+16:23:38.160 INFO  - Updating hardware inferred compiler options for FSBL_tubii. 
+16:23:38.167 INFO  - Clearing existing target manager status. 
+16:23:47.838 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.c into \FSBL_tubii\src\ps7_init.c. 
+16:23:47.868 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.h into \FSBL_tubii\src\ps7_init.h. 
+16:23:48.322 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.html into \FSBL_tubii\src\ps7_init.html. 
+16:23:48.393 INFO  - Copied contents of C:\Users\Ian\Documents\GitHub\workspace_tubii\hw_platform_7020\ps7_init.tcl into \FSBL_tubii\src\ps7_init.tcl. 
+16:23:49.834 INFO  - Workspace synchronized with the new hardware specification file. Cleaning dependent projects... 
+16:47:13.298 ERROR - Unexpected error while parsing XMD response ?: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near  

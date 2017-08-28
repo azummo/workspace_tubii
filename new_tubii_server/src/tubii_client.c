@@ -178,7 +178,7 @@ void SetMZHappyPulser(client *c, int argc, sds *argv)
 
 void ping(client *c, int argc, sds *argv)
 {
-  Log(VERBOSE, "TUBii: Ping!");
+  Log(NOTICE, "TUBii: Ping!");
   addReplyStatus(c, "+OK");
 }
 

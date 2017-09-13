@@ -697,6 +697,21 @@ void SetTrigWordDelay(client *c, int argc, sds *argv)
   addReplyStatus(c, "+OK");
 }
 
+void SetTrigWordLength(client *c, int argc, sds *argv)
+{
+  float flength=0;
+  safe_strtof(argv[1],&flength);
+  u32 length = flength;
+
+  int ret= TrigWordLength(length);
+  if(ret!=0){
+	addReplyError(c, tubii_err);
+	return;
+  }
+  save_tubii_state();  // Note: Need to add length to the DB
+  addReplyStatus(c, "+OK");
+}
+
 void ResetGTID(client *c, int argc, sds *argv)
 {
   resetGTID();

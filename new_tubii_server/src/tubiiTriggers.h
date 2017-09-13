@@ -261,4 +261,10 @@ int TrigWordDelay(u32 delay)
   return 0;
 }
 
+int TrigWordLength(u32 delay)
+{
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset2, delay);
+  return 0;
+}
+
 #endif /* TRIGGERS_H_ */

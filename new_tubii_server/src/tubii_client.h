@@ -102,6 +102,7 @@ void ResetGTID(client *c, int argc, sds *argv);
 
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);
+void SetTrigWordLength(client *c, int argc, sds *argv);
 void start_data_readout(client *c, int argc, sds *argv);
 void stop_data_readout(client *c, int argc, sds *argv);
 int tubii_status(aeEventLoop *el, long long id, void *data);

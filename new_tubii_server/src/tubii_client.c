@@ -23,6 +23,7 @@ extern aeEventLoop *el;
 extern database *detector_db;
 long long tubii_readout_id = AE_ERR;
 int last_gtid=0;
+int spam_flag=0;
 
 static void save_db_callback(PGresult *res, PGconn *conn, void *data);
 static void save_db_client_callback(PGresult *res, PGconn *conn, void *data);
@@ -809,6 +810,9 @@ int tubii_status(aeEventLoop *el, long long id, void *data)
 	  GetCounterRate();
 	}
 
+	// Reset flag to prevent spamming warnings
+	spam_flag=0;
+
 	// Renew the MZHappy Pulser
 	//Pulser(1,0.5,100,MappedHappyBaseAddress);
 
@@ -883,9 +887,12 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 		// Have we advanced?
 		if(last_gtid!=trec.GTID){
 			// Have we missed a tick
-			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1 && (last_gtid & 0xFFFF)!=0xFFFE)
-				Log(WARNING, "TUBII: FIFO skipped a GTID from %i to %i\n",last_gtid,trec.GTID);
-
+			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1 && (last_gtid & 0xFFFF)!=0xFFFE){
+				if(spam_flag==0){
+					Log(WARNING, "TUBII: FIFO skipped GTIDs\n");
+					spam_flag=1;
+				}
+			}
 			last_gtid=trec.GTID;
 
 			/* convert to big endian */

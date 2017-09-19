@@ -124,6 +124,8 @@ int auto_init()
   // Instead set trig word length to 100ns
   TrigWordLength(10);
 
+  TellieMode(1);
+
   // Switch data readout on by default
   data_readout=1;
 

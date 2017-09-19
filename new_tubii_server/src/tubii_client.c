@@ -120,7 +120,9 @@ int auto_init()
   //speakerScale(1);
 
   // Set trig word delay to 90ns
-  TrigWordDelay(9);
+  //TrigWordDelay(9);
+  // Instead set trig word length to 100ns
+  TrigWordLength(10);
 
   // Switch data readout on by default
   data_readout=1;

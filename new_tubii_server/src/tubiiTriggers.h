@@ -202,7 +202,7 @@ void resetGTID()
 u32 currentgtid()
 {
   u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
-  Log(WARNING, "TUBii: Current GTID: %lu\n", gtid);
+  Log(NOTICE, "TUBii: Current GTID: %lu\n", gtid);
   return gtid;
 }
 

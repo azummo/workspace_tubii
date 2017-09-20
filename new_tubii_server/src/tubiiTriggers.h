@@ -199,19 +199,10 @@ void resetGTID()
 }
 
 /////// Data Readout
-u32 currentTrigger()
-{
-  u32 current_trig= mReadReg((u32) MappedTrigBaseAddress, RegOffset0) && 0xFFFFFF;
-  u32 trig_mask= mReadReg((u32) MappedTrigBaseAddress, RegOffset3);
-  u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
-  u32 sync= mReadReg((u32) MappedTrigBaseAddress, RegOffset5);
-  Log(WARNING, "Current trig is: %lu with mask %lu and gtid %lu and sync %lu\n", current_trig, trig_mask, gtid, sync);
-  return current_trig;
-}
-
 u32 currentgtid()
 {
   u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
+  Log(WARNING, "TUBii: Current GTID: %lu\n", gtid);
   return gtid;
 }
 

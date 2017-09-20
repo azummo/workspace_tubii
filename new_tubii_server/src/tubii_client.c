@@ -747,11 +747,6 @@ void gtdelay(client *c, int argc, sds *argv)
 }
 
 // Data readout
-void GetTrigger(client *c, int argc, sds *argv)
-{
-  addReply(c, ":%u", currentTrigger());
-}
-
 void GetGTID(client *c, int argc, sds *argv)
 {
   addReply(c, ":%u", currentgtid());

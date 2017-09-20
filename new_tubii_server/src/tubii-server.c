@@ -159,7 +159,6 @@ struct command commandTable[] = {
 		{"getTUBiiPGT",         GetTUBiiPGT,        1},
 		{"setComboTrigger",    	SetComboTrigger,    3},
 		{"setPrescaleTrigger", 	SetPrescaleTrigger, 3},
-		{"GetTrigger",  		GetTrigger,  1},
 		{"GetGTID", 			GetGTID,		1},
 		{"GetFifoTrigger",     	GetFifoTrigger,     1},
 		{"ResetFifo",     	   	ResetFIFO,	   	    1},

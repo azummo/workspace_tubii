@@ -94,7 +94,6 @@ void SetTUBiiPGT(client *c, int argc, sds *argv);
 void GetTUBiiPGT(client *c, int argc, sds *argv);
 void SetComboTrigger(client *c, int argc, sds *argv);
 void SetPrescaleTrigger(client *c, int argc, sds *argv);
-void GetTrigger(client *c, int argc, sds *argv);
 void GetGTID(client *c, int argc, sds *argv);
 void GetFifoTrigger(client *c, int argc, sds *argv);
 void ResetFIFO(client *c, int argc, sds *argv);

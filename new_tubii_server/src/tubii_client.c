@@ -750,7 +750,7 @@ void gtdelay(client *c, int argc, sds *argv)
 void GetGTID(client *c, int argc, sds *argv)
 {
   int gtid=currentgtid();
-  //Log(NOTICE, "TUBii: Current GTID: %lu\n", gtid);
+  Log(NOTICE, "TUBii: Current GTID: %lu\n", gtid);
   addReply(c, ":%u", gtid);
 }
 

@@ -749,7 +749,9 @@ void gtdelay(client *c, int argc, sds *argv)
 // Data readout
 void GetGTID(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", currentgtid());
+  int gtid=currentgtid();
+  Log(NOTICE, "TUBii: Current GTID: %lu\n", gtid);
+  addReply(c, ":%u", gtid);
 }
 
 void GetFifoTrigger(client *c, int argc, sds *argv)
@@ -766,7 +768,7 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
     struct TubiiRecord trec;
     fifoTrigger(&trec);
 
-    //printf("GTID %i Word %i\n",trec.GTID,trec.TrigWord);
+    printf("GTID %i Word %i\n",trec.GTID,trec.TrigWord);
     if(last_gtid!=trec.GTID){
       if(last_gtid!=trec.GTID-1 && trec.GTID!=0) printf("Missed one! %i --> %i\n",last_gtid,trec.GTID);
 

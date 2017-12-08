@@ -63,6 +63,7 @@ void GetSmellieNPulses(client *c, int argc, sds *argv);
 void GetSmellieDelay(client *c, int argc, sds *argv);
 void SetTelliedelay(client *c, int argc, sds *argv);
 void SetTellieMode(client *c, int argc, sds *argv);
+void GetTellieMode(client *c, int argc, sds *argv);
 void SetTelliepulser(client *c, int argc, sds *argv);
 void GetTellieRate(client *c, int argc, sds *argv);
 void GetTelliePulseWidth(client *c, int argc, sds *argv);

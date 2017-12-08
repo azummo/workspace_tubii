@@ -125,7 +125,7 @@ int auto_init()
   // Instead set trig word length to 100ns
   TrigWordLength(10);
 
-  TellieMode(1);
+  SetTellieTriggerMode(1);
 
   // Switch data readout on by default
   data_readout=1;
@@ -295,8 +295,13 @@ void SetTellieMode(client *c, int argc, sds *argv)
   uint32_t option=0;
   safe_strtoul(argv[1],&option);
 
-  TellieMode(option);
+  SetTellieTriggerMode(option);
   addReplyStatus(c, "+OK");
+}
+
+void GetTellieMode(client *c, int argc, sds *argv)
+{
+  addReplyDouble(c, GetTellieTriggerMode());
 }
 
 void SetTelliedelay(client *c, int argc, sds *argv)

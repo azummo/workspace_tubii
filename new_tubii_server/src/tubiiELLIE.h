@@ -105,9 +105,14 @@ int Lengthen(char* dArg)
   return 0;
 }
 
-void TellieMode(u32 option)
+void SetTellieTriggerMode(u32 option)
 {
   mWriteReg((u32) MappedEllieControlBaseAddress, RegOffset0, option);
+}
+
+int GetTellieTriggerMode()
+{
+  return mReadReg((u32) MappedEllieControlBaseAddress, RegOffset0);
 }
 
 #endif /* TUBIIELLIE_H_ */

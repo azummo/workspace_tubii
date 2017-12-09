@@ -105,6 +105,8 @@ void SetTrigWordDelay(client *c, int argc, sds *argv);
 void SetTrigWordLength(client *c, int argc, sds *argv);
 void start_data_readout(client *c, int argc, sds *argv);
 void stop_data_readout(client *c, int argc, sds *argv);
+void start_status_readout(client *c, int argc, sds *argv);
+void stop_status_readout(client *c, int argc, sds *argv);
 int tubii_status(aeEventLoop *el, long long id, void *data);
 int tubii_readout(aeEventLoop *el, long long id, void *data);
 int start_tubii_readout(long long milliseconds);

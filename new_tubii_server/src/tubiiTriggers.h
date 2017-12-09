@@ -14,6 +14,7 @@ int last_one=-1;
 int last_ptr=0;
 int err_flg=0;
 int data_readout=0;
+int status_readout=0;
 int counter_mode=0;
 
 void *MappedCountBaseAddress;

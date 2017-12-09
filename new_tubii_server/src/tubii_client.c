@@ -129,6 +129,7 @@ int auto_init()
 
   // Switch data readout on by default
   data_readout=1;
+  status_readout=1;
 
   save_tubii_state();
 
@@ -806,7 +807,9 @@ void GetFifoTrigger(client *c, int argc, sds *argv)
 
 int tubii_status(aeEventLoop *el, long long id, void *data)
 {
-    // Check if we are in rate mode
+    if(getStatusReadout() == 0) return 1000;
+
+	// Check if we are in rate mode
 	if(counter_mode == 1){
 	  // Toggle latchs
 	  GetCounterRate();
@@ -852,6 +855,23 @@ void stop_data_readout(client *c, int argc, sds *argv)
 int getDataReadout()
 {
 	return data_readout;
+}
+
+void start_status_readout(client *c, int argc, sds *argv)
+{
+	status_readout=1;
+	addReplyStatus(c, "+OK");
+}
+
+void stop_status_readout(client *c, int argc, sds *argv)
+{
+	status_readout=0;
+	addReplyStatus(c, "+OK");
+}
+
+int getStatusReadout()
+{
+	return status_readout;
 }
 
 int start_tubii_readout(long long milliseconds)

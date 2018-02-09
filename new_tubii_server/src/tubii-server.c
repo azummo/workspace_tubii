@@ -129,7 +129,7 @@ struct command commandTable[] = {
 		{"getSmellieDelay", 	GetSmellieDelay, 	1},
 		{"setTellieDelay",  	SetTelliedelay,  	2},
 		{"setTellieMode",       SetTellieMode,      2},
-		{"GetTellieMode",       SetTellieMode,      1},
+		{"GetTellieMode",       GetTellieMode,      1},
 		{"setTelliePulser", 	SetTelliepulser, 	4},
 		{"getTellieRate", 		GetTellieRate, 		1},
 		{"getTelliePulseWidth", GetTelliePulseWidth, 1},

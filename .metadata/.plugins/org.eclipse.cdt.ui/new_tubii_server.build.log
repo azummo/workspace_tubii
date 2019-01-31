@@ -1,0 +1,76 @@
+14:27:06 **** Auto Build of configuration Debug for project new_tubii_server ****
+make all 
+Building file: ../src/tubii_client.c
+Invoking: ARM v7 Linux gcc compiler
+arm-linux-gnueabi-gcc -Wall -O0 -g3 -I"/home/zummo/snoplus/TUBii/workspace_tubii_2/new_tubii_server/src" -c -fmessage-length=0 -MMD -MP -MF"src/tubii_client.d" -MT"src/tubii_client.o" -o "src/tubii_client.o" "../src/tubii_client.c"
+In file included from ../src/tubii_client.c:15:0:
+../src/tubiiELLIE.h: In function ‘Lengthen’:
+../src/tubiiELLIE.h:101:21: warning: passing argument 2 of ‘safe_strtoul’ from incompatible pointer type [-Wincompatible-pointer-types]
+   safe_strtoul(dArg,&length);
+                     ^
+In file included from ../src/tubii_client.c:1:0:
+../src/tubii_client.h:7:5: note: expected ‘uint32_t * {aka unsigned int *}’ but argument is of type ‘u32 * {aka long unsigned int *}’
+ int safe_strtoul(char *s, uint32_t *si);
+     ^
+In file included from ../src/tubii_client.c:17:0:
+../src/tubiiTriggers.h: In function ‘individualTriggerMask’:
+../src/tubiiTriggers.h:162:10: warning: comparison with string literal results in unspecified behavior [-Waddress]
+   if(type=="sync"){
+          ^
+../src/tubiiTriggers.h:168:15: warning: comparison with string literal results in unspecified behavior [-Waddress]
+   else if(type=="async"){
+               ^
+../src/tubii_client.c: In function ‘tubii_status’:
+../src/tubii_client.c:810:8: warning: implicit declaration of function ‘getStatusReadout’ [-Wimplicit-function-declaration]
+     if(getStatusReadout() == 0) return 1000;
+        ^
+../src/tubii_client.c: In function ‘auto_load_config’:
+../src/tubii_client.c:951:10: warning: implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+       if(strcmp(call,"user")==0) fscanf(fp,"%s",dbconfig.user);
+          ^
+../src/tubii_client.c: In function ‘save_TUBii_command’:
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 3 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+     sprintf(command, "SELECT save_tubii ("
+                      ^
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 8 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 9 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 10 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 11 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 12 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 13 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 14 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 17 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 18 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 19 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 20 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:985:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 21 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c: In function ‘save_tubii’:
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 3 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+     sprintf(command, "INSERT INTO TUBii ("
+                      ^
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 8 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 9 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 10 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 11 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 12 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 13 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 14 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 17 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 18 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 19 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 20 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c:1232:22: warning: format ‘%u’ expects argument of type ‘unsigned int’, but argument 21 has type ‘u32 {aka long unsigned int}’ [-Wformat=]
+../src/tubii_client.c: At top level:
+../src/tubii_client.c:1226:12: warning: ‘save_tubii’ defined but not used [-Wunused-function]
+ static int save_tubii(aeEventLoop *el, long long id, void *data)
+            ^
+Finished building: ../src/tubii_client.c
+ 
+Building target: new_tubii_server.elf
+Invoking: ARM v7 Linux gcc linker
+arm-linux-gnueabi-gcc -L"/home/zummo/snoplus/TUBii/workspace_tubii_2/new_tubii_server/src" -o "new_tubii_server.elf"  ./src/adlist.o ./src/ae.o ./src/ae_epoll.o ./src/anet.o ./src/async.o ./src/blocked.o ./src/data.o ./src/db.o ./src/dict.o ./src/hiredis.o ./src/logging.o ./src/net.o ./src/networking.o ./src/read.o ./src/sds.o ./src/server.o ./src/sha1.o ./src/sock.o ./src/tubii-server.o ./src/tubii_client.o ./src/util.o   -lm -lpthread -lpq
+Finished building target: new_tubii_server.elf
+ 
+
+14:27:07 Build Finished (took 820ms)
+

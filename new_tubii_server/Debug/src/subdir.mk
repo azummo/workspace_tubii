@@ -76,8 +76,8 @@ C_DEPS += \
 # Each subdirectory must supply rules for building sources it contributes
 src/%.o: ../src/%.c
 	@echo 'Building file: $<'
-	@echo 'Invoking: ARM Linux gcc compiler'
-	arm-xilinx-linux-gnueabi-gcc -Wall -O0 -g3 -I"C:\Users\Ian\Documents\GitHub\workspace_tubii\new_tubii_server\src" -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Invoking: ARM v7 Linux gcc compiler'
+	arm-linux-gnueabi-gcc -Wall -O0 -g3 -I"/home/zummo/snoplus/TUBii/workspace_tubii/new_tubii_server/src" -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

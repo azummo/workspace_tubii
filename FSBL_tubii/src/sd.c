@@ -1,43 +1,34 @@
 /******************************************************************************
 *
-* (c) Copyright 2012-2013 Xilinx, Inc. All rights reserved.
+* Copyright (C) 2012 - 2014 Xilinx, Inc.  All rights reserved.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
 *
-* This file contains confidential and proprietary information of Xilinx, Inc.
-* and is protected under U.S. and international copyright and other
-* intellectual property laws.
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
 *
-* DISCLAIMER
-* This disclaimer is not a license and does not grant any rights to the
-* materials distributed herewith. Except as otherwise provided in a valid
-* license issued to you by Xilinx, and to the maximum extent permitted by
-* applicable law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL
-* FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS,
-* IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
-* MERCHANTABILITY, NON-INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE;
-* and (2) Xilinx shall not be liable (whether in contract or tort, including
-* negligence, or under any other theory of liability) for any loss or damage
-* of any kind or nature related to, arising under or in connection with these
-* materials, including for any direct, or any indirect, special, incidental,
-* or consequential loss or damage (including loss of data, profits, goodwill,
-* or any type of loss or damage suffered as a result of any action brought by
-* a third party) even if such damage or loss was reasonably foreseeable or
-* Xilinx had been advised of the possibility of the same.
+* Use of the Software is limited solely to applications: 
+* (a) running on a Xilinx device, or 
+* (b) that interact with a Xilinx device through a bus or interconnect.  
 *
-* CRITICAL APPLICATIONS
-* Xilinx products are not designed or intended to be fail-safe, or for use in
-* any application requiring fail-safe performance, such as life-support or
-* safety devices or systems, Class III medical devices, nuclear facilities,
-* applications related to the deployment of airbags, or any other applications
-* that could lead to death, personal injury, or severe property or
-* environmental damage (individually and collectively, "Critical
-* Applications"). Customer assumes the sole risk and liability of any use of
-* Xilinx products in Critical Applications, subject only to applicable laws
-* and regulations governing limitations on product liability.
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
 *
-* THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE
-* AT ALL TIMES.
+* Except as contained in this notice, the name of the Xilinx shall not be used
+* in advertising or otherwise to promote the sale, use or other dealings in 
+* this Software without prior written authorization from Xilinx.
 *
-*******************************************************************************/
+******************************************************************************/
 /*****************************************************************************/
 /**
 *
@@ -51,6 +42,8 @@
 * Ver	Who	Date		Changes
 * ----- ---- -------- -------------------------------------------------------
 * 1.00a jz	04/28/11 Initial release
+* 7.00a kc  10/18/13 Integrated SD/MMC driver
+* 12.00a ssc 12/11/14 Fix for CR# 839182
 *
 * </pre>
 *
@@ -61,7 +54,13 @@
 /***************************** Include Files *********************************/
 #include "xparameters.h"
 #include "fsbl.h"
-#ifdef XPAR_PS7_SD_0_S_AXI_BASEADDR
+
+#if defined(XPAR_PS7_SD_0_S_AXI_BASEADDR) || defined(XPAR_XSDPS_0_BASEADDR)
+
+#ifndef XPAR_PS7_SD_0_S_AXI_BASEADDR
+#define XPAR_PS7_SD_0_S_AXI_BASEADDR XPAR_XSDPS_0_BASEADDR
+#endif
+
 #include "xstatus.h"
 
 #include "ff.h"
@@ -104,9 +103,10 @@ u32 InitSD(const char *filename)
 {
 
 	FRESULT rc;
+	TCHAR *path = "0:/"; /* Logical drive number is 0 */
 
 	/* Register volume work area, initialize device */
-	rc = f_mount(0, &fatfs);
+	rc = f_mount(&fatfs, path, 0);
 	fsbl_printf(DEBUG_INFO,"SD: rc= %.8x\n\r", rc);
 
 	if (rc != FR_OK) {
@@ -152,7 +152,7 @@ u32 SDAccess( u32 SourceAddress, u32 DestinationAddress, u32 LengthBytes)
 
 	rc = f_lseek(&fil, SourceAddress);
 	if (rc) {
-		fsbl_printf(DEBUG_INFO,"SD: Unable to seek to %x\n", SourceAddress);
+		fsbl_printf(DEBUG_INFO,"SD: Unable to seek to %lx\n", SourceAddress);
 		return XST_FAILURE;
 	}
 

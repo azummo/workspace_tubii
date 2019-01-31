@@ -1,5 +1,0 @@
-the_ROM_image:
-{
-[bootloader]/Users/Ian/Documents/GitHub/workspace_tubii/FSBL_tubii/Debug/FSBL_tubii.elf
-	/Users/Ian/Documents/GitHub/workspace_tubii/hw_platform_7020/system.bit
-}

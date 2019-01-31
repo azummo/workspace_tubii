@@ -1,13 +1,39 @@
-/*******************************************************************/
-/*                                                                 */
-/* (c) Copyright 2012-2013 Xilinx, Inc. All rights reserved			*/
-/*                                                                 */
-/* Description : FSBL Linker Script                          		*/
-/*                                                                 */
-/*******************************************************************/
+/******************************************************************************
+*
+* Copyright (C) 2012 - 2014 Xilinx, Inc.  All rights reserved.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
+*
+* Use of the Software is limited solely to applications: 
+* (a) running on a Xilinx device, or 
+* (b) that interact with a Xilinx device through a bus or interconnect.  
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
+*
+* Except as contained in this notice, the name of the Xilinx shall not be used
+* in advertising or otherwise to promote the sale, use or other dealings in 
+* this Software without prior written authorization from Xilinx.
+*
+******************************************************************************/
 
 _STACK_SIZE = DEFINED(_STACK_SIZE) ? _STACK_SIZE : 0x6000;
 _HEAP_SIZE = DEFINED(_HEAP_SIZE) ? _HEAP_SIZE : 0x2000;
+
+_RSA_AC_SIZE = DEFINED(_RSA_AC_SIZE) ? _RSA_AC_SIZE : 0x1000;
 
 _ABORT_STACK_SIZE = DEFINED(_ABORT_STACK_SIZE) ? _ABORT_STACK_SIZE : 1024;
 _SUPERVISOR_STACK_SIZE = DEFINED(_SUPERVISOR_STACK_SIZE) ? _SUPERVISOR_STACK_SIZE : 2048;
@@ -148,7 +174,7 @@ SECTIONS
    *(.gcc_except_table)
 } > ps7_ram_0_S_AXI_BASEADDR
 
-.mmu_tbl ALIGN(0x4000): {
+.mmu_tbl (ALIGN(0x4000)): {
    __mmu_tbl_start = .;
    *(.mmu_tbl)
    __mmu_tbl_end = .;
@@ -180,6 +206,13 @@ SECTIONS
    KEEP (*(SORT(.fini_array.*)))
    KEEP (*(.fini_array))
    __fini_array_end = .;
+} > ps7_ram_0_S_AXI_BASEADDR
+
+.rsa_ac : {
+	. = ALIGN(64);
+	__rsa_ac_start = .;
+	. += _RSA_AC_SIZE;
+	__rsa_ac_end = .;
 } > ps7_ram_0_S_AXI_BASEADDR
 
 .ARM.attributes : {
@@ -222,11 +255,13 @@ SECTIONS
 
 .bss (NOLOAD) : {
    __bss_start = .;
+   __bss_start__ = .;
    *(.bss)
    *(.bss.*)
    *(.gnu.linkonce.b.*)
    *(COMMON)
    __bss_end = .;
+   __bss_end__ = .;
 } > ps7_ram_0_S_AXI_BASEADDR
 
 _SDA_BASE_ = __sdata_start + ((__sbss_end - __sdata_start) / 2 );

@@ -1,43 +1,34 @@
 /******************************************************************************
 *
-* (c) Copyright 2012-2013 Xilinx, Inc. All rights reserved.
+* Copyright (C) 2012 - 2018 Xilinx, Inc.  All rights reserved.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
 *
-* This file contains confidential and proprietary information of Xilinx, Inc.
-* and is protected under U.S. and international copyright and other
-* intellectual property laws.
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
 *
-* DISCLAIMER
-* This disclaimer is not a license and does not grant any rights to the
-* materials distributed herewith. Except as otherwise provided in a valid
-* license issued to you by Xilinx, and to the maximum extent permitted by
-* applicable law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL
-* FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS,
-* IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
-* MERCHANTABILITY, NON-INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE;
-* and (2) Xilinx shall not be liable (whether in contract or tort, including
-* negligence, or under any other theory of liability) for any loss or damage
-* of any kind or nature related to, arising under or in connection with these
-* materials, including for any direct, or any indirect, special, incidental,
-* or consequential loss or damage (including loss of data, profits, goodwill,
-* or any type of loss or damage suffered as a result of any action brought by
-* a third party) even if such damage or loss was reasonably foreseeable or
-* Xilinx had been advised of the possibility of the same.
+* Use of the Software is limited solely to applications: 
+* (a) running on a Xilinx device, or 
+* (b) that interact with a Xilinx device through a bus or interconnect.  
 *
-* CRITICAL APPLICATIONS
-* Xilinx products are not designed or intended to be fail-safe, or for use in
-* any application requiring fail-safe performance, such as life-support or
-* safety devices or systems, Class III medical devices, nuclear facilities,
-* applications related to the deployment of airbags, or any other applications
-* that could lead to death, personal injury, or severe property or
-* environmental damage (individually and collectively, "Critical
-* Applications"). Customer assumes the sole risk and liability of any use of
-* Xilinx products in Critical Applications, subject only to applicable laws
-* and regulations governing limitations on product liability.
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
 *
-* THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE
-* AT ALL TIMES.
+* Except as contained in this notice, the name of the Xilinx shall not be used
+* in advertising or otherwise to promote the sale, use or other dealings in 
+* this Software without prior written authorization from Xilinx.
 *
-*******************************************************************************/
+******************************************************************************/
 /*****************************************************************************/
 /**
 *
@@ -61,18 +52,62 @@
 * 				Added clearing of ECC Error Code
 * 				Added the watchdog timer value
 * 4.00a sgd 02/28/13	Code Cleanup
-* 						Fix for CR#681014
-* 						Fix for CR#689077
-*						Fix for CR#694038
-*						Fix for CR#694039
-*                       Fix for CR#699475
+* 						Fix for CR#681014 - ECC init in FSBL should not
+* 						                    call fabric_init()
+* 						Fix for CR#689077 - FSBL hangs at Handoff clearing the
+* 						                    TX UART buffer when using UART0
+* 						                    instead of UART1
+*						Fix for CR#694038 - FSBL debug logs always prints 14.3
+*											as the Revision number - this is
+*										    incorrect
+*						Fix for CR#694039 - FSBL prints "unsupported silicon
+*											version for v3.0" 3.0 Silicon
+*                       Fix for CR#699475 - FSBL functionality is broken and
+*                                           its not able to boot in QSPI/NAND
+*                                           bootmode
 *                       Removed DDR initialization check
 *                       Removed DDR ECC initialization code
 *						Modified hand off address check to 1MB
 *						Added RSA authentication support
 *						Watchdog disabled for AES E-Fuse encryption
 * 5.00a sgd 05/17/13	Fallback support for E-Fuse encryption
-*                       Fix for CR#708728
+*                       Fix for CR#708728 - Issues seen while making HP
+*                                           interconnect 32 bit wide
+* 6.00a kc  07/30/13    Fix for CR#708316 - PS7_init.tcl file should have
+*                                           Error mechanism for all mask_poll
+*                       Fix for CR#691150 - ps7_init does not check for
+*                                           peripheral initialization failures
+*                                           or timeout on polls
+*                       Fix for CR#724165 - Partition Header used by FSBL is
+*                                           not authenticated
+*                       Fix for CR#724166 - FSBL doesn’t use PPK authenticated
+*                                           by Boot ROM for authenticating
+*                                           the Partition images
+*                       Fix for CR#722979 - Provide customer-friendly
+*                                           changelogs in FSBL
+*                       Fix for CR#732865 - Backward compatibility for ps7_init
+*                       					function
+* 7.00a kc  10/18/13    Integrated SD/MMC driver
+* 8.00a kc  02/20/14	Fix for CR#775631 - FSBL: FsblGetGlobalTimer() 
+*											is not proper
+* 9.00a kc  04/16/14	Fix for CR#724166 - SetPpk() will fail on secure
+*		 									fallback unless FSBL* and FSBL
+*		 									are identical in length
+* 10.00a kc 07/24/14	Fix for CR#809336 - Minor code cleanup
+*        kc 08/27/14	Fix for CR#820356 - FSBL compilation fails with
+* 											IAR compiler
+* 11.00a kv 10/08/14	Fix for CR#826030 - LinearBootDeviceFlag should
+*											be initialized to 0 in IO mode
+*											case
+* 15.00a gan 07/21/16   Fix for CR# 953654 -(2016.3)FSBL -
+* 											In pcap.c/pcap.h/main.c,
+* 											Fabric Initialization sequence
+* 											is modified to check the PL power
+* 											before sequence starts and checking
+* 											INIT_B reset status twice in case
+* 											of failure.
+* 16.00a bsv 03/26/18	Fix for CR# 996973  Add code under JTAG_ENABLE_LEVEL_SHIFTERS macro
+* 											to enable level shifters in jtag boot mode.
 * </pre>
 *
 * @note
@@ -110,7 +145,13 @@
 #endif
 
 #ifdef STDOUT_BASEADDRESS
+#ifdef XPAR_XUARTPS_0_BASEADDR
 #include "xuartps_hw.h"
+#endif
+#endif
+
+#ifdef RSA_SUPPORT
+#include "rsa.h"
 #endif
 
 /************************** Constant Definitions *****************************/
@@ -130,11 +171,9 @@ XWdtPs Watchdog;		/* Instance of WatchDog Timer	*/
 #endif
 /************************** Function Prototypes ******************************/
 extern int ps7_init();
+extern char* getPS7MessageInfo(unsigned key);
 #ifdef PS7_POST_CONFIG
 extern int ps7_post_config();
-#endif
-#ifdef PEEP_CODE
-extern void init_ddr(void);
 #endif
 
 static void Update_MultiBootRegister(void);
@@ -171,7 +210,7 @@ u32 Silicon_Version;
 /*
  * Boot Device flag
  */
-u8 LinearBootDeviceFlag;
+u8 LinearBootDeviceFlag=0;
 
 u32 PcapCtrlRegVal;
 
@@ -203,18 +242,21 @@ int main(void)
 	u32 BootModeRegister = 0;
 	u32 HandoffAddress = 0;
 	u32 Status = XST_SUCCESS;
-
-#ifdef PEEP_CODE
-	/*
-	 * PEEP DDR initialization
-	 */
-	init_ddr();
-#else
+	u32 RegVal;
 	/*
 	 * PCW initialization for MIO,PLL,CLK and DDR
 	 */
-	ps7_init();
-#endif
+	Status = ps7_init();
+	if (Status != FSBL_PS7_INIT_SUCCESS) {
+		fsbl_printf(DEBUG_GENERAL,"PS7_INIT_FAIL : %s\r\n",
+						getPS7MessageInfo(Status));
+		OutputStatus(PS7_INIT_FAIL);
+		/*
+		 * Calling FsblHookFallback instead of Fallback
+		 * since, devcfg driver is not yet initialized
+		 */
+		FsblHookFallback();
+	}
 
 	/*
 	 * Unlock SLCR for SLCR register write
@@ -229,7 +271,7 @@ int main(void)
 	 */
 #ifdef FSBL_PERF
 	XTime tCur = 0;
-	FsblGetGlobalTime(tCur);
+	FsblGetGlobalTime(&tCur);
 #endif
 
 	/*
@@ -251,8 +293,7 @@ int main(void)
 	 * Print the FSBL Banner
 	 */
 	fsbl_printf(DEBUG_GENERAL,"\n\rXilinx First Stage Boot Loader \n\r");
-	fsbl_printf(DEBUG_GENERAL,"Release %d.%d/%d.%d	%s-%s\r\n",
-			SDK_RELEASE_VER, SDK_SUB_VER,
+	fsbl_printf(DEBUG_GENERAL,"Release %d.%d	%s-%s\r\n",
 			SDK_RELEASE_YEAR, SDK_RELEASE_QUARTER,
 			__DATE__,__TIME__);
 
@@ -266,7 +307,11 @@ int main(void)
 		fsbl_printf(DEBUG_GENERAL,"DDR_INIT_FAIL \r\n");
 		/* Error Handling here */
 		OutputStatus(DDR_INIT_FAIL);
-		FsblFallback();
+		/*
+		 * Calling FsblHookFallback instead of Fallback
+		 * since, devcfg driver is not yet initialized
+		 */
+		FsblHookFallback();
 	}
 
 
@@ -277,7 +322,11 @@ int main(void)
 	if (Status == XST_FAILURE) {
 		fsbl_printf(DEBUG_GENERAL,"PCAP_INIT_FAIL \n\r");
 		OutputStatus(PCAP_INIT_FAIL);
-		FsblFallback();
+		/*
+		 * Calling FsblHookFallback instead of Fallback
+		 * since, devcfg driver is not yet initialized
+		 */
+		FsblHookFallback();
 	}
 
 	fsbl_printf(DEBUG_INFO,"Devcfg driver initialized \r\n");
@@ -313,7 +362,7 @@ int main(void)
 	/*
 	 * Check for AES source key
 	 */
-	if (PcapCtrlRegVal & PCAP_CTRL_PCFG_AES_FUSE_EFUSE_MASK) {
+	if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
 		/*
 		 * For E-Fuse AES encryption Watch dog Timer disabled and
 		 * User not allowed to do system reset
@@ -404,7 +453,7 @@ int main(void)
 	/*
 	 * SD BOOT MODE
 	 */
-#ifdef XPAR_PS7_SD_0_S_AXI_BASEADDR
+#if defined(XPAR_PS7_SD_0_S_AXI_BASEADDR) || defined(XPAR_XSDPS_0_BASEADDR)
 
 	if (BootModeRegister == SD_MODE) {
 		fsbl_printf(DEBUG_GENERAL,"Boot mode is SD\r\n");
@@ -445,6 +494,19 @@ int main(void)
 	 */
 	if (BootModeRegister == JTAG_MODE) {
 		fsbl_printf(DEBUG_GENERAL,"Boot mode is JTAG\r\n");
+
+		RegVal = Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_INT_STS_OFFSET);
+		/** If bitstream was loaded in jtag boot mode prior to running FSBL */
+		if(RegVal & XDCFG_IXR_PCFG_DONE_MASK)
+		{
+#ifdef PS7_POST_CONFIG
+		ps7_post_config();
+		/*
+		 * Unlock SLCR for SLCR register write
+		 */
+		SlcrUnlock();
+#endif
+		}
 		/*
 		 * Stop the Watchdog before JTAG handoff
 		 */
@@ -471,7 +533,7 @@ int main(void)
 		FsblFallback();
 	}
 
-	fsbl_printf(DEBUG_INFO,"Flash Base Address: 0x%08x\r\n", FlashReadBaseAddress);
+	fsbl_printf(DEBUG_INFO,"Flash Base Address: 0x%08lx\r\n", FlashReadBaseAddress);
 
 	/*
 	 * Check for valid flash address
@@ -511,7 +573,7 @@ int main(void)
 	 */
 	HandoffAddress = LoadBootImage();
 
-	fsbl_printf(DEBUG_INFO,"Handoff Address: 0x%08x\r\n",HandoffAddress);
+	fsbl_printf(DEBUG_INFO,"Handoff Address: 0x%08lx\r\n",HandoffAddress);
 
 	/*
 	 * For Performance measurement
@@ -553,13 +615,20 @@ void FsblFallback(void)
 	u32 RebootStatusReg;
 	u32 Status;
 	u32 HandoffAddr;
+	u32 BootModeRegister;
+
+	/*
+	 * Read bootmode register
+	 */
+	BootModeRegister = Xil_In32(BOOT_MODE_REG);
+	BootModeRegister &= BOOT_MODES_MASK;
 
 	/*
 	 * Fallback support check
 	 */
-	if (!((FlashReadBaseAddress == XPS_QSPI_LINEAR_BASEADDR) ||
-			(FlashReadBaseAddress == XPS_NAND_BASEADDR) ||
-			(FlashReadBaseAddress == XPS_NOR_BASEADDR))) {
+	if (!((BootModeRegister == QSPI_MODE) ||
+			(BootModeRegister == NAND_FLASH_MODE) ||
+			(BootModeRegister == NOR_FLASH_MODE))) {
 		fsbl_printf(DEBUG_INFO,"\r\n"
 				"This Boot Mode Doesn't Support Fallback\r\n");
 		ClearFSBLIn();
@@ -584,7 +653,7 @@ void FsblFallback(void)
 	/*
 	 * Barrier for synchronization
 	 */
-		asm(
+		__asm(
 			"dsb\n\t"
 			"isb"
 		);
@@ -592,7 +661,7 @@ void FsblFallback(void)
 	/*
 	 * Check for AES source key
 	 */
-	if (PcapCtrlRegVal & PCAP_CTRL_PCFG_AES_FUSE_EFUSE_MASK) {
+	if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
 		/*
 		 * Next valid image search can happen only
 		 * when system initialization done
@@ -601,7 +670,19 @@ void FsblFallback(void)
 			/*
 			 * Clean the Fabric
 			 */
-			FabricInit();
+			Status = FabricInit();
+			if(Status != XST_SUCCESS){
+				ClearFSBLIn();
+				FsblHookFallback();
+			}
+
+#ifdef RSA_SUPPORT
+
+			/*
+			 * Making sure PPK is set for efuse error cases
+			 */
+			SetPpk();
+#endif
 
 			/*
 			 * Search for next valid image
@@ -745,18 +826,22 @@ void FsblHandoff(u32 FsblStartAddr)
 void OutputStatus(u32 State)
 {
 #ifdef STDOUT_BASEADDRESS
+#ifdef XPAR_XUARTPS_0_BASEADDR
 	u32 UartReg = 0;
+#endif
 
-	fsbl_printf(DEBUG_GENERAL,"FSBL Status = 0x%.4x\r\n", State);
+	fsbl_printf(DEBUG_GENERAL,"FSBL Status = 0x%.4lx\r\n", State);
 	/*
 	 * The TX buffer needs to be flushed out
 	 * If this is not done some of the prints will not appear on the
 	 * serial output
 	 */
+#ifdef XPAR_XUARTPS_0_BASEADDR
 	UartReg = Xil_In32(STDOUT_BASEADDRESS + XUARTPS_SR_OFFSET);
 	while ((UartReg & XUARTPS_SR_TXEMPTY) != XUARTPS_SR_TXEMPTY) {
 		UartReg = Xil_In32(STDOUT_BASEADDRESS + XUARTPS_SR_OFFSET);
 	}
+#endif
 #endif
 }
 
@@ -981,7 +1066,7 @@ static void Update_MultiBootRegister(void)
 				XDCFG_MULTIBOOT_ADDR_OFFSET,
 				MultiBootReg);
 
-		fsbl_printf(DEBUG_INFO,"Updated MultiBootReg = 0x%08x\r\n",
+		fsbl_printf(DEBUG_INFO,"Updated MultiBootReg = 0x%08lx\r\n",
 				MultiBootReg);
 	}
 }
@@ -1024,9 +1109,9 @@ u32 GetResetReason(void)
 *
 *******************************************************************************/
 #ifdef FSBL_PERF
-void FsblGetGlobalTime (XTime tCur)
+void FsblGetGlobalTime (XTime *tCur)
 {
-	XTime_GetTime(&tCur);
+	XTime_GetTime(tCur);
 }
 
 
@@ -1054,12 +1139,7 @@ void FsblMeasurePerfTime (XTime tCur, XTime tEnd)
 	 */
 	tPerfSeconds = tDiff/COUNTS_PER_SECOND;
 
-	/*
-	 * Convert tPerf into Seconds
-	 */
-	tPerfSeconds = tDiff/COUNTS_PER_SECOND;
-
-#if defined(FSBL_DEBUG) || defined(FSBL_DEBUG_INFO)
+#if defined(STDOUT_BASEADDRESS)
 	printf("%f seconds \r\n",tPerfSeconds);
 #endif
 
@@ -1248,7 +1328,7 @@ void GetSiliconVersion(void)
 	if(Silicon_Version == SILICON_VERSION_3_1) {
 		fsbl_printf(DEBUG_GENERAL,"Silicon Version 3.1\r\n");
 	} else {
-		fsbl_printf(DEBUG_GENERAL,"Silicon Version %d.0\r\n",
+		fsbl_printf(DEBUG_GENERAL,"Silicon Version %lu.0\r\n",
 				Silicon_Version + 1);
 	}
 }
@@ -1295,7 +1375,7 @@ u32 HeaderChecksum(u32 FlashOffsetAddress){
 	 * Validate the checksum
 	 */
 	if (TempValue != Checksum){
-		fsbl_printf(DEBUG_INFO, "Checksum = %8.8x\r\n", Checksum);
+		fsbl_printf(DEBUG_INFO, "Checksum = %8.8lx\r\n", Checksum);
 		return XST_FAILURE;
 	}
 
@@ -1400,7 +1480,7 @@ u32 NextValidImageCheck(void)
 		if ((ImageCheckID(ImageBaseAddr) == XST_SUCCESS) &&
 				(HeaderChecksum(ImageBaseAddr) == XST_SUCCESS)) {
 
-			fsbl_printf(DEBUG_GENERAL, "\r\nImage found, offset: 0x%.8x\r\n",
+			fsbl_printf(DEBUG_GENERAL, "\r\nImage found, offset: 0x%.8lx\r\n",
 					ImageBaseAddr);
 			/*
 			 * Update multiboot register

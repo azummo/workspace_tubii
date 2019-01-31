@@ -1,4 +1,4 @@
-src/dict.d: ../src/dict.c ../src/fmacros.h ../src/dict.h
+src/dict.o: ../src/dict.c ../src/fmacros.h ../src/dict.h
 
 ../src/fmacros.h:
 

@@ -1,43 +1,34 @@
 /******************************************************************************
 *
-* (c) Copyright 2012-2013 Xilinx, Inc. All rights reserved.
+* Copyright (C) 2012 - 2014 Xilinx, Inc.  All rights reserved.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
 *
-* This file contains confidential and proprietary information of Xilinx, Inc.
-* and is protected under U.S. and international copyright and other
-* intellectual property laws.
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
 *
-* DISCLAIMER
-* This disclaimer is not a license and does not grant any rights to the
-* materials distributed herewith. Except as otherwise provided in a valid
-* license issued to you by Xilinx, and to the maximum extent permitted by
-* applicable law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL
-* FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS,
-* IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
-* MERCHANTABILITY, NON-INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE;
-* and (2) Xilinx shall not be liable (whether in contract or tort, including
-* negligence, or under any other theory of liability) for any loss or damage
-* of any kind or nature related to, arising under or in connection with these
-* materials, including for any direct, or any indirect, special, incidental,
-* or consequential loss or damage (including loss of data, profits, goodwill,
-* or any type of loss or damage suffered as a result of any action brought by
-* a third party) even if such damage or loss was reasonably foreseeable or
-* Xilinx had been advised of the possibility of the same.
+* Use of the Software is limited solely to applications: 
+* (a) running on a Xilinx device, or 
+* (b) that interact with a Xilinx device through a bus or interconnect.  
 *
-* CRITICAL APPLICATIONS
-* Xilinx products are not designed or intended to be fail-safe, or for use in
-* any application requiring fail-safe performance, such as life-support or
-* safety devices or systems, Class III medical devices, nuclear facilities,
-* applications related to the deployment of airbags, or any other applications
-* that could lead to death, personal injury, or severe property or
-* environmental damage (individually and collectively, "Critical
-* Applications"). Customer assumes the sole risk and liability of any use of
-* Xilinx products in Critical Applications, subject only to applicable laws
-* and regulations governing limitations on product liability.
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
 *
-* THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE
-* AT ALL TIMES.
+* Except as contained in this notice, the name of the Xilinx shall not be used
+* in advertising or otherwise to promote the sale, use or other dealings in 
+* this Software without prior written authorization from Xilinx.
 *
-*******************************************************************************/
+******************************************************************************/
 /*****************************************************************************/
 /**
 *
@@ -51,7 +42,18 @@
 * Ver	Who	Date		Changes
 * ----- ---- -------- -------------------------------------------------------
 * 4.00a sgd	02/28/13 Initial release
-*
+* 6.00a kc	07/30/13 Added FSBL_DEBUG_RSA to print more RSA buffers
+* 					 Fix for CR#724165 - Partition Header used by FSBL is
+*                                        not authenticated
+*                    Fix for CR#724166 - FSBL doesn’t use PPK authenticated
+*                                        by Boot ROM for authenticating
+*                                        the Partition images
+*                    Fix for CR#722979 - Provide customer-friendly
+*                                        changelogs in FSBL
+* 9.00a kc  04/16/14 Fix for CR#724166 - SetPpk() will fail on secure
+*					 					 fallback unless FSBL* and FSBL are
+*					 					 identical in length
+*					 Fix for CR#791245 - Use of xilrsa in FSBL
 * </pre>
 *
 * @note
@@ -59,8 +61,10 @@
 ******************************************************************************/
 
 /***************************** Include Files *********************************/
+#ifdef RSA_SUPPORT
 #include "fsbl.h"
 #include "rsa.h"
+#include "xilrsa.h"
 
 #ifdef	XPAR_XWDTPS_0_BASEADDR
 #include "xwdtps.h"
@@ -82,8 +86,101 @@ extern XWdtPs Watchdog;	/* Instance of WatchDog Timer	*/
 
 /************************** Variable Definitions *****************************/
 
+static u8 *PpkModular;
+static u8 *PpkModularEx;
+static u32	PpkExp;
+static u32 PpkAlreadySet=0;
 
-#ifdef RSA_SUPPORT
+extern u32 FsblLength;
+
+void FsblPrintArray (u8 *Buf, u32 Len, char *Str)
+{
+#ifdef FSBL_DEBUG_RSA
+	int Index;
+	fsbl_printf(DEBUG_INFO, "%s START\r\n", Str);
+	for (Index=0;Index<Len;Index++)
+	{
+		fsbl_printf(DEBUG_INFO, "%02x",Buf[Index]);
+		if ((Index+1)%16 == 0){
+			fsbl_printf(DEBUG_INFO, "\r\n");
+		}
+	}
+	fsbl_printf(DEBUG_INFO, "\r\n %s END\r\n",Str);
+#endif
+	return;
+}
+
+
+/*****************************************************************************/
+/**
+*
+* This function is used to set ppk pointer to ppk in OCM
+*
+* @param	None
+*
+* @return
+*
+* @note		None
+*
+******************************************************************************/
+
+void SetPpk(void )
+{
+	u32 PadSize;
+	u8 *PpkPtr;
+	
+	/*
+	 * Set PPK only if is not already set
+	 */
+	if(PpkAlreadySet == 0)
+	{
+	
+		/*
+		 * Set PpkPtr to PPK in OCM
+		 */
+	 
+		/*
+		 * Skip FSBL Length
+		 */
+		PpkPtr = (u8 *)(FsblLength);
+		/*
+		 * Skip to 64 byte Boundary
+		 */
+		PadSize = ((u32)PpkPtr % 64);
+		if(PadSize != 0)
+		{
+			PpkPtr += (64 - PadSize);
+		}
+
+		/*
+		 * Increment the pointer by authentication Header size
+		 */
+		PpkPtr += RSA_HEADER_SIZE;
+
+		/*
+		 * Increment the pointer by Magic word size
+		 */
+		PpkPtr += RSA_MAGIC_WORD_SIZE;
+
+		/*
+		 * Set pointer to PPK
+		 */
+		PpkModular = (u8 *)PpkPtr;
+		PpkPtr += RSA_PPK_MODULAR_SIZE;
+		PpkModularEx = (u8 *)PpkPtr;
+		PpkPtr += RSA_PPK_MODULAR_EXT_SIZE;
+		PpkExp = *((u32 *)PpkPtr);
+	
+		/*
+		 * Setting variable to avoid resetting PPK pointers
+		 */
+		PpkAlreadySet=1;
+	}
+	
+	return;
+}
+
+
 /*****************************************************************************/
 /**
 *
@@ -98,16 +195,13 @@ extern XWdtPs Watchdog;	/* Instance of WatchDog Timer	*/
 * @note		None
 *
 ******************************************************************************/
-u32 AuthenticateParition(u8 *Buffer, u32 Size)
+u32 AuthenticatePartition(u8 *Buffer, u32 Size)
 {
 	u8 DecryptSignature[256];
 	u8 HashSignature[32];
 	u8 *SpkModular;
 	u8 *SpkModularEx;
-	u8 *PpkModular;
-	u8 *PpkModularEx;
 	u32 SpkExp;
-	u32	PpkExp;
 	u8 *SignaturePtr;
 	u32 Status;
 
@@ -134,21 +228,19 @@ u32 AuthenticateParition(u8 *Buffer, u32 Size)
 	SignaturePtr += RSA_MAGIC_WORD_SIZE;
 
 	/*
-	 * Set pointer to PPK
+	 * Increment the pointer beyond the PPK
 	 */
-	PpkModular = (u8 *)SignaturePtr;
 	SignaturePtr += RSA_PPK_MODULAR_SIZE;
-	PpkModularEx = (u8 *)SignaturePtr;
 	SignaturePtr += RSA_PPK_MODULAR_EXT_SIZE;
-	PpkExp = *((u32 *)SignaturePtr);
 	SignaturePtr += RSA_PPK_EXPO_SIZE;
 
 	/*
 	 * Calculate Hash Signature
 	 */
-	sha_256((u8 *)SignaturePtr, (RSA_PPK_MODULAR_EXT_SIZE +
-				RSA_PPK_EXPO_SIZE + RSA_SPK_MODULAR_SIZE),
+	sha_256((u8 *)SignaturePtr, (RSA_SPK_MODULAR_EXT_SIZE +
+				RSA_SPK_EXPO_SIZE + RSA_SPK_MODULAR_SIZE),
 				HashSignature);
+	FsblPrintArray(HashSignature, 32, "SPK Hash Calculated");
 
    	/*
    	 * Extract SPK signature
@@ -168,6 +260,9 @@ u32 AuthenticateParition(u8 *Buffer, u32 Size)
 			(u32)PpkExp,
 			(RSA_NUMBER)PpkModular,
 			(RSA_NUMBER)PpkModularEx);
+	FsblPrintArray(DecryptSignature, RSA_SPK_SIGNATURE_SIZE,
+					"SPK Decrypted Hash");
+
 
 	Status = RecreatePaddingAndCheck(DecryptSignature, HashSignature);
 	if (Status != XST_SUCCESS) {
@@ -185,6 +280,8 @@ u32 AuthenticateParition(u8 *Buffer, u32 Size)
 			(u32)SpkExp,
 			(RSA_NUMBER)SpkModular,
 			(RSA_NUMBER)SpkModularEx);
+	FsblPrintArray(DecryptSignature, RSA_PARTITION_SIGNATURE_SIZE,
+					"Partition Decrypted Hash");
 
 	/*
 	 * Partition Authentication
@@ -193,6 +290,8 @@ u32 AuthenticateParition(u8 *Buffer, u32 Size)
 	sha_256((u8 *)Buffer,
 			(Size - RSA_PARTITION_SIGNATURE_SIZE),
 			HashSignature);
+	FsblPrintArray(HashSignature, 32,
+						"Partition Hash Calculated");
 
 	Status = RecreatePaddingAndCheck(DecryptSignature, HashSignature);
 	if (Status != XST_SUCCESS) {

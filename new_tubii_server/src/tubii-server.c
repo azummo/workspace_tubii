@@ -242,19 +242,21 @@ int main(int argc, char **argv)
     /* set up the dispatch_connect event which will try to connect to the
      * data stream server. If it can't connect, it will retry every 10
      * seconds. */
+/*
     if (data_connect(config.dataserver)) {
         Log(WARNING, "failed to set up data stream");
         return 1;
     }
-
+*/
     /* Set up the database connection */
+/*
     auto_load_config("/mnt/settings.cfg");
     detector_db = db_connect(el, dbconfig.host, dbconfig.name, dbconfig.user, dbconfig.password);
     if( detector_db == 0) {
          Log(WARNING, "failed to set up database connection");
          return 1;
     }
-
+*/
     /* Run TUBii's initialisation */
     auto_init();
 
@@ -265,17 +267,20 @@ int main(int argc, char **argv)
     }
 
     /* check for ORCA connection */
-    if ((aeCreateTimeEvent(el, 30000, daq_connection, NULL, NULL)) == AE_ERR) {
+/*
+   if ((aeCreateTimeEvent(el, 30000, daq_connection, NULL, NULL)) == AE_ERR) {
         Log(WARNING, "failed to check tubii's daq connection");
         return 1;
     }
+*/
 
     /* set up status event */
+/*
     if (aeCreateTimeEvent(el, 0, tubii_status, NULL, NULL) == AE_ERR) {
         Log(WARNING, "failed to set up status tubii");
         return 1;
     }
-
+*/
     /* enter the main event loop */
     el->stop = 0;
     while (!el->stop) {

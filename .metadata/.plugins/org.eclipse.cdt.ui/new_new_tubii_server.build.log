@@ -1,0 +1,14 @@
+15:42:00 **** Auto Build of configuration Debug for project new_new_tubii_server ****
+make all 
+Building file: ../src/db.c
+Invoking: ARM v7 Linux gcc compiler
+arm-linux-gnueabihf-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/db.o" -MMD -MP -MF"src/db.d" -MT"src/db.o" -o "src/db.o" "../src/db.c"
+../src/db.c:1:10: fatal error: libpq-fe.h: No such file or directory
+ #include <libpq-fe.h>
+          ^~~~~~~~~~~~
+compilation terminated.
+make: *** [src/db.o] Error 1
+src/subdir.mk:78: recipe for target 'src/db.o' failed
+
+15:42:01 Build Finished (took 454ms)
+

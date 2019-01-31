@@ -1,43 +1,34 @@
-/******************************************************************************
+/*****************************************************************************
 *
-* (c) Copyright 2012-2013 Xilinx, Inc. All rights reserved.
+* Copyright (C) 2012 - 2016 Xilinx, Inc.  All rights reserved.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal 
+* in the Software without restriction, including without limitation the rights 
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
+* copies of the Software, and to permit persons to whom the Software is 
+* furnished to do so, subject to the following conditions:
 *
-* This file contains confidential and proprietary information of Xilinx, Inc.
-* and is protected under U.S. and international copyright and other
-* intellectual property laws.
+* The above copyright notice and this permission notice shall be included in 
+* all copies or substantial portions of the Software.
 *
-* DISCLAIMER
-* This disclaimer is not a license and does not grant any rights to the
-* materials distributed herewith. Except as otherwise provided in a valid
-* license issued to you by Xilinx, and to the maximum extent permitted by
-* applicable law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND WITH ALL
-* FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS,
-* IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
-* MERCHANTABILITY, NON-INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE;
-* and (2) Xilinx shall not be liable (whether in contract or tort, including
-* negligence, or under any other theory of liability) for any loss or damage
-* of any kind or nature related to, arising under or in connection with these
-* materials, including for any direct, or any indirect, special, incidental,
-* or consequential loss or damage (including loss of data, profits, goodwill,
-* or any type of loss or damage suffered as a result of any action brought by
-* a third party) even if such damage or loss was reasonably foreseeable or
-* Xilinx had been advised of the possibility of the same.
+* Use of the Software is limited solely to applications: 
+* (a) running on a Xilinx device, or 
+* (b) that interact with a Xilinx device through a bus or interconnect.  
 *
-* CRITICAL APPLICATIONS
-* Xilinx products are not designed or intended to be fail-safe, or for use in
-* any application requiring fail-safe performance, such as life-support or
-* safety devices or systems, Class III medical devices, nuclear facilities,
-* applications related to the deployment of airbags, or any other applications
-* that could lead to death, personal injury, or severe property or
-* environmental damage (individually and collectively, "Critical
-* Applications"). Customer assumes the sole risk and liability of any use of
-* Xilinx products in Critical Applications, subject only to applicable laws
-* and regulations governing limitations on product liability.
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
+* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+* SOFTWARE.
 *
-* THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS PART OF THIS FILE
-* AT ALL TIMES.
+* Except as contained in this notice, the name of the Xilinx shall not be used
+* in advertising or otherwise to promote the sale, use or other dealings in 
+* this Software without prior written authorization from Xilinx.
 *
-*******************************************************************************/
+******************************************************************************/
 /*****************************************************************************/
 /**
 *
@@ -57,11 +48,43 @@
 * 3.00a mb  16/08/12	Added the poll function
 *						Removed the FPGA_RST_CTRL define
 *						Added the flag for NON PS instantiated bitstream
-* 4.00a sgd 02/28/13	Fix for CR#681014
-* 						Fix for CR#689026
-* 						Fix for CR#699475
-*						Removed check for Fabric is already initialized
-*						Fix for CR#705664
+* 4.00a sgd 02/28/13	Fix for CR#681014 - ECC init in FSBL should not call
+*                                           fabric_init()
+* 						Fix for CR#689026 - FSBL doesn't hold PL resets active
+* 						                    during bit download
+* 						Fix for CR#699475 - FSBL functionality is broken and
+* 						                    its not able to boot in QSPI/NAND
+* 						                    bootmode
+*						Fix for CR#705664 - FSBL fails to decrypt the
+*						                    bitstream when the image is AES
+*						                    encrypted using non-zero key value
+* 6.00a kc  08/30/13    Fix for CR#722979 - Provide customer-friendly
+*                                           changelogs in FSBL
+* 7.00a kc	10/25/13	Fix for CR#724620 - How to handle PCAP_MODE after
+*						                    bitstream configuration
+*						Fix for CR#726178 - FabricInit() PROG_B is kept active
+*						                    for 5mS.
+* 						Fix for CR#731839 - FSBL has to check the
+* 											HMAC error status after decryption
+*			12/04/13	Fix for CR#764382 - How to handle PCAP_MODE after
+*						                    bitstream configuration - PCAP_MODE
+*											and PCAP_PR bits are not modified
+* 8.00a kc  2/20/14		Fix for CR#775631 - FSBL: FsblGetGlobalTimer() 
+*						is not proper
+* 10.00a kc 07/24/14    Fix for CR#809336 - Minor code cleanup
+* 13.00a ssc 04/10/15   Fix for CR#846899 - Corrected logic to clear
+*                                           DMA done count
+* 15.00a gan 07/21/16   Fix for CR# 953654 -(2016.3)FSBL -
+* 											In pcap.c/pcap.h/main.h,
+* 											Fabric Initialization sequence
+* 											is modified to check the PL power
+* 											before sequence starts and checking
+* 											INIT_B reset status twice in case
+* 											of failure.
+* 16.00a gan 08/02/16   Fix for CR# 955897 -(2016.3)FSBL -
+* 											In pcap.c, check pl power
+* 											through MCTRL register for
+* 											3.0 and later versions of silicon.
 * </pre>
 *
 * @note
@@ -78,6 +101,7 @@
 #include "xil_exception.h"
 #include "xdevcfg.h"
 #include "sleep.h"
+#include "xtime_l.h"
 
 #ifdef XPAR_XWDTPS_0_BASEADDR
 #include "xwdtps.h"
@@ -102,7 +126,7 @@ extern int XDcfgPollDone(u32 MaskValue, u32 MaxCount);
 /* Devcfg driver instance */
 static XDcfg DcfgInstance;
 XDcfg *DcfgInstPtr;
-
+extern u32 Silicon_Version;
 #ifdef XPAR_XWDTPS_0_BASEADDR
 extern XWdtPs Watchdog;	/* Instance of WatchDog Timer	*/
 #endif
@@ -130,6 +154,7 @@ u32 PcapDataTransfer(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 				u32 SourceLength, u32 DestinationLength, u32 SecureTransfer)
 {
 	u32 Status;
+	u32 IntrStsReg;
 	u32 PcapTransferType = XDCFG_CONCURRENT_NONSEC_READ_WRITE;
 
 	/*
@@ -141,7 +166,7 @@ u32 PcapDataTransfer(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 
 #ifdef FSBL_PERF
 	XTime tXferCur = 0;
-	FsblGetGlobalTime(tXferCur);
+	FsblGetGlobalTime(&tXferCur);
 #endif
 
 	/*
@@ -174,7 +199,7 @@ u32 PcapDataTransfer(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 					(u8 *)DestinationDataPtr,
 					DestinationLength, PcapTransferType);
 	if (Status != XST_SUCCESS) {
-		fsbl_printf(DEBUG_INFO,"Status of XDcfg_Transfer = %d \r \n",Status);
+		fsbl_printf(DEBUG_INFO,"Status of XDcfg_Transfer = %lu \r \n",Status);
 		return XST_FAILURE;
 	}
 
@@ -193,6 +218,15 @@ u32 PcapDataTransfer(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 	}
 
 	fsbl_printf(DEBUG_INFO,"DMA Done ! \n\r");
+		
+	/*
+	 * Check for errors
+	 */
+	IntrStsReg = XDcfg_IntrGetStatus(DcfgInstPtr);
+	if (IntrStsReg & FSBL_XDCFG_IXR_ERROR_FLAGS_MASK) {
+		fsbl_printf(DEBUG_INFO,"Errors in PCAP \r\n");
+		return XST_FAILURE;
+	}
 
 	/*
 	 * For Performance measurement
@@ -230,6 +264,7 @@ u32 PcapLoadPartition(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 		u32 SourceLength, u32 DestinationLength, u32 SecureTransfer)
 {
 	u32 Status;
+	u32 IntrStsReg;
 	u32 PcapTransferType = XDCFG_NON_SECURE_PCAP_WRITE;
 
 	/*
@@ -241,7 +276,7 @@ u32 PcapLoadPartition(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 
 #ifdef FSBL_PERF
 	XTime tXferCur = 0;
-	FsblGetGlobalTime(tXferCur);
+	FsblGetGlobalTime(&tXferCur);
 #endif
 
 	/*
@@ -261,7 +296,10 @@ u32 PcapLoadPartition(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 	/*
 	 * New Bitstream download initialization sequence
 	 */
-	FabricInit();
+	Status = FabricInit();
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
 
 
 #ifdef	XPAR_XWDTPS_0_BASEADDR
@@ -285,7 +323,7 @@ u32 PcapLoadPartition(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 					(u8 *)DestinationDataPtr,
 					DestinationLength, PcapTransferType);
 	if (Status != XST_SUCCESS) {
-		fsbl_printf(DEBUG_INFO,"Status of XDcfg_Transfer = %d \r \n",Status);
+		fsbl_printf(DEBUG_INFO,"Status of XDcfg_Transfer = %lu \r \n",Status);
 		return XST_FAILURE;
 	}
 
@@ -317,6 +355,15 @@ u32 PcapLoadPartition(u32 *SourceDataPtr, u32 *DestinationDataPtr,
 	}
 
 	fsbl_printf(DEBUG_INFO,"FPGA Done ! \n\r");
+	
+	/*
+	 * Check for errors
+	 */
+	IntrStsReg = XDcfg_IntrGetStatus(DcfgInstPtr);
+	if (IntrStsReg & FSBL_XDCFG_IXR_ERROR_FLAGS_MASK) {
+		fsbl_printf(DEBUG_INFO,"Errors in PCAP \r\n");
+		return XST_FAILURE;
+	}
 
 	/*
 	 * For Performance measurement
@@ -364,7 +411,6 @@ int InitPcap(void)
 
 	return XST_SUCCESS;
 }
-
 /******************************************************************************/
 /**
 *
@@ -372,22 +418,29 @@ int InitPcap(void)
 *
 * @param	None
 *
-* @return	None
+* @return
 *		- XST_SUCCESS if the Fabric  initialization is successful
 *		- XST_FAILURE if the Fabric  initialization fails
 * @note		None
 *
 ****************************************************************************/
-void FabricInit(void)
+u32 FabricInit(void)
 {
-	u32 PcapReg;
+	u32 PcapReg; 
+	u32 PcapCtrlRegVal;
 	u32 StatusReg;
+	u32 MctrlReg;
+	u32 PcfgInit;
+	u32 TimerExpired=0;
+	XTime tCur=0;
+	XTime tEnd=0;
+
 
 	/*
 	 * Set Level Shifters DT618760 - PS to PL enabling
 	 */
 	Xil_Out32(PS_LVL_SHFTR_EN, LVL_PS_PL);
-	fsbl_printf(DEBUG_INFO,"Level Shifter Value = 0x%x \r\n",
+	fsbl_printf(DEBUG_INFO,"Level Shifter Value = 0x%lx \r\n",
 				Xil_In32(PS_LVL_SHFTR_EN));
 
 	/*
@@ -397,15 +450,38 @@ void FabricInit(void)
 				XDCFG_CTRL_OFFSET);
 
 	/*
+	 * Check the PL power status
+	 */
+	if(Silicon_Version >= SILICON_VERSION_3)
+	{
+		MctrlReg = XDcfg_GetMiscControlRegister(DcfgInstPtr);
+
+		if((MctrlReg & XDCFG_MCTRL_PCAP_PCFG_POR_B_MASK) !=
+				XDCFG_MCTRL_PCAP_PCFG_POR_B_MASK)
+		{
+			fsbl_printf(DEBUG_INFO,"Fabric not powered up\r\n");
+			return XST_FAILURE;
+		}
+	}
+
+
+	/*
 	 * Setting PCFG_PROG_B signal to high
 	 */
 	XDcfg_WriteReg(DcfgInstPtr->Config.BaseAddr, XDCFG_CTRL_OFFSET,
 				(PcapReg | XDCFG_CTRL_PCFG_PROG_B_MASK));
 
 	/*
+	 * Check for AES source key
+	 */
+	PcapCtrlRegVal = XDcfg_GetControlRegister(DcfgInstPtr);
+	if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
+	/*
 	 * 5msec delay
 	 */
-	usleep(5000);
+		usleep(5000);
+	}
+	
 	/*
 	 * Setting PCFG_PROG_B signal to low
 	 */
@@ -413,14 +489,107 @@ void FabricInit(void)
 				(PcapReg & ~XDCFG_CTRL_PCFG_PROG_B_MASK));
 
 	/*
+	 * Check for AES source key
+	 */
+	if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
+	/*
 	 * 5msec delay
 	 */
-	usleep(5000);
+		usleep(5000);
+	}
+
 	/*
-	 * Polling the PCAP_INIT status for Reset
+	 * Polling the PCAP_INIT status for Reset or timeout
 	 */
-	while(XDcfg_GetStatusRegister(DcfgInstPtr) &
+
+	XTime_GetTime(&tCur);
+	do
+	{
+		PcfgInit = (XDcfg_GetStatusRegister(DcfgInstPtr) &
 				XDCFG_STATUS_PCFG_INIT_MASK);
+		if(PcfgInit == 0)
+		{
+			break;
+		}
+		XTime_GetTime(&tEnd);
+		if((u64)((u64)tCur + (COUNTS_PER_MILLI_SECOND*30)) > (u64)tEnd)
+		{
+			TimerExpired = 1;
+		}
+
+	} while(!TimerExpired);
+
+	if(TimerExpired == 1)
+	{
+		TimerExpired = 0;
+		/*
+		 * Came here due to expiration and PCAP_INIT is set.
+		 * Retry PCFG_PROG_B High -> Low again
+		 */
+
+		/*
+		 * Setting PCFG_PROG_B signal to high
+		 */
+		XDcfg_WriteReg(DcfgInstPtr->Config.BaseAddr, XDCFG_CTRL_OFFSET,
+					(PcapReg | XDCFG_CTRL_PCFG_PROG_B_MASK));
+
+		/*
+		 * Check for AES source key
+		 */
+		PcapCtrlRegVal = XDcfg_GetControlRegister(DcfgInstPtr);
+		if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
+			/*
+			 * 5msec delay
+			 */
+			usleep(5000);
+		}
+
+		/*
+		 * Setting PCFG_PROG_B signal to low
+		 */
+		XDcfg_WriteReg(DcfgInstPtr->Config.BaseAddr, XDCFG_CTRL_OFFSET,
+					(PcapReg & ~XDCFG_CTRL_PCFG_PROG_B_MASK));
+
+		/*
+		 * Check for AES source key
+		 */
+		if (PcapCtrlRegVal & XDCFG_CTRL_PCFG_AES_FUSE_MASK) {
+			/*
+			 * 5msec delay
+			 */
+			usleep(5000);
+		}
+		/*
+		 * Polling the PCAP_INIT status for Reset or timeout (second iteration)
+		 */
+
+		XTime_GetTime(&tCur);
+		do
+		{
+			PcfgInit = (XDcfg_GetStatusRegister(DcfgInstPtr) &
+					XDCFG_STATUS_PCFG_INIT_MASK);
+			if(PcfgInit == 0)
+			{
+				break;
+			}
+			XTime_GetTime(&tEnd);
+			if((u64)((u64)tCur + (COUNTS_PER_MILLI_SECOND*30)) > (u64)tEnd)
+			{
+				TimerExpired = 1;
+			}
+
+		} while(!TimerExpired);
+
+		if(TimerExpired == 1)
+		{
+			/*
+			 * Came here due to PCAP_INIT is not getting reset
+			 * for PCFG_PROG_B signal High -> Low
+			 */
+			fsbl_printf(DEBUG_INFO,"Fabric Init failed\r\n");
+			return XST_FAILURE;
+		}
+	}
 
 	/*
 	 * Setting PCFG_PROG_B signal to high
@@ -438,11 +607,12 @@ void FabricInit(void)
 	 * Get Device configuration status
 	 */
 	StatusReg = XDcfg_GetStatusRegister(DcfgInstPtr);
-	fsbl_printf(DEBUG_INFO,"Devcfg Status register = 0x%x \r\n",StatusReg);
+	fsbl_printf(DEBUG_INFO,"Devcfg Status register = 0x%lx \r\n",StatusReg);
 
 	fsbl_printf(DEBUG_INFO,"PCAP:Fabric is Initialized done\r\n");
-}
 
+	return XST_SUCCESS;
+}
 /******************************************************************************/
 /**
 *
@@ -473,7 +643,7 @@ u32 ClearPcapStatus(void)
 	 */
 	IntStatusReg = XDcfg_IntrGetStatus(DcfgInstPtr);
 	if (IntStatusReg & FSBL_XDCFG_IXR_ERROR_FLAGS_MASK) {
-		fsbl_printf(DEBUG_INFO,"FATAL errors in PCAP %x\r\n",
+		fsbl_printf(DEBUG_INFO,"FATAL errors in PCAP %lx\r\n",
 				IntStatusReg);
 		return XST_FAILURE;
 	}
@@ -483,7 +653,7 @@ u32 ClearPcapStatus(void)
 	 */
 	StatusReg = XDcfg_GetStatusRegister(DcfgInstPtr);
 
-	fsbl_printf(DEBUG_INFO,"PCAP:StatusReg = 0x%.8x\r\n", StatusReg);
+	fsbl_printf(DEBUG_INFO,"PCAP:StatusReg = 0x%.8lx\r\n", StatusReg);
 
 	/*
 	 * If the queue is full, return w/ XST_DEVICE_BUSY
@@ -522,7 +692,7 @@ u32 ClearPcapStatus(void)
 	}
 
 	if ((StatusReg & XDCFG_STATUS_DMA_DONE_CNT_MASK) != 0) {
-		XDcfg_IntrClear(DcfgInstPtr, StatusReg &
+		XDcfg_SetStatusRegister(DcfgInstPtr, StatusReg |
 				XDCFG_STATUS_DMA_DONE_CNT_MASK);
 	}
 
@@ -547,49 +717,49 @@ void PcapDumpRegisters (void) {
 
 	fsbl_printf(DEBUG_INFO,"PCAP register dump:\r\n");
 
-	fsbl_printf(DEBUG_INFO,"PCAP CTRL 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP CTRL 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_CTRL_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_CTRL_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP LOCK 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP LOCK 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_LOCK_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_LOCK_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP CONFIG 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP CONFIG 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_CFG_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_CFG_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP ISR 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP ISR 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_INT_STS_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_INT_STS_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP IMR 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP IMR 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_INT_MASK_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_INT_MASK_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP STATUS 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP STATUS 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_STATUS_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_STATUS_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP DMA SRC ADDR 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP DMA SRC ADDR 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_SRC_ADDR_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_SRC_ADDR_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP DMA DEST ADDR 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP DMA DEST ADDR 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_DEST_ADDR_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_DEST_ADDR_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP DMA SRC LEN 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP DMA SRC LEN 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_SRC_LEN_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_SRC_LEN_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP DMA DEST LEN 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP DMA DEST LEN 0x%x: 0x%08lx\r\n",
 			XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_DEST_LEN_OFFSET,
 			Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_DMA_DEST_LEN_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP ROM SHADOW CTRL 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP ROM SHADOW CTRL 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_ROM_SHADOW_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_ROM_SHADOW_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP MBOOT 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP MBOOT 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_MULTIBOOT_ADDR_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_MULTIBOOT_ADDR_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP SW ID 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP SW ID 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_SW_ID_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_SW_ID_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP UNLOCK 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP UNLOCK 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_UNLOCK_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_UNLOCK_OFFSET));
-	fsbl_printf(DEBUG_INFO,"PCAP MCTRL 0x%x: 0x%08x\r\n",
+	fsbl_printf(DEBUG_INFO,"PCAP MCTRL 0x%x: 0x%08lx\r\n",
 		XPS_DEV_CFG_APB_BASEADDR + XDCFG_MCTRL_OFFSET,
 		Xil_In32(XPS_DEV_CFG_APB_BASEADDR + XDCFG_MCTRL_OFFSET));
 }
@@ -623,7 +793,7 @@ int XDcfgPollDone(u32 MaskValue, u32 MaxCount)
 		Count -=1;
 
 		if (IntrStsReg & FSBL_XDCFG_IXR_ERROR_FLAGS_MASK) {
-				fsbl_printf(DEBUG_INFO,"FATAL errors in PCAP %x\r\n",
+				fsbl_printf(DEBUG_INFO,"FATAL errors in PCAP %lx\r\n",
 						IntrStsReg);
 				PcapDumpRegisters();
 				return XST_FAILURE;
@@ -644,4 +814,3 @@ int XDcfgPollDone(u32 MaskValue, u32 MaxCount)
 
 	return XST_SUCCESS;
 }
-

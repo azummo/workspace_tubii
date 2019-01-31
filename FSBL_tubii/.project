@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>FSBL_tubii</name>
-	<comment></comment>
+	<comment>Created by SDK v2018.2. standalone_bsp_0 - ps7_cortexa9_0</comment>
 	<projects>
-		<project>standalone_bsp_7020</project>
-		<project>standalone_bsp_tubii</project>
+		<project>standalone_bsp_0</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -24,4 +23,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/ps7_init.c</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/system_wrapper_hw_platform_0/ps7_init.c</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

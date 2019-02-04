@@ -29,6 +29,8 @@ void *MappedCountLengthenBaseAddress;
 void* MappedTrigWordDelayBaseAddress;
 void* MappedGTIDBaseAddress;
 void* MappedSpeakerScaleBaseAddress;
+void* MappedCoincBaseAddress;
+void* MappedClockDividerBaseAddress;
 
 /////// Internal Triggers
 int burstTrig(float rate, int masterBit, int slaveBit)
@@ -256,6 +258,61 @@ int TrigWordLength(u32 delay)
 {
   mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset2, delay);
   return 0;
+}
+
+int setCoincMask(u32 mask_1, u32 mask_2)
+{
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset2, mask_1);
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset3, mask_2);
+  return 0;
+}
+
+int getCoincMask_1()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset2);
+}
+
+int getCoincMask_2()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset3);
+}
+
+int setCoincTiming(u32 length, u32 offset)
+{
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset0, length);
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset1, offset);
+  return 0;
+}
+
+int getCoincLength()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset0);
+}
+
+int getCoincOffset()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset1);
+}
+
+int getCoincReg1()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset4);
+}
+
+int getCoincReg2()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset5);
+}
+
+int setClockDivider(u32 divider)
+{
+  mWriteReg((u32) MappedClockDividerBaseAddress, RegOffset0, divider);
+  return 0;
+}
+
+int getClockDivider()
+{
+  return mReadReg((u32) MappedClockDividerBaseAddress, RegOffset0);
 }
 
 #endif /* TRIGGERS_H_ */

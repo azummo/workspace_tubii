@@ -1,6 +1,6 @@
 //arch = zynq; split = false; format = BIN
 the_ROM_image:
 {
-	[bootloader]/home/zummo/snoplus/TUBii/workspace_tubii_2/FSBL_tubii/Debug/FSBL_tubii.elf
-	/home/zummo/snoplus/TUBii/workspace_tubii_2/system_wrapper_hw_platform_0/system_wrapper.bit
+	[bootloader]/home/zummo/snoplus/TUBii/workspace_tubii/FSBL_tubii/Debug/FSBL_tubii.elf
+	/home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper_hw_platform_0/system_wrapper.bit
 }

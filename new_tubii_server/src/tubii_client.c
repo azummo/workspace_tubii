@@ -71,6 +71,9 @@ int InitMapping()
   MappedComboBaseAddress= MemoryMapping(COMBOTRIG_BASEADDR,COMBOTRIG_HIGHADDR);
   MappedPrescaleBaseAddress= MemoryMapping(PRESCALETRIG_BASEADDR,PRESCALETRIG_HIGHADDR);
 
+  MappedCoincBaseAddress= MemoryMapping(COINCTRIG_BASEADDR,COINCTRIG_HIGHADDR);
+  MappedClockDividerBaseAddress = MemoryMapping(CLOCKDIVIDER_BASEADDR,CLOCKDIVIDER_HIGHADDR);
+
   // Pulsers
   MappedPulserBaseAddress= MemoryMapping(GENERICPULSER_BASEADDR,GENERICPULSER_HIGHADDR);
   MappedSPulserBaseAddress= MemoryMapping(SMELLIEPULSER_BASEADDR,SMELLIEPULSER_HIGHADDR);
@@ -750,6 +753,81 @@ void gtdelay(client *c, int argc, sds *argv)
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
+}
+
+void SetCoincMask(client *c, int argc, sds *argv)
+{
+  uint32_t mask_1;
+  uint32_t mask_2;
+  safe_strtoul(argv[1],&mask_1);
+  safe_strtoul(argv[2],&mask_2);
+
+  if(setCoincMask(mask_1,mask_2) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
+  else addReplyError(c, tubii_err);
+}
+
+void GetCoincMask_1(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincMask_1());
+}
+
+void GetCoincMask_2(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincMask_2());
+}
+
+void SetCoincTiming(client *c, int argc, sds *argv)
+{
+  uint32_t length;
+  uint32_t offset;
+  safe_strtoul(argv[1],&length);
+  safe_strtoul(argv[2],&offset);
+
+  if(setCoincTiming(length,offset) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
+  else addReplyError(c, tubii_err);
+}
+
+void GetCoincLength(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincLength());
+}
+
+void GetCoincOffset(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincOffset());
+}
+
+void GetCoincReg_1(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincReg1());
+}
+
+void GetCoincReg_2(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getCoincReg2());
+}
+
+void SetClockDivider(client *c, int argc, sds *argv)
+{
+  uint32_t divider;
+  safe_strtoul(argv[1],&divider);
+
+  if(setClockDivider(divider) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
+  else addReplyError(c, tubii_err);
+}
+
+void GetClockDivider(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getClockDivider());
 }
 
 // Data readout

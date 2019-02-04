@@ -100,6 +100,17 @@ void GetFifoTrigger(client *c, int argc, sds *argv);
 void ResetFIFO(client *c, int argc, sds *argv);
 void ResetGTID(client *c, int argc, sds *argv);
 
+void SetCoincMask(client *c, int argc, sds *argv);
+void GetCoincMask_1(client *c, int argc, sds *argv);
+void GetCoincMask_2(client *c, int argc, sds *argv);
+void SetCoincTiming(client *c, int argc, sds *argv);
+void GetCoincLength(client *c, int argc, sds *argv);
+void GetCoincOffset(client *c, int argc, sds *argv);
+void GetCoincReg_1(client *c, int argc, sds *argv);
+void GetCoincReg_2(client *c, int argc, sds *argv);
+void SetClockDivider(client *c, int argc, sds *argv);
+void GetClockDivider(client *c, int argc, sds *argv);
+
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);
 void SetTrigWordLength(client *c, int argc, sds *argv);

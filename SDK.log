@@ -43,3 +43,44 @@
 17:01:18 INFO  : Successfully done setting XSCT server connection channel  
 17:01:18 INFO  : Successfully done setting SDK workspace  
 17:01:18 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:24:12 INFO  : Registering command handlers for SDK TCF services
+17:24:17 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:24:26 INFO  : XSCT server has started successfully.
+17:24:45 INFO  : Successfully done setting XSCT server connection channel  
+17:24:45 INFO  : Successfully done setting SDK workspace  
+17:24:46 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:26:27 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:26:29 INFO  : XSCT server has started successfully.
+17:26:29 INFO  : Successfully done setting XSCT server connection channel  
+17:26:33 INFO  : Successfully done setting SDK workspace  
+17:26:35 INFO  : Registering command handlers for SDK TCF services
+17:26:35 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+18:15:05 INFO  : Invoking Bootgen: bootgen -image FSBL_tubii.bif -arch zynq -o /home/zummo/snoplus/TUBii/workspace_tubii/FSBL_tubii/bootimage/BOOT.bin
+18:15:05 INFO  : Overwriting existing bif file /home/zummo/snoplus/TUBii/workspace_tubii/FSBL_tubii/bootimage/FSBL_tubii.bif
+18:15:06 INFO  : Bootgen command execution is done.
+20:27:09 INFO  : Registering command handlers for SDK TCF services
+20:27:12 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+20:27:20 INFO  : XSCT server has started successfully.
+20:27:20 INFO  : Successfully done setting XSCT server connection channel  
+20:27:42 INFO  : Successfully done setting SDK workspace  
+20:27:42 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+20:27:42 INFO  : Checking for hwspec changes in the project system_wrapper_hw_platform_0.
+20:28:31 INFO  : Registering command handlers for SDK TCF services
+20:28:32 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+20:28:34 INFO  : XSCT server has started successfully.
+20:28:34 INFO  : Successfully done setting XSCT server connection channel  
+20:28:34 INFO  : Successfully done setting SDK workspace  
+20:28:34 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:44:28 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:44:32 INFO  : XSCT server has started successfully.
+17:44:56 INFO  : Successfully done setting XSCT server connection channel  
+17:44:56 INFO  : Successfully done setting SDK workspace  
+17:45:00 INFO  : Registering command handlers for SDK TCF services
+17:45:07 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:45:11 INFO  : Checking for hwspec changes in the project system_wrapper_hw_platform_0.
+17:47:58 INFO  : Registering command handlers for SDK TCF services
+17:47:59 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:48:02 INFO  : XSCT server has started successfully.
+17:48:02 INFO  : Successfully done setting XSCT server connection channel  
+17:48:02 INFO  : Successfully done setting SDK workspace  
+17:48:02 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.

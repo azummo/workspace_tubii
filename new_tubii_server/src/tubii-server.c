@@ -166,6 +166,18 @@ struct command commandTable[] = {
 		{"GetFifoTrigger",     	GetFifoTrigger,     1},
 		{"ResetFifo",     	   	ResetFIFO,	   	    1},
 		{"ResetGTID",		   	ResetGTID,          1},
+
+		{"setCoincMask",		SetCoincMask,		3},
+		{"getCoincMask_1",		GetCoincMask_1,		1},
+		{"getCoincMask_2",		GetCoincMask_2,		1},
+		{"setCoincTiming",		SetCoincTiming,		3},
+		{"getCoincLength",		GetCoincLength,		1},
+		{"getCoincOffset",		GetCoincOffset,		1},
+		{"getCoincReg_1",		GetCoincReg_1,		1},
+		{"getCoincReg_2",		GetCoincReg_2,		1},
+		{"setClockDivider",		SetClockDivider,	2},
+		{"getClockDivider",		GetClockDivider,	1},
+
 		/// High level functions
 		{"setGTDelays", 	SetGTDelays, 	3},
 		{"getLODelay", 		GetLODelay, 	1},

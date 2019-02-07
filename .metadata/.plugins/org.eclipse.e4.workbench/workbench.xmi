@@ -67,6 +67,7 @@
           <children xsi:type="basic:PartSashContainer" xmi:id="_auLy8SDSEemEcdlqn12A9g" selectedElement="_auLy-iDSEemEcdlqn12A9g" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_auLy8iDSEemEcdlqn12A9g" containerData="2500" selectedElement="_auLy8yDSEemEcdlqn12A9g">
               <children xsi:type="basic:PartStack" xmi:id="_auLy8yDSEemEcdlqn12A9g" elementId="topLeft" containerData="7500" selectedElement="_auLy9CDSEemEcdlqn12A9g">
+                <tags>noFocus</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_auLy9CDSEemEcdlqn12A9g" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_at2bwCDSEemEcdlqn12A9g"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_auLy9SDSEemEcdlqn12A9g" elementId="org.eclipse.cdt.ui.CView" toBeRendered="false" ref="_at4Q8CDSEemEcdlqn12A9g"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_auLy9iDSEemEcdlqn12A9g" elementId="org.eclipse.ui.views.ResourceNavigator" toBeRendered="false" ref="_at44ACDSEemEcdlqn12A9g"/>
@@ -139,19 +140,19 @@
         <tags>active</tags>
         <tags>noFocus</tags>
         <children xsi:type="basic:Part" xmi:id="_YbGvICWKEemd5sumQ3IlDQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="tubii-server.c" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii-server.c&quot; partName=&quot;tubii-server.c&quot; title=&quot;tubii-server.c&quot; tooltip=&quot;new_tubii_server/src/tubii-server.c&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii-server.c&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;4652&quot; selectionTopPixel=&quot;1980&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii-server.c&quot; partName=&quot;tubii-server.c&quot; title=&quot;tubii-server.c&quot; tooltip=&quot;new_tubii_server/src/tubii-server.c&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii-server.c&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;6310&quot; selectionTopPixel=&quot;0&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_aEmukCZxEemX7aDfxMhzmA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="tubii_client.h" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii_client.h&quot; partName=&quot;tubii_client.h&quot; title=&quot;tubii_client.h&quot; tooltip=&quot;new_tubii_server/src/tubii_client.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii_client.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;4341&quot; selectionTopPixel=&quot;1095&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii_client.h&quot; partName=&quot;tubii_client.h&quot; title=&quot;tubii_client.h&quot; tooltip=&quot;new_tubii_server/src/tubii_client.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii_client.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;4458&quot; selectionTopPixel=&quot;1269&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_7BkFcCWNEemd5sumQ3IlDQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="tubii_client.c" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii_client.c&quot; partName=&quot;tubii_client.c&quot; title=&quot;tubii_client.c&quot; tooltip=&quot;new_tubii_server/src/tubii_client.c&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii_client.c&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;18426&quot; selectionTopPixel=&quot;11610&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubii_client.c&quot; partName=&quot;tubii_client.c&quot; title=&quot;tubii_client.c&quot; tooltip=&quot;new_tubii_server/src/tubii_client.c&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubii_client.c&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;995&quot; selectionTopPixel=&quot;504&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
@@ -159,18 +160,18 @@
           <tags>activeOnClose</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_HWemECZyEemX7aDfxMhzmA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="tubiiAddresses.h" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubiiAddresses.h&quot; partName=&quot;tubiiAddresses.h&quot; title=&quot;tubiiAddresses.h&quot; tooltip=&quot;new_tubii_server/src/tubiiAddresses.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubiiAddresses.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2300&quot; selectionTopPixel=&quot;564&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubiiAddresses.h&quot; partName=&quot;tubiiAddresses.h&quot; title=&quot;tubiiAddresses.h&quot; tooltip=&quot;new_tubii_server/src/tubiiAddresses.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubiiAddresses.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2228&quot; selectionTopPixel=&quot;519&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_XeH_ECZyEemX7aDfxMhzmA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="tubiiTriggers.h" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubiiTriggers.h&quot; partName=&quot;tubiiTriggers.h&quot; title=&quot;tubiiTriggers.h&quot; tooltip=&quot;new_tubii_server/src/tubiiTriggers.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubiiTriggers.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;7248&quot; selectionTopPixel=&quot;3686&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;tubiiTriggers.h&quot; partName=&quot;tubiiTriggers.h&quot; title=&quot;tubiiTriggers.h&quot; tooltip=&quot;new_tubii_server/src/tubiiTriggers.h&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/new_tubii_server/src/tubiiTriggers.h&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;7445&quot; selectionTopPixel=&quot;4029&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
         </children>
-        <children xsi:type="basic:Part" xmi:id="_8NOJwCjOEems4q6AT3yDhw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="system.hdf" iconURI="platform:/plugin/com.xilinx.sdk.hw/icons/hwspec_file_icon.png" closeable="true">
+        <children xsi:type="basic:Part" xmi:id="_GeSaoCskEem3VKKotYZX-Q" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="system.hdf" iconURI="platform:/plugin/com.xilinx.sdk.hw/icons/hwspec_file_icon.png" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;com.xilinx.sdk.hw.ui.HwSpecXMLEditor&quot; name=&quot;system.hdf&quot; partName=&quot;system.hdf&quot; title=&quot;system.hdf&quot; tooltip=&quot;system_wrapper_hw_platform_0/system.hdf&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/system_wrapper_hw_platform_0/system.hdf&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>com.xilinx.sdk.hw.ui.HwSpecXMLEditor</tags>
@@ -317,7 +318,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_aO_8kCDSEemEcdlqn12A9g" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_55d-cCjOEems4q6AT3yDhw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_ZXmajyDSEemEcdlqn12A9g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_EgClQCskEem3VKKotYZX-Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_ZXmajyDSEemEcdlqn12A9g"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_aO_8kSDSEemEcdlqn12A9g" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -341,7 +342,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_aPAjoSDSEemEcdlqn12A9g" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_55hBwCjOEems4q6AT3yDhw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_ZXkleSDSEemEcdlqn12A9g"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_EgGPoCskEem3VKKotYZX-Q" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_ZXkleSDSEemEcdlqn12A9g"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_aPAjoiDSEemEcdlqn12A9g" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2259,7 +2260,7 @@
   </addons>
   <addons xmi:id="_ZWdLECDSEemEcdlqn12A9g" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.workbench" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_ZWoxMCDSEemEcdlqn12A9g" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_5JZMYCjOEems4q6AT3yDhw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_EHFSsSskEem3VKKotYZX-Q" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <addons xmi:id="_ZZ0oECDSEemEcdlqn12A9g" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
   <addons xmi:id="_slY4cCQcEem1EtOdVK2GWw" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
@@ -2271,6 +2272,10 @@
   <addons xmi:id="_1cL20CaJEemmdN9QwG0ojQ" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
   <addons xmi:id="_Zx6zMSjOEemDJ4YP8aqtkA" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
   <addons xmi:id="_5JvxsCjOEems4q6AT3yDhw" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
+  <addons xmi:id="_iwf58SjdEemBf6DC0BLSSA" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
+  <addons xmi:id="_A1OR0CjeEemm0c9zfnATUQ" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
+  <addons xmi:id="_ulq_sSsjEemGQvxzLtV1hw" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
+  <addons xmi:id="_EHVxYCskEem3VKKotYZX-Q" elementId="com.xilinx.sdk.targetmanager.ui.addon.view" contributionURI="bundleclass://com.xilinx.sdk.targetmanager.ui/com.xilinx.sdk.targetmanager.ui.ViewVisibilityAdapterAddon"/>
   <categories xmi:id="_ZXd3oCDSEemEcdlqn12A9g" elementId="org.eclipse.team.ui.category.team" name="Team" description="Actions that apply when working with a Team"/>
   <categories xmi:id="_ZXd3oSDSEemEcdlqn12A9g" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>
   <categories xmi:id="_ZXd3oiDSEemEcdlqn12A9g" elementId="org.eclipse.ui.category.edit" name="Edit"/>

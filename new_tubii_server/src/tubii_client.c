@@ -71,8 +71,7 @@ int InitMapping()
   MappedComboBaseAddress= MemoryMapping(COMBOTRIG_BASEADDR,COMBOTRIG_HIGHADDR);
   MappedPrescaleBaseAddress= MemoryMapping(PRESCALETRIG_BASEADDR,PRESCALETRIG_HIGHADDR);
 
-  MappedCoincBaseAddress= MemoryMapping(COINCTRIG_BASEADDR,COINCTRIG_HIGHADDR);
-  MappedClockDividerBaseAddress = MemoryMapping(CLOCKDIVIDER_BASEADDR,CLOCKDIVIDER_HIGHADDR);
+  MappedAnticoincBaseAddress= MemoryMapping(ANTICOINCTRIG_BASEADDR,ANTICOINCTRIG_HIGHADDR);
 
   // Pulsers
   MappedPulserBaseAddress= MemoryMapping(GENERICPULSER_BASEADDR,GENERICPULSER_HIGHADDR);
@@ -755,79 +754,62 @@ void gtdelay(client *c, int argc, sds *argv)
   else addReplyError(c, tubii_err);
 }
 
-void SetCoincMask(client *c, int argc, sds *argv)
+void SetAnticoincMask(client *c, int argc, sds *argv)
 {
   uint32_t mask_1;
   uint32_t mask_2;
   safe_strtoul(argv[1],&mask_1);
   safe_strtoul(argv[2],&mask_2);
 
-  if(setCoincMask(mask_1,mask_2) == 0){
+  if(setAnticoincMask(mask_1,mask_2) == 0){
 	  save_tubii_state();
 	  addReplyStatus(c, "+OK");
   }
   else addReplyError(c, tubii_err);
 }
 
-void GetCoincMask_1(client *c, int argc, sds *argv)
+void GetAnticoincMask_1(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincMask_1());
+  addReply(c, ":%u", getAnticoincMask_1());
 }
 
-void GetCoincMask_2(client *c, int argc, sds *argv)
+void GetAnticoincMask_2(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincMask_2());
+  addReply(c, ":%u", getAnticoincMask_2());
 }
 
-void SetCoincTiming(client *c, int argc, sds *argv)
+void SetAnticoincTiming(client *c, int argc, sds *argv)
 {
   uint32_t length;
   uint32_t offset;
   safe_strtoul(argv[1],&length);
   safe_strtoul(argv[2],&offset);
 
-  if(setCoincTiming(length,offset) == 0){
+  if(setAnticoincTiming(length,offset) == 0){
 	  save_tubii_state();
 	  addReplyStatus(c, "+OK");
   }
   else addReplyError(c, tubii_err);
 }
 
-void GetCoincLength(client *c, int argc, sds *argv)
+void GetAnticoincLength(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincLength());
+  addReply(c, ":%u", getAnticoincLength());
 }
 
-void GetCoincOffset(client *c, int argc, sds *argv)
+void GetAnticoincOffset(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincOffset());
+  addReply(c, ":%u", getAnticoincOffset());
 }
 
-void GetCoincReg_1(client *c, int argc, sds *argv)
+void GetAnticoincReg_1(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincReg1());
+  addReply(c, ":%u", getAnticoincReg1());
 }
 
-void GetCoincReg_2(client *c, int argc, sds *argv)
+void GetAnticoincReg_2(client *c, int argc, sds *argv)
 {
-  addReply(c, ":%u", getCoincReg2());
-}
-
-void SetClockDivider(client *c, int argc, sds *argv)
-{
-  uint32_t divider;
-  safe_strtoul(argv[1],&divider);
-
-  if(setClockDivider(divider) == 0){
-	  save_tubii_state();
-	  addReplyStatus(c, "+OK");
-  }
-  else addReplyError(c, tubii_err);
-}
-
-void GetClockDivider(client *c, int argc, sds *argv)
-{
-  addReply(c, ":%u", getClockDivider());
+  addReply(c, ":%u", getAnticoincReg2());
 }
 
 // Data readout

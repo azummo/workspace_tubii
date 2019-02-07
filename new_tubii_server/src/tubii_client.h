@@ -100,16 +100,14 @@ void GetFifoTrigger(client *c, int argc, sds *argv);
 void ResetFIFO(client *c, int argc, sds *argv);
 void ResetGTID(client *c, int argc, sds *argv);
 
-void SetCoincMask(client *c, int argc, sds *argv);
-void GetCoincMask_1(client *c, int argc, sds *argv);
-void GetCoincMask_2(client *c, int argc, sds *argv);
-void SetCoincTiming(client *c, int argc, sds *argv);
-void GetCoincLength(client *c, int argc, sds *argv);
-void GetCoincOffset(client *c, int argc, sds *argv);
-void GetCoincReg_1(client *c, int argc, sds *argv);
-void GetCoincReg_2(client *c, int argc, sds *argv);
-void SetClockDivider(client *c, int argc, sds *argv);
-void GetClockDivider(client *c, int argc, sds *argv);
+void SetAnticoincMask(client *c, int argc, sds *argv);
+void GetAnticoincMask_1(client *c, int argc, sds *argv);
+void GetAnticoincMask_2(client *c, int argc, sds *argv);
+void SetAnticoincTiming(client *c, int argc, sds *argv);
+void GetAnticoincLength(client *c, int argc, sds *argv);
+void GetAnticoincOffset(client *c, int argc, sds *argv);
+void GetAnticoincReg_1(client *c, int argc, sds *argv);
+void GetAnticoincReg_2(client *c, int argc, sds *argv);
 
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);

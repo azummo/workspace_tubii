@@ -30,6 +30,7 @@ void* MappedTrigWordDelayBaseAddress;
 void* MappedGTIDBaseAddress;
 void* MappedSpeakerScaleBaseAddress;
 void* MappedAnticoincBaseAddress;
+void* MappedCoincBaseAddress;
 
 /////// Internal Triggers
 int burstTrig(float rate, int masterBit, int slaveBit)
@@ -97,12 +98,12 @@ int setAnticoincMask(u32 mask_1, u32 mask_2)
   return 0;
 }
 
-int getAnticoincMask_1()
+int getAnticoincMask1()
 {
   return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset2);
 }
 
-int getAnticoincMask_2()
+int getAnticoincMask2()
 {
   return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset3);
 }
@@ -145,6 +146,41 @@ int getAnticoincReg2()
 {
   return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset5);
 }
+
+int setCoincMask(u32 mask1, u32 mask2)
+{
+  if(mask1<0 || mask1>65535 || mask2<0 || mask2>65535)
+  {
+	  Log(WARNING, "TUBii: Choose a coincidence trigger mask between 0 and 65535.");
+	  sprintf(tubii_err, "TUBii: Choose a coincidence trigger mask between 0 and 65535.");
+	  return -1;
+  }
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset1, mask1);
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset2, mask2);
+  return 0;
+}
+
+int getCoincMaskPrompt()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset1);
+}
+
+int getCoincMaskDelayed()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset2);
+}
+
+int setCoincLength(u32 length)
+{
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset0, length);
+  return 0;
+}
+
+int getCoincLength()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset0);
+}
+
 
 /////// Counters and Speakers
 int counterLatch(int latch)

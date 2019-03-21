@@ -30,6 +30,17 @@
  
  
 /******************************************************************/
+/* Definitions for driver ANTICOINCTRIGGER */
+#define XPAR_ANTICOINCTRIGGER_NUM_INSTANCES 1
+
+/* Definitions for peripheral ANTICOINCTRIGGER_0 */
+#define XPAR_ANTICOINCTRIGGER_0_DEVICE_ID 0
+#define XPAR_ANTICOINCTRIGGER_0_S00_AXI_BASEADDR 0x43C18000
+#define XPAR_ANTICOINCTRIGGER_0_S00_AXI_HIGHADDR 0x43C18FFF
+
+
+/******************************************************************/
+
 
 /* Definitions for peripheral PS7_DDR_0 */
 #define XPAR_PS7_DDR_0_S_AXI_BASEADDR 0x00100000
@@ -139,8 +150,8 @@
 
 /* Definitions for peripheral FIFO_READOUT_0 */
 #define XPAR_FIFO_READOUT_0_DEVICE_ID 0
-#define XPAR_FIFO_READOUT_0_S00_AXI_BASEADDR 0x43C02000
-#define XPAR_FIFO_READOUT_0_S00_AXI_HIGHADDR 0x43C02FFF
+#define XPAR_FIFO_READOUT_0_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_FIFO_READOUT_0_S00_AXI_HIGHADDR 0x00000000
 
 
 /******************************************************************/
@@ -408,8 +419,8 @@
 
 /* Definitions for peripheral TRIGGERS_0 */
 #define XPAR_TRIGGERS_0_DEVICE_ID 0
-#define XPAR_TRIGGERS_0_S00_AXI_BASEADDR 0x43C09000
-#define XPAR_TRIGGERS_0_S00_AXI_HIGHADDR 0x43C09FFF
+#define XPAR_TRIGGERS_0_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_TRIGGERS_0_S00_AXI_HIGHADDR 0x00000000
 
 
 /******************************************************************/
@@ -419,8 +430,8 @@
 
 /* Definitions for peripheral TRIGWORDFIFO_0 */
 #define XPAR_TRIGWORDFIFO_0_DEVICE_ID 0
-#define XPAR_TRIGWORDFIFO_0_S00_AXI_BASEADDR 0x43C13000
-#define XPAR_TRIGWORDFIFO_0_S00_AXI_HIGHADDR 0x43C13FFF
+#define XPAR_TRIGWORDFIFO_0_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_TRIGWORDFIFO_0_S00_AXI_HIGHADDR 0x00000000
 
 
 /******************************************************************/

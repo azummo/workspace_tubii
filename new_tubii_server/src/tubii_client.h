@@ -101,13 +101,19 @@ void ResetFIFO(client *c, int argc, sds *argv);
 void ResetGTID(client *c, int argc, sds *argv);
 
 void SetAnticoincMask(client *c, int argc, sds *argv);
-void GetAnticoincMask_1(client *c, int argc, sds *argv);
-void GetAnticoincMask_2(client *c, int argc, sds *argv);
+void GetAnticoincMask1(client *c, int argc, sds *argv);
+void GetAnticoincMask2(client *c, int argc, sds *argv);
 void SetAnticoincTiming(client *c, int argc, sds *argv);
 void GetAnticoincLength(client *c, int argc, sds *argv);
 void GetAnticoincOffset(client *c, int argc, sds *argv);
-void GetAnticoincReg_1(client *c, int argc, sds *argv);
-void GetAnticoincReg_2(client *c, int argc, sds *argv);
+void GetAnticoincReg1(client *c, int argc, sds *argv);
+void GetAnticoincReg2(client *c, int argc, sds *argv);
+
+void SetCoincMask(client *c, int argc, sds *argv);
+void GetCoincMaskPrompt(client *c, int argc, sds *argv);
+void GetCoincMaskDelayed(client *c, int argc, sds *argv);
+void SetCoincLength(client *c, int argc, sds *argv);
+void GetCoincLength(client *c, int argc, sds *argv);
 
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);

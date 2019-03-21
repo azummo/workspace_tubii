@@ -1,0 +1,360 @@
+/*
+ * triggers.h
+ *
+ *  Created on: Mar 20, 2015
+ *      Author: Ian
+ */
+
+#ifndef TRIGGERS_H_
+#define TRIGGERS_H_
+#include <time.h>
+#include <math.h>
+
+int last_one=-1;
+int last_ptr=0;
+int err_flg=0;
+int data_readout=0;
+int status_readout=0;
+int counter_mode=0;
+
+void *MappedCountBaseAddress;
+void *MappedTrigBaseAddress;
+void *MappedFifoBaseAddress;
+void *MappedBurstBaseAddress;
+void *MappedTUBiiPGTBaseAddress;
+void *MappedComboBaseAddress;
+void *MappedPrescaleBaseAddress;
+void *MappedCountLengthenBaseAddress;
+//void *MappedSpeakLengthenBaseAddress;
+void* MappedTrigWordDelayBaseAddress;
+void* MappedGTIDBaseAddress;
+void* MappedSpeakerScaleBaseAddress;
+void* MappedAnticoincBaseAddress;
+void* MappedCoincBaseAddress;
+
+/////// Internal Triggers
+int burstTrig(float rate, int masterBit, int slaveBit)
+{
+  if(masterBit<0 || masterBit>15){
+	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  if(slaveBit<0 || slaveBit>15){
+	  Log(WARNING, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a burst trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  int masterMask = pow(2,masterBit);
+  int slaveMask = pow(2,slaveBit);
+  Log(VERBOSE, "TUBii: Set rate for burst trigger: %lf on bit %i",rate,masterBit);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset0, rate);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, masterMask);
+  mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, slaveMask);
+  return 0;
+}
+
+int comboTrig(u32 enableMask, u32 logicMask)
+{
+  if(logicMask<0 || logicMask>65535 || enableMask<0 || enableMask>65535){
+	  Log(WARNING, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  sprintf(tubii_err, "TUBii: Choose a combo trigger mask between 0 and 65535.");
+	  return -1;
+  }
+
+  Log(VERBOSE, "TUBii: Set mask for combo trigger: %d (%d)",logicMask,enableMask);
+  mWriteReg((u32) MappedComboBaseAddress, RegOffset2, enableMask);
+  mWriteReg((u32) MappedComboBaseAddress, RegOffset3, logicMask);
+  return 0;
+}
+
+int prescaleTrig(float rate, int bit)
+{
+  if(bit<0 || bit>15){
+	  Log(WARNING, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  sprintf(tubii_err, "TUBii: Choose a prescale trigger bit between 0 and 15.");
+	  return -1;
+  }
+
+  int mask = pow(2,bit);
+  Log(VERBOSE, "TUBii: Set rate for prescale trigger: %lf on bit %i",rate,bit);
+  mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset2, rate);
+  mWriteReg((u32) MappedPrescaleBaseAddress, RegOffset3, mask);
+  return 0;
+}
+
+int setAnticoincMask(u32 mask_1, u32 mask_2)
+{
+  if(mask_1<0 || mask_1>65535 || mask_2<0 || mask_2>65535)
+  {
+	  Log(WARNING, "TUBii: Choose an anticoincidence trigger mask between 0 and 65535.");
+	  sprintf(tubii_err, "TUBii: Choose an anticoincidence trigger mask between 0 and 65535.");
+	  return -1;
+  }
+  mWriteReg((u32) MappedAnticoincBaseAddress, RegOffset2, mask_1);
+  mWriteReg((u32) MappedAnticoincBaseAddress, RegOffset3, mask_2);
+  return 0;
+}
+
+int getAnticoincMask_1()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset2);
+}
+
+int getAnticoincMask_2()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset3);
+}
+
+int setAnticoincTiming(u32 length, u32 offset)
+{
+  if(length<0 || length>15)
+  {
+    Log(WARNING, "TUBii: Choose an anticoincidence length between 0 and 15.");
+    sprintf(tubii_err, "TUBii: Choose an anticoincidence length between 0 and 15.");
+    return -1;
+  }
+  if(offset<0 || offset>length)
+  {
+    Log(WARNING, "TUBii: Choose an anticoincidence offset between 0 and length.");
+    sprintf(tubii_err, "TUBii: Choose an anticoincidence offset between 0 and length.");
+    return -1;
+  }
+  mWriteReg((u32) MappedAnticoincBaseAddress, RegOffset0, length);
+  mWriteReg((u32) MappedAnticoincBaseAddress, RegOffset1, offset);
+  return 0;
+}
+
+int getAnticoincLength()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset0);
+}
+
+int getAnticoincOffset()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset1);
+}
+
+int getAnticoincReg1()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset4);
+}
+
+int getAnticoincReg2()
+{
+  return mReadReg((u32) MappedAnticoincBaseAddress, RegOffset5);
+}
+
+int setCoincMask(u32 mask1, u32 mask2)
+{
+  if(mask1<0 || mask1>65535 || mask2<0 || mask2>65535)
+  {
+	  Log(WARNING, "TUBii: Choose a coincidence trigger mask between 0 and 65535.");
+	  sprintf(tubii_err, "TUBii: Choose a coincidence trigger mask between 0 and 65535.");
+	  return -1;
+  }
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset1, mask1);
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset2, mask2);
+  return 0;
+}
+
+int getCoincMaskPrompt()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset1);
+}
+
+int getCoincMaskDelayed()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset2);
+}
+
+int setCoincTiming(u32 length)
+{
+  mWriteReg((u32) MappedCoincBaseAddress, RegOffset0, length);
+  return 0;
+}
+
+int getCoincLength()
+{
+  return mReadReg((u32) MappedCoincBaseAddress, RegOffset0);
+}
+
+
+/////// Counters and Speakers
+int counterLatch(int latch)
+{
+  mWriteReg((u32) MappedCountBaseAddress, RegOffset0, latch);
+  return 0;
+}
+
+int counterReset(int reset)
+{
+  mWriteReg((u32) MappedCountBaseAddress, RegOffset1, reset);
+  return 0;
+}
+
+int counterMode(int mode)
+{
+  counter_mode = mode;
+  if(counter_mode == 0) counterLatch(0);
+  return counter_mode;
+}
+
+void GetCounterRate()
+{
+  // Toggle Latch
+  counterLatch(0);
+  usleep(1);
+  counterLatch(1);
+  usleep(1);
+  counterReset(0);
+  usleep(1);
+  counterReset(1);
+}
+
+int counterMask(u32 mask)
+{
+  mWriteReg((u32) MappedCountLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
+  mWriteReg((u32) MappedCountLengthenBaseAddress, RegOffset2,400); // And deadtime
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset1,mask);
+
+  return mask;
+}
+
+int getCounterMask()
+{
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset1);
+}
+
+int speakerMask(u32 mask)
+{
+  //mWriteReg((u32) MappedSpeakLengthenBaseAddress, RegOffset1,200); // Fix the pulse length
+  //mWriteReg((u32) MappedSpeakLengthenBaseAddress, RegOffset2,400); // And deadtime
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset2,mask);
+  return mask;
+}
+
+int speakerScale(u32 rate)
+{
+  Log(VERBOSE, "TUBii: Scaling the speaker by a factor of %d",rate);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset5, rate);
+  return 0;
+}
+
+int getSpeakerMask()
+{
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset2);
+}
+
+int triggerMask(u32 mask, u32 mask_async)
+{
+  if((mask & mask_async)!=0) return -1;
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset3,mask);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset8,mask_async);
+  return mask;
+}
+
+int individualTriggerMask(u32 mask, char* type)
+{
+  if(type=="sync"){
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset3, mask);
+    u32 async= mReadReg((u32) MappedTrigBaseAddress, RegOffset8);
+    async = async - (async & mask);
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset8, async);
+  }
+  else if(type=="async"){
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset8, mask);
+    u32 sync= mReadReg((u32) MappedTrigBaseAddress, RegOffset3);
+    sync = sync - (sync & mask);
+    mWriteReg((u32) MappedTrigBaseAddress, RegOffset3, sync);
+  }
+
+  return mask;
+}
+
+int getSyncTriggerMask()
+{
+  return mReadReg((u32) MappedTrigBaseAddress,RegOffset3);
+}
+
+int getAsyncTriggerMask()
+{
+  return mReadReg((u32) MappedTrigBaseAddress,RegOffset8);
+}
+
+void softGT()
+{
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset6,1);
+  usleep(100);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset6, 0);
+}
+
+void resetGTID()
+{
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset7,1);
+  usleep(1000);
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset7, 0);
+}
+
+/////// Data Readout
+u32 currentgtid()
+{
+  u32 gtid= mReadReg((u32) MappedTrigBaseAddress, RegOffset4);
+  return gtid;
+}
+
+void fifoTrigger(struct TubiiRecord* record)
+{
+  int error;
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,1);
+  record->TrigWord = mReadReg((u32) MappedFifoBaseAddress, RegOffset1) & 0xFFFFFF;
+  record->GTID = mReadReg((u32) MappedFifoBaseAddress, RegOffset2) & 0xFFFFFF;
+  error= mReadReg((u32) MappedFifoBaseAddress, RegOffset3);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,0);
+
+  if(error>1 && err_flg==0){
+	  //printf("Error is: %i \n", error);
+	  err_flg=1;
+  }
+  else if(error<2) err_flg=0;
+}
+
+u32 fifoStatus()
+{
+  u32 error= mReadReg((u32) MappedFifoBaseAddress, RegOffset3);
+  return error;
+}
+
+void resetFIFO()
+{
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,2);
+  usleep(1000);
+  mWriteReg((u32) MappedFifoBaseAddress, RegOffset0,0);
+}
+
+int TrigWordDelay(u32 delay)
+{
+  /*delay *= ns;
+  if(delay<0){
+	Log(WARNING, "TUBii: delay length is outside acceptable range.");
+	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
+	return -1;
+  }*/
+
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset1, 1); // Reset
+  usleep(1000);
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset1, 0); // Reset
+  usleep(1000);
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset0, delay);
+  return 0;
+}
+
+int TrigWordLength(u32 delay)
+{
+  mWriteReg((u32) MappedTrigWordDelayBaseAddress, RegOffset2, delay);
+  return 0;
+}
+
+#endif /* TRIGGERS_H_ */

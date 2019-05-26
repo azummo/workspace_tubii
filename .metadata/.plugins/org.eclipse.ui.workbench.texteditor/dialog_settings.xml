@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Mask" key="selection"/>
+		<item value="resetFIFO" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="resetfifo"/>
+			<item value="shift"/>
+			<item value="async"/>
 			<item value="mask"/>
 			<item value="coinc"/>
 			<item value="clock"/>
 			<item value="addreply"/>
 			<item value="combo"/>
-			<item value="save_tubii_state"/>
-			<item value="save_tubii"/>
-			<item value="save"/>
 		</list>
 		<list key="replacehistory">
 		</list>

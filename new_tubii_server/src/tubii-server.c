@@ -115,6 +115,8 @@ struct command commandTable[] = {
 		{"ping",         ping,         1},
 		// ellie
 		{"setGenericDelay",  	SetGenericdelay,  	2},
+		{"toggleAsyncDelay",  	ToggleAsyncdelay,  	2},
+		{"setAsyncDelay",	  	SetAsyncdelay,  	2},
 		{"setGenericPulser", 	SetGenericpulser, 	4},
 		{"getGenericRate", 		GetPulserRate, 		1},
 		{"getGenericPulseWidth", GetPulserWidth, 	1},

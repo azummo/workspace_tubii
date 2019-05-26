@@ -1,0 +1,213 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue May 14 11:12:29 2019
+# Process ID: 5605
+# Current directory: /home/zummo/snoplus/TUBii/workspace_tubii
+# Command line: vivado
+# Log file: /home/zummo/snoplus/TUBii/workspace_tubii/vivado.log
+# Journal file: /home/zummo/snoplus/TUBii/workspace_tubii/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.xpr
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.srcs/sources_1/bd/system/ip/system_TrigWordDelay_0_0/system_TrigWordDelay_0_0.upgrade_log'.
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.srcs/sources_1/bd/system/ip/system_buttonTrigger_0_0/system_buttonTrigger_0_0.upgrade_log'.
+Scanning sources...
+Finished scanning sources
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/snoplus/TUBii/project_tubii_7020/TrigWordFifo_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/snoplus/TUBii/project_tubii_7020/sync_gtid_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/snoplus/TUBii/project_tubii_7020/SyncGTID_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/snoplus/TUBii/project_tubii_7020/tubii_triggers_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/snoplus/TUBii/project_tubii_7020/ShiftReg_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/project_tubii_7020/ShiftRegs_1.0'.
+WARNING: [filemgmt 56-3] IP Repository Path: Could not find the directory '/home/zummo/project_tubii_7020/triggerOut_1.0'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ellie_control_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/anticoincTrigger_1.0'.
+WARNING: [IP_Flow 19-2207] Repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0' already exists; ignoring attempt to add it again.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/clockDivider_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/trigwordfifo_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/TrigWordFifo_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggers_2.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/prescaleSignal_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/sync_gtid_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/SyncGTID_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggers_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/tubii_triggers_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ShiftRegisters_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/buttonTrigger_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ShiftReg_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/implement_gtid_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/TrigWordDelay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/oneshot_pulse_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/fifo_readout_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/counter_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/project_tubii_7020/ShiftRegs_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/countDisplay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/comboTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/testPulser_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/project_tubii_7020/triggerOut_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/clockLogic_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggerSplit_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/testDelay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/prescaleTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/burstTrigger_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:25 ; elapsed = 00:00:24 . Memory (MB): peak = 6230.789 ; gain = 185.125 ; free physical = 124 ; free virtual = 12575
+update_compile_order -fileset sources_1
+open_bd_design {/home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.srcs/sources_1/bd/system/system.bd}
+Adding cell -- xilinx.com:user:countDisplay:1.0 - countDisplay_0
+Adding cell -- xilinx.com:user:comboTrigger:1.0 - comboTrigger_0
+Adding cell -- xilinx.com:user:ShiftRegisters:1.0 - ShiftRegisters_0
+Adding cell -- xilinx.com:user:prescaleTrigger:1.0 - prescaleTrigger_0
+Adding cell -- xilinx.com:user:burstTrigger:1.0 - burstTrigger_0
+Adding cell -- xilinx.com:user:clockLogic:1.0 - clockLogic_0
+Adding cell -- xilinx.com:user:oneshot_pulse:1.0 - oneshot_pulse_0
+Adding cell -- xilinx.com:user:oneshot_pulse:1.0 - oneshot_pulse_1
+Adding cell -- xilinx.com:user:testPulser:1.0 - MZ_Happy
+Adding cell -- xilinx.com:user:testPulser:1.0 - genericPulser
+Adding cell -- xilinx.com:user:testPulser:1.0 - smelliePulser
+Adding cell -- xilinx.com:user:testPulser:1.0 - telliePulser
+Adding cell -- xilinx.com:user:testPulser:1.0 - testPulser_0
+Adding cell -- xilinx.com:user:testDelay:1.0 - genericDelay
+Adding cell -- xilinx.com:user:testDelay:1.0 - gtDelay
+Adding cell -- xilinx.com:user:testDelay:1.0 - smellieDelay
+Adding cell -- xilinx.com:user:testDelay:1.0 - tellieDelay
+Adding cell -- xilinx.com:user:ellie_control:1.0 - ellie_control_0
+Adding cell -- xilinx.com:ip:fifo_generator:13.2 - fifo_generator_0
+INFO: [xilinx.com:ip:fifo_generator:13.2-5968] /fifo_generator_0Executing the post_config_ip from bd
+Adding cell -- xilinx.com:ip:fifo_generator:13.2 - fifo_generator_1
+INFO: [xilinx.com:ip:fifo_generator:13.2-5968] /fifo_generator_1Executing the post_config_ip from bd
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_0
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_1
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_2
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_3
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_4
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_5
+Adding cell -- xilinx.com:ip:util_reduced_logic:2.0 - util_reduced_logic_6
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_0
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_10
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_11
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_12
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_13
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_1
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_2
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_3
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_4
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_5
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_6
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_7
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_8
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_9
+Adding cell -- xilinx.com:ip:xlconcat:2.1 - xlconcat_0
+Adding cell -- xilinx.com:ip:xlconcat:2.1 - xlconcat_1
+Adding cell -- user.org:user:anticoincTrigger:1.0 - anticoincTrigger_0
+Adding cell -- user.org:user:coincTrigger:1.0 - coincTrigger_0
+Adding cell -- xilinx.com:user:trigwordfifo:1.0 - trigwordfifo_0
+Adding cell -- xilinx.com:user:triggers:2.0 - triggers_0
+Adding cell -- xilinx.com:user:fifo_readout:1.0 - fifo_readout_0
+Adding cell -- xilinx.com:user:implement_gtid:1.0 - implement_gtid_0
+Adding cell -- xilinx.com:user:prescaleSignal:1.0 - prescaleSignal_0
+Adding cell -- xilinx.com:user:prescaleSignal:1.0 - prescaleSignal_1
+WARNING: [BD 41-1731] Type mismatch between connected pins: /fifo_readout_0/read(undef) and /fifo_generator_0/rd_clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /fifo_readout_0/reset(rst) and /fifo_generator_0/rst(undef)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /trigwordfifo_0/reset(rst) and /fifo_generator_1/rst(undef)
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - xbar
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - tier2_xbar_0
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - tier2_xbar_1
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - tier2_xbar_2
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - tier2_xbar_3
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Successfully read diagram <system> from BD file </home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.srcs/sources_1/bd/system/system.bd>
+open_bd_design: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 7248.289 ; gain = 0.000 ; free physical = 169 ; free virtual = 12539
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Tue May 14 11:20:45 2019] Launched synth_1...
+Run output will be captured here: /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.runs/synth_1/runme.log
+[Tue May 14 11:20:45 2019] Launched impl_1...
+Run output will be captured here: /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.runs/impl_1/runme.log
+launch_sdk -workspace /home/zummo/snoplus/TUBii/workspace_tubii -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf
+INFO: [Vivado 12-393] Launching SDK...
+INFO: [Vivado 12-417] Running xsdk -workspace /home/zummo/snoplus/TUBii/workspace_tubii -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf
+INFO: [Vivado 12-3157] SDK launch initiated. Please check console for any further messages.
+ipx::edit_ip_in_project -upgrade true -name oneshot_pulse_v1_0_project -directory /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.tmp/oneshot_pulse_v1_0_project /home/zummo/snoplus/TUBii/project_tubii_7020/oneshot_pulse_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2018.2/data/ip'.
+create_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:18 . Memory (MB): peak = 7248.289 ; gain = 0.000 ; free physical = 127 ; free virtual = 9899
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ellie_control_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/anticoincTrigger_1.0'.
+WARNING: [IP_Flow 19-2207] Repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0' already exists; ignoring attempt to add it again.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/coincTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/clockDivider_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/trigwordfifo_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/TrigWordFifo_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggers_2.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/prescaleSignal_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/sync_gtid_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/SyncGTID_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggers_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/tubii_triggers_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ShiftRegisters_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/buttonTrigger_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/ShiftReg_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/implement_gtid_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/TrigWordDelay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/oneshot_pulse_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/fifo_readout_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/counter_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/project_tubii_7020/ShiftRegs_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/countDisplay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/comboTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/testPulser_1.0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository '/home/zummo/project_tubii_7020/triggerOut_1.0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/clockLogic_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/triggerSplit_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/testDelay_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/prescaleTrigger_1.0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/zummo/snoplus/TUBii/project_tubii_7020/burstTrigger_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 7248.289 ; gain = 0.000 ; free physical = 120 ; free virtual = 9880
+update_compile_order -fileset sources_1
+launch_runs impl_1 -jobs 2
+[Wed May 15 11:36:15 2019] Launched synth_1...
+Run output will be captured here: /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.tmp/oneshot_pulse_v1_0_project/oneshot_pulse_v1_0_project.runs/synth_1/runme.log
+[Wed May 15 11:36:15 2019] Launched impl_1...
+Run output will be captured here: /home/zummo/snoplus/TUBii/project_tubii_7020/project_tubii_7020.tmp/oneshot_pulse_v1_0_project/oneshot_pulse_v1_0_project.runs/impl_1/runme.log
+current_project project_tubii_7020
+current_project oneshot_pulse_v1_0_project
+close_project
+close_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:23 . Memory (MB): peak = 7248.289 ; gain = 0.000 ; free physical = 204 ; free virtual = 7984
+exit
+INFO: [Common 17-206] Exiting Vivado at Fri May 17 09:22:40 2019...

@@ -82,6 +82,7 @@ int InitMapping()
   // Delays
   MappedDelayBaseAddress= MemoryMapping(GENERICDELAY_BASEADDR,GENERICDELAY_HIGHADDR);
   MappedDelayLengthenBaseAddress= MemoryMapping(DELAYLENGTHEN_BASEADDR,DELAYLENGTHEN_HIGHADDR);
+  MappedAsyncToggleBaseAddress= MemoryMapping(ASYNCTOGGLE_BASEADDR,ASYNCTOGGLE_HIGHADDR);
   MappedSDelayBaseAddress= MemoryMapping(SMELLIEDELAY_BASEADDR,SMELLIEDELAY_HIGHADDR);
   MappedTDelayBaseAddress= MemoryMapping(TELLIEDELAY_BASEADDR,TELLIEDELAY_HIGHADDR);
   MappedGTDelayBaseAddress= MemoryMapping(GTDELAY_BASEADDR,GTDELAY_HIGHADDR);
@@ -234,6 +235,34 @@ void SetGenericdelay(client *c, int argc, sds *argv)
   // 3. Async part to shift reg:
   //int ret2= Muxer("5");
   //int ret3= LoadShift(argv[1]);
+
+  save_tubii_state();
+
+  addReplyStatus(c, "+OK");
+}
+
+void ToggleAsyncdelay(client *c, int argc, sds *argv)
+{
+  uint32_t asyncToggle;
+  safe_strtoul(argv[1],&asyncToggle);
+  ToggleAsyncDelay(asyncToggle);
+}
+
+void SetAsyncdelay(client *c, int argc, sds *argv)
+{
+  float length=0;
+  safe_strtof(argv[1],&length);
+  u32 delay = length;
+
+  int ret1= Muxer(4);
+  MuxEnable(1);
+  int ret2= LoadShift(delay);
+  MuxEnable(0);
+
+  if(ret1 != 0 || ret2 != 0){
+      addReplyError(c, tubii_err);
+      return;
+    }
 
   save_tubii_state();
 

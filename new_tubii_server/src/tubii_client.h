@@ -49,6 +49,8 @@ void SetAllowableClockMisses(client *c, int argc, sds *argv);
 
 // Ellie Commands
 void SetGenericdelay(client *c, int argc, sds *argv);
+void ToggleAsyncdelay(client *c, int argc, sds *argv);
+void SetAsyncdelay(client *c, int argc, sds *argv);
 void SetGenericpulser(client *c, int argc, sds *argv);
 void GetPulserRate(client *c, int argc, sds *argv);
 void GetPulserWidth(client *c, int argc, sds *argv);

@@ -18,6 +18,7 @@ void *MappedPulserBaseAddress;
 void *MappedSPulserBaseAddress;
 void *MappedTPulserBaseAddress;
 void *MappedDelayLengthenBaseAddress;
+void *MappedAsyncToggleBaseAddress;
 void *MappedEllieControlBaseAddress;
 
 int Pulser(float rate, float length, u32 nPulse, void* MappedBaseAddress)
@@ -104,6 +105,12 @@ int Lengthen(char* dArg)
 
   return 0;
 }
+
+void ToggleAsyncDelay(u32 toggle)
+{
+  mWriteReg((u32) MappedAsyncToggleBaseAddress, RegOffset0, toggle);
+}
+
 
 void SetTellieTriggerMode(u32 option)
 {

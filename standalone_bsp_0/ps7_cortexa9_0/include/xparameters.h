@@ -41,6 +41,17 @@
 
 /******************************************************************/
 
+/* Definitions for driver COINCTRIGGER */
+#define XPAR_COINCTRIGGER_NUM_INSTANCES 1
+
+/* Definitions for peripheral COINCTRIGGER_0 */
+#define XPAR_COINCTRIGGER_0_DEVICE_ID 0
+#define XPAR_COINCTRIGGER_0_S00_AXI_BASEADDR 0x43C19000
+#define XPAR_COINCTRIGGER_0_S00_AXI_HIGHADDR 0x43C19FFF
+
+
+/******************************************************************/
+
 
 /* Definitions for peripheral PS7_DDR_0 */
 #define XPAR_PS7_DDR_0_S_AXI_BASEADDR 0x00100000
@@ -275,8 +286,8 @@
 
 /* Definitions for peripheral IMPLEMENT_GTID_0 */
 #define XPAR_IMPLEMENT_GTID_0_DEVICE_ID 0
-#define XPAR_IMPLEMENT_GTID_0_S00_AXI_BASEADDR 0x43C15000
-#define XPAR_IMPLEMENT_GTID_0_S00_AXI_HIGHADDR 0x43C15FFF
+#define XPAR_IMPLEMENT_GTID_0_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_IMPLEMENT_GTID_0_S00_AXI_HIGHADDR 0x00000000
 
 
 /******************************************************************/

@@ -181,6 +181,28 @@ int getCoincLength()
   return mReadReg((u32) MappedCoincBaseAddress, RegOffset0);
 }
 
+int setSync16Count(u32 count)
+{
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset8, count);
+  return 0;
+}
+
+int setSync24Count(u32 count)
+{
+  mWriteReg((u32) MappedTrigBaseAddress, RegOffset9, count);
+  return 0;
+}
+
+
+int getSync16Count()
+{
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset8);
+}
+
+int getSync24Count()
+{
+  return mReadReg((u32) MappedTrigBaseAddress, RegOffset9);
+}
 
 /////// Counters and Speakers
 int counterLatch(int latch)

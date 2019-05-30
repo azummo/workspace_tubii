@@ -334,6 +334,17 @@
 
 /******************************************************************/
 
+/* Definitions for driver REGISTER_MUX */
+#define XPAR_REGISTER_MUX_NUM_INSTANCES 1
+
+/* Definitions for peripheral REGISTER_MUX_0 */
+#define XPAR_REGISTER_MUX_0_DEVICE_ID 0
+#define XPAR_REGISTER_MUX_0_S00_AXI_BASEADDR 0x43C20000
+#define XPAR_REGISTER_MUX_0_S00_AXI_HIGHADDR 0x43C20FFF
+
+
+/******************************************************************/
+
 /* Definitions for driver SCUGIC */
 #define XPAR_XSCUGIC_NUM_INSTANCES 1U
 

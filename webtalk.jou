@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# 
+# Start of session at: Wed May 29 15:28:39 2019
+# Process ID: 22114
+# Current directory: /home/zummo/snoplus/TUBii/workspace_tubii
+# Command line: wbtcv -mode batch -source sdk_webtalk.tcl
+# Log file: /home/zummo/snoplus/TUBii/workspace_tubii/webtalk.log
+# Journal file: /home/zummo/snoplus/TUBii/workspace_tubii/webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl

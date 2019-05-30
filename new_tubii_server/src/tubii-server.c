@@ -181,6 +181,10 @@ struct command commandTable[] = {
 		{"getCoincMaskDelayed",		GetCoincMaskDelayed,		1},
 		{"setCoincLength",		SetCoincLength,		2},
 		{"getCoincLength",		GetCoincLength,		1},
+		{"setSync16Count",		SetSync16Count,		2},
+		{"setSync24Count",		SetSync24Count,		2},
+		{"getSync16Count",		GetSync16Count,		1},
+		{"getSync24Count",		GetSync24Count,		1},
 		/// High level functions
 		{"setGTDelays", 	SetGTDelays, 	3},
 		{"getLODelay", 		GetLODelay, 	1},

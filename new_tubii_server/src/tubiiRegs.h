@@ -64,7 +64,13 @@ int LoadShift(u32 data)
   for(cnt=0; cnt<8; cnt++){
 	// Set
 	mWriteReg((u32) MappedRegsBaseAddress, RegOffset4, 1);
-	usleep(10000);
+	Log(WARNING, "Slv Reg 3: %i \n ", mReadReg((u32) MappedRegsBaseAddress, RegOffset3));
+	Log(WARNING, "Clked: %i \n ", mReadReg((u32) MappedRegsBaseAddress, RegOffset9));
+	usleep(1000);
+	Log(WARNING, "Clked: %i \n ", mReadReg((u32) MappedRegsBaseAddress, RegOffset9));
+	usleep(11000);
+	Log(WARNING, "Clked: %i \n ", mReadReg((u32) MappedRegsBaseAddress, RegOffset9));
+//	usleep(10000);
   }
 
   return 0;

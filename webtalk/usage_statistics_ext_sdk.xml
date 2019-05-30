@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<webTalkData  fileName='usage_statistics_ext_sdk.xml'  majorVersion='1' minorVersion='0' timeStamp='Fri May 24 17:02:56 2019'>
+<webTalkData  fileName='usage_statistics_ext_sdk.xml'  majorVersion='1' minorVersion='0' timeStamp='Thu May 30 10:06:08 2019'>
 <section name="__ROOT__" level="0" order="1" description="">
  <section name="software_version_and_target_device" level="1" order="1" description="">
   <keyValuePair key="beta" value="false" description="" />
   <keyValuePair key="build_version" value="2018.2" description="" />
-  <keyValuePair key="date_generated" value="2019-05-24 17:02:46" description="" />
+  <keyValuePair key="date_generated" value="2019-05-30 10:05:57" description="" />
   <keyValuePair key="os_platform" value="amd64" description="" />
   <keyValuePair key="product_version" value="SDK v2018.2" description="" />
-  <keyValuePair key="project_id" value="2018.2_24" description="" />
-  <keyValuePair key="project_iteration" value="24" description="" />
-  <keyValuePair key="random_id" value="flop2aut76n18or3l91oh4p7ei" description="" />
-  <keyValuePair key="registration_id" value="176227461_174110084_210667175_940" description="" />
+  <keyValuePair key="project_id" value="2018.2_31" description="" />
+  <keyValuePair key="project_iteration" value="31" description="" />
+  <keyValuePair key="random_id" value="itupr8omq96qu5qrhopg0c6vbd" description="" />
+  <keyValuePair key="registration_id" value="itupr8omq96qu5qrhopg0c6vbd" description="" />
   <keyValuePair key="route_design" value="NA" description="" />
   <keyValuePair key="target_device" value="NA" description="" />
   <keyValuePair key="target_family" value="NA" description="" />
@@ -20,14 +20,14 @@
  </section>
  <section name="user_environment" level="1" order="2" description="">
   <keyValuePair key="cpu_name" value="Intel(R) Core(TM) i5-6200U CPU @ 2.30GHz" description="" />
-  <keyValuePair key="cpu_speed" value="700.006 MHz" description="" />
+  <keyValuePair key="cpu_speed" value="500.021 MHz" description="" />
   <keyValuePair key="os_name" value="Ubuntu" description="" />
   <keyValuePair key="os_release" value="Ubuntu 16.04.6 LTS" description="" />
   <keyValuePair key="system_ram" value="8.279 GB" description="" />
   <keyValuePair key="total_processors" value="1" description="" />
  </section>
  <section name="sdk" level="1" order="3" description="">
-  <section name="bsp/1558731763878" level="2" order="1" description="">
+  <section name="bsp/1559225156826" level="2" order="1" description="">
    <keyValuePair key="bootgencount" value="0" description="" />
    <keyValuePair key="crosstriggcount" value="0" description="" />
    <keyValuePair key="debugcount" value="0" description="" />
@@ -37,7 +37,7 @@
    <keyValuePair key="recordtype" value="ToolUsage" description="" />
    <keyValuePair key="uid" value="NA" description="" />
   </section>
-  <section name="hardware/1558650770000" level="2" order="2" description="">
+  <section name="hardware/1559166536000" level="2" order="2" description="">
    <keyValuePair key="apptemplate" value="NA" description="" />
    <keyValuePair key="arch" value="zynq" description="" />
    <keyValuePair key="device" value="7z020" description="" />
@@ -47,7 +47,7 @@
    <keyValuePair key="os" value="NA" description="" />
    <keyValuePair key="processors" value="2" description="" />
    <keyValuePair key="recordtype" value="HWCreation" description="" />
-   <keyValuePair key="uid" value="1558650770000" description="" />
+   <keyValuePair key="uid" value="1559166536000" description="" />
    <keyValuePair key="vivadoversion" value="2018.2" description="" />
   </section>
  </section>

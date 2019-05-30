@@ -101,6 +101,7 @@ int auto_init()
 
   // MZHappy
   Pulser(1,0.5,1e9,MappedHappyBaseAddress);
+
 /*
   // Reset the FIFO
   resetFIFO();
@@ -880,6 +881,40 @@ void SetCoincLength(client *c, int argc, sds *argv)
 void GetCoincLength(client *c, int argc, sds *argv)
 {
   addReply(c, ":%u", getCoincLength());
+}
+
+void SetSync16Count(client *c, int argc, sds *argv)
+{
+  uint32_t count;
+  safe_strtoul(argv[1],&count);
+
+  if(setSync16Count(count) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
+  else addReplyError(c, tubii_err);
+}
+
+void SetSync24Count(client *c, int argc, sds *argv)
+{
+  uint32_t count;
+  safe_strtoul(argv[1],&count);
+
+  if(setSync24Count(count) == 0){
+	  save_tubii_state();
+	  addReplyStatus(c, "+OK");
+  }
+  else addReplyError(c, tubii_err);
+}
+
+void GetSync16Count(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getSync16Count());
+}
+
+void GetSync24Count(client *c, int argc, sds *argv)
+{
+  addReply(c, ":%u", getSync24Count());
 }
 
 // Data readout

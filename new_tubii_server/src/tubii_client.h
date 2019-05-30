@@ -117,6 +117,11 @@ void GetCoincMaskDelayed(client *c, int argc, sds *argv);
 void SetCoincLength(client *c, int argc, sds *argv);
 void GetCoincLength(client *c, int argc, sds *argv);
 
+void SetSync16Count(client *c, int argc, sds *argv);
+void SetSync24Count(client *c, int argc, sds *argv);
+void GetSync16Count(client *c, int argc, sds *argv);
+void GetSync24Count(client *c, int argc, sds *argv);
+
 // TUBii Readout
 void SetTrigWordDelay(client *c, int argc, sds *argv);
 void SetTrigWordLength(client *c, int argc, sds *argv);

@@ -150,3 +150,81 @@
 18:32:28 INFO  : Successfully done setting XSCT server connection channel  
 18:32:37 INFO  : Successfully done setting SDK workspace  
 18:32:37 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+10:08:31 INFO  : Registering command handlers for SDK TCF services
+10:08:33 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+10:08:40 INFO  : XSCT server has started successfully.
+10:09:01 INFO  : Successfully done setting XSCT server connection channel  
+10:09:01 INFO  : Successfully done setting SDK workspace  
+10:09:01 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+10:09:01 INFO  : Checking for hwspec changes in the project system_wrapper_hw_platform_0.
+10:09:09 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1558964143000,  Project:1558649365000
+10:09:09 INFO  : The hardware specification for project 'system_wrapper_hw_platform_0' is different from /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+10:09:09 INFO  : Copied contents of /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf into /system_wrapper_hw_platform_0/system.hdf.
+10:09:31 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+10:09:38 INFO  : 
+10:09:38 INFO  : Updating hardware inferred compiler options for FSBL_tubii.
+10:09:38 INFO  : Clearing existing target manager status.
+10:09:38 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+10:09:40 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+11:27:22 INFO  : Registering command handlers for SDK TCF services
+11:27:23 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+11:27:27 INFO  : XSCT server has started successfully.
+11:27:31 INFO  : Successfully done setting XSCT server connection channel  
+11:27:31 INFO  : Successfully done setting SDK workspace  
+11:27:31 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+12:38:13 INFO  : Registering command handlers for SDK TCF services
+12:38:14 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+12:38:18 INFO  : XSCT server has started successfully.
+12:38:22 INFO  : Successfully done setting XSCT server connection channel  
+12:38:22 INFO  : Successfully done setting SDK workspace  
+12:38:22 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+13:31:59 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1558978262000,  Project:1558973184000
+13:31:59 INFO  : Project system_wrapper_hw_platform_0's source hardware specification located at /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated.
+13:32:09 INFO  : Project system_wrapper_hw_platform_0's source hardware specification location will not be monitored anymore.
+13:33:31 INFO  : Registering command handlers for SDK TCF services
+13:33:33 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+13:33:38 INFO  : XSCT server has started successfully.
+13:33:38 INFO  : Successfully done setting XSCT server connection channel  
+13:33:44 INFO  : Successfully done setting SDK workspace  
+13:33:45 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+14:12:05 INFO  : Registering command handlers for SDK TCF services
+14:12:08 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+14:12:15 INFO  : XSCT server has started successfully.
+14:12:31 INFO  : Successfully done setting XSCT server connection channel  
+14:12:31 INFO  : Successfully done setting SDK workspace  
+14:12:31 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+16:20:57 INFO  : Registering command handlers for SDK TCF services
+16:20:59 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+16:21:03 INFO  : XSCT server has started successfully.
+16:21:03 INFO  : Successfully done setting XSCT server connection channel  
+16:21:21 INFO  : Successfully done setting SDK workspace  
+16:21:21 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:01:54 INFO  : Registering command handlers for SDK TCF services
+17:01:56 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:02:02 INFO  : XSCT server has started successfully.
+17:02:02 INFO  : Successfully done setting XSCT server connection channel  
+17:02:07 INFO  : Successfully done setting SDK workspace  
+17:02:07 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+15:28:13 INFO  : Registering command handlers for SDK TCF services
+15:28:14 ERROR : Unsatisfied link error while loading librdi_repo_manager.so: java.lang.UnsatisfiedLinkError: no rdi_repo_manager in java.library.path
+15:28:14 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:46:12 INFO  : Registering command handlers for SDK TCF services
+17:46:14 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:46:21 INFO  : XSCT server has started successfully.
+17:46:21 INFO  : Successfully done setting XSCT server connection channel  
+17:46:49 INFO  : Successfully done setting SDK workspace  
+17:46:49 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+17:46:49 INFO  : Checking for hwspec changes in the project system_wrapper_hw_platform_0.
+17:48:50 INFO  : Registering command handlers for SDK TCF services
+17:48:51 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+17:48:53 INFO  : XSCT server has started successfully.
+17:48:53 INFO  : Successfully done setting XSCT server connection channel  
+17:48:53 INFO  : Successfully done setting SDK workspace  
+17:48:53 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+10:07:57 INFO  : Registering command handlers for SDK TCF services
+10:07:59 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+10:08:04 INFO  : XSCT server has started successfully.
+10:08:16 INFO  : Successfully done setting XSCT server connection channel  
+10:08:16 INFO  : Successfully done setting SDK workspace  
+10:08:16 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.

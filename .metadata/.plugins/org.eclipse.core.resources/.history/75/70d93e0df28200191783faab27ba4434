@@ -1149,7 +1149,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     // Writes to the next free row or (if settings match previous, returns that instead)
     sprintf(command, "SELECT save_tubii ("
                      "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
-                     "%u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u, %u"
+                     "%u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u"
            	         ");",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getAsyncTriggerMask(),
@@ -1173,8 +1173,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
                      GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
                      GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
-                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress),
-					 getDataReadout()
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
                      );
 
     if (db_exec_async(detector_db, command, save_db_client_callback, c)) {
@@ -1312,8 +1311,6 @@ static void load_db_callback(PGresult *res, PGconn *conn, void *data)
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, value);
         } else if (!strcmp(name, "burst_slave")) {
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, value);
-        } else if (!strcmp(name, "readout_status")) {
-            data_readout = value;
         } else {
             addReplyErrorFormat(c, "got unknown field '%s'", name);
             goto err;
@@ -1406,11 +1403,11 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      "burst_rate, burst_channel, burst_slave, pgt_rate,"
                      "smellie_pulse_rate, smellie_pulse_width, smellie_npulses, smellie_delay_length,"
                      "tellie_pulse_rate, tellie_pulse_width, tellie_npulses, tellie_delay_length,"
-                     "pulse_rate, pulse_width, npulses, delay_length, readout_status"
+                     "pulse_rate, pulse_width, npulses, delay_length"
                      ") "
                      "VALUES (0, "
                      "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
-                     " %u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u, %u)"
+                     " %u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u)"
                      " ON CONFLICT (key) DO UPDATE SET "
                      "control_reg = EXCLUDED.control_reg,"
                      "trigger_mask = EXCLUDED.trigger_mask,"
@@ -1443,8 +1440,7 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      "pulse_rate = EXCLUDED.pulse_rate,"
                      "pulse_width = EXCLUDED.pulse_width,"
                      "npulses = EXCLUDED.npulses,"
-                     "delay_length = EXCLUDED.delay_length,"
-    		         "readout_status = EXCLUDED.readout_status"
+                     "delay_length = EXCLUDED.delay_length"
                      " RETURNING key;",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getAsyncTriggerMask(),
@@ -1468,8 +1464,7 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
                      GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
                      GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
-                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress),
-					 getDataReadout()
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
                      );
 
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {

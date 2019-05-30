@@ -1312,8 +1312,6 @@ static void load_db_callback(PGresult *res, PGconn *conn, void *data)
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset2, value);
         } else if (!strcmp(name, "burst_slave")) {
         	mWriteReg((u32) MappedBurstBaseAddress, RegOffset3, value);
-        } else if (!strcmp(name, "readout_status")) {
-            data_readout = value;
         } else {
             addReplyErrorFormat(c, "got unknown field '%s'", name);
             goto err;

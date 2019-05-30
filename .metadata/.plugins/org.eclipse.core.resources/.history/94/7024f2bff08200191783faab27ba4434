@@ -1149,7 +1149,7 @@ void save_TUBii_command(client *c, int argc, sds *argv)
     // Writes to the next free row or (if settings match previous, returns that instead)
     sprintf(command, "SELECT save_tubii ("
                      "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
-                     "%u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u"
+                     "%u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u, %u"
            	         ");",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getAsyncTriggerMask(),
@@ -1173,7 +1173,8 @@ void save_TUBii_command(client *c, int argc, sds *argv)
                      GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
                      GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
                      GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
-                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress),
+					 getDataReadout()
                      );
 
     if (db_exec_async(detector_db, command, save_db_client_callback, c)) {
@@ -1407,7 +1408,7 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      ") "
                      "VALUES (0, "
                      "%u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u, %u,"
-                     " %u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u)"
+                     " %u, %u, %f, %f, %f, %u, %u, %f, %f, %u, %u, %f, %f, %u, %u, %u)"
                      " ON CONFLICT (key) DO UPDATE SET "
                      "control_reg = EXCLUDED.control_reg,"
                      "trigger_mask = EXCLUDED.trigger_mask,"
@@ -1440,7 +1441,8 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      "pulse_rate = EXCLUDED.pulse_rate,"
                      "pulse_width = EXCLUDED.pulse_width,"
                      "npulses = EXCLUDED.npulses,"
-                     "delay_length = EXCLUDED.delay_length"
+                     "delay_length = EXCLUDED.delay_length,"
+    		         "readout_status = EXCLUDED.readout_status"
                      " RETURNING key;",
                      mReadReg((u32) MappedRegsBaseAddress, RegOffset10),
                      getSyncTriggerMask(), getAsyncTriggerMask(),
@@ -1464,7 +1466,8 @@ static int save_tubii(aeEventLoop *el, long long id, void *data)
                      GetRate(MappedTPulserBaseAddress),GetWidth(MappedTPulserBaseAddress),
                      GetNPulses(MappedTPulserBaseAddress),GetDelayLength(MappedTDelayBaseAddress),
                      GetRate(MappedPulserBaseAddress),GetWidth(MappedPulserBaseAddress),
-                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress)
+                     GetNPulses(MappedPulserBaseAddress),GetDelayLength(MappedDelayBaseAddress),
+					 getDataReadout()
                      );
 
     if (db_exec_async(detector_db, command, save_db_callback, NULL)) {
@@ -1522,7 +1525,6 @@ void save_tubii_state()
             save_tubii_id = -1;
 	   }
     }
-
 }
 
 // String to float and int conversions

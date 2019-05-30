@@ -102,7 +102,7 @@ int auto_init()
   // MZHappy
   Pulser(1,0.5,1e9,MappedHappyBaseAddress);
 
-
+/*
   // Reset the FIFO
   resetFIFO();
 
@@ -136,7 +136,7 @@ int auto_init()
   status_readout=1;
 
   save_tubii_state();
-
+*/
   return 0;
 }
 
@@ -1515,14 +1515,14 @@ void save_tubii_state()
 {
     /* Set up an event to save the current TUBii state to the database in
      * one second if one isn't already scheduled. */
-
+/*
     if (save_tubii_id == -1) {
         if ((save_tubii_id = aeCreateTimeEvent(el, 1000, save_tubii, NULL, NULL)) == AE_ERR) {
             Log(WARNING, "failed to set up timed event to save tubii state to database");
             save_tubii_id = -1;
 	   }
     }
-
+   */
 }
 
 // String to float and int conversions

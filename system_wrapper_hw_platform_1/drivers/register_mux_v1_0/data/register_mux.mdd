@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER register_mux
+	OPTION supported_peripherals = (register_mux);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = register_mux;
+END DRIVER

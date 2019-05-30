@@ -1075,9 +1075,10 @@ int tubii_readout(aeEventLoop *el, long long id, void *data)
 		if(last_gtid!=trec.GTID){
 			// Have we missed a tick
 			if(last_gtid!=trec.GTID-1 && trec.GTID!=0 && trec.GTID!=1 && (last_gtid & 0xFFFF)!=0xFFFE){
-				if(spam_flag==0){
+				if(spam_flag<10){
 					Log(WARNING, "TUBII: FIFO skipped GTIDs\n");
-					spam_flag=1;
+					Log(WARNING, "TUBII: Skipped from %u to %u \n", last_gtid, trec.GTID);
+					spam_flag+=1;
 				}
 			}
 			last_gtid=trec.GTID;

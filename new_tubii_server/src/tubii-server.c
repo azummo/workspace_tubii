@@ -116,7 +116,7 @@ struct command commandTable[] = {
 		// ellie
 		{"setGenericDelay",  	SetGenericdelay,  	2},
 		{"toggleAsyncDelay",  	ToggleAsyncdelay,  	2},
-		{"setAsyncDelay",	  	SetAsyncdelay,  	2},
+		{"setAsyncDelay",	  	SetAsyncdelay,  	3},
 		{"setGenericPulser", 	SetGenericpulser, 	4},
 		{"getGenericRate", 		GetPulserRate, 		1},
 		{"getGenericPulseWidth", GetPulserWidth, 	1},
@@ -280,10 +280,13 @@ int main(int argc, char **argv)
     auto_init();
 
     /* start tubii readout */
-    if (start_tubii_readout(1000)) {
+
+
+     if (start_tubii_readout(1000)) {
         //Log(WARNING, tubii_err);
         return 1;
     }
+
 
     /* check for ORCA connection */
 

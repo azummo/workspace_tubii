@@ -105,7 +105,7 @@ int auto_init()
 
   // Reset the FIFO
   resetFIFO();
-
+/*
   //Put caen in attenuating mode
   CAENWords(255, 255);
   //setup DGT and LO* delay lengths
@@ -134,6 +134,7 @@ int auto_init()
   // Switch data readout on by default
   data_readout=1;
   status_readout=1;
+*/
 
   save_tubii_state();
 
@@ -247,20 +248,25 @@ void ToggleAsyncdelay(client *c, int argc, sds *argv)
   uint32_t asyncToggle;
   safe_strtoul(argv[1],&asyncToggle);
   ToggleAsyncDelay(asyncToggle);
+  addReplyStatus(c, "+OK");
 }
 
 void SetAsyncdelay(client *c, int argc, sds *argv)
 {
-  float length=0;
-  safe_strtof(argv[1],&length);
-  u32 delay = length;
+  float length1=0;
+  float length2=0;
+  safe_strtof(argv[1],&length1);
+  safe_strtof(argv[2],&length2);
+  u32 delay1 = length1;
+  u32 delay2 = length2;
 
   int ret1= Muxer(4);
   MuxEnable(1);
-  int ret2= LoadShift(delay);
+  int ret2= LoadShift(delay1);
+  int ret3= LoadShift(delay2);
   MuxEnable(0);
 
-  if(ret1 != 0 || ret2 != 0){
+  if(ret1 != 0 || ret2 != 0 || ret3 != 0){
       addReplyError(c, tubii_err);
       return;
     }
@@ -1528,7 +1534,6 @@ void save_tubii_state()
             save_tubii_id = -1;
 	   }
     }
-
 }
 
 // String to float and int conversions

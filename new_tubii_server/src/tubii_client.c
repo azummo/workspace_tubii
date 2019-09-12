@@ -53,6 +53,9 @@ int InitMapping()
 
   // Clocks
   MappedClocksBaseAddress= MemoryMapping(CLOCKLOGIC_BASEADDR,CLOCKLOGIC_HIGHADDR);
+  MappedTUBiiClockBaseAddress= MemoryMapping(TUBIICLOCK_BASEADDR,TUBIICLOCK_HIGHADDR);
+  MappedMZClockBaseAddress= MemoryMapping(MZCLOCK_BASEADDR,MZCLOCK_HIGHADDR);
+  MappedClockCompBaseAddress= MemoryMapping(CLOCKCOMP_BASEADDR,CLOCKCOMP_HIGHADDR);
 
   // Counter Latch & Reset
   MappedCountBaseAddress= MemoryMapping(COUNTDISP_BASEADDR,COUNTDISP_HIGHADDR);
@@ -102,10 +105,9 @@ int auto_init()
   // MZHappy
   Pulser(1,0.5,1e9,MappedHappyBaseAddress);
 
-
   // Reset the FIFO
   resetFIFO();
-/*
+
   //Put caen in attenuating mode
   CAENWords(255, 255);
   //setup DGT and LO* delay lengths
@@ -134,7 +136,7 @@ int auto_init()
   // Switch data readout on by default
   data_readout=1;
   status_readout=1;
-*/
+
 
   save_tubii_state();
 
@@ -160,6 +162,27 @@ void clockstatus(client *c, int argc, sds *argv)
   // add to the datastream?
 
   addReply(c, ":%d", status);
+}
+
+void GetTUBiiClockTicks(client *c, int argc, sds *argv)
+{
+  uint32_t delay=0;
+  safe_strtoul(argv[1], &delay);
+  addReply(c, ":%u", getClockTicks(delay, MappedTUBiiClockBaseAddress));
+}
+
+void GetMZClockTicks(client *c, int argc, sds *argv)
+{
+  uint32_t delay=0;
+  safe_strtoul(argv[1], &delay);
+  addReply(c, ":%u", getClockTicks(delay, MappedMZClockBaseAddress));
+}
+
+void GetClockTickDiff(client *c, int argc, sds *argv)
+{
+  uint32_t delay=0;
+  safe_strtoul(argv[1], &delay);
+  addReply(c, ":%u", getClockTicks(delay, MappedClockCompBaseAddress));
 }
 
 // Utility commands
@@ -321,7 +344,7 @@ void SetTelliepulser(client *c, int argc, sds *argv)
   safe_strtof(argv[2],&length);
   safe_strtoul(argv[3],&nPulse);
 
-  int ret= Pulser(rate,length,nPulse,MappedTPulserBaseAddress);
+  int ret= MZPulser(rate*2,length/2,nPulse,MappedTPulserBaseAddress);
 
   save_tubii_state();
 
@@ -347,7 +370,7 @@ void SetTelliedelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length;
+  u32 delay = length/2;
   int ret= Delay(delay,MappedTDelayBaseAddress);
   save_tubii_state();
 

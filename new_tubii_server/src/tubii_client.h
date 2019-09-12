@@ -18,6 +18,9 @@ void ping(client *c, int argc, sds *argv);
 // Clock
 void clockreset(client *c, int argc, sds *argv);
 void clockstatus(client *c, int argc, sds *argv);
+void GetTUBiiClockTicks(client *c, int argc, sds *argv);
+void GetMZClockTicks(client *c, int argc, sds *argv);
+void GetClockTickDiff(client *c, int argc, sds *argv);
 
 // Low-level register commands
 void dataready(client *c, int argc, sds *argv);

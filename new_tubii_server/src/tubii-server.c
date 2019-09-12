@@ -103,6 +103,9 @@ struct command commandTable[] = {
 		// clocks
 		{"clockReset",   clockreset,   1},
 		{"clockStatus",  clockstatus,  1},
+		{"getTUBiiClockTicks", GetTUBiiClockTicks, 2},
+		{"getMZClockTicks",  GetMZClockTicks, 2},
+		{"getClockTickDiff",  GetClockTickDiff, 2},
 		// shift registers
 		{"dataready",    dataready,    2},
 		{"loadShift",  	 loadShift,    2},
@@ -302,6 +305,7 @@ int main(int argc, char **argv)
         Log(WARNING, "failed to set up status tubii");
         return 1;
     }
+
 
     /* enter the main event loop */
     el->stop = 0;

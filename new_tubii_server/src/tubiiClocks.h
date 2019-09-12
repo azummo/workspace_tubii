@@ -10,6 +10,9 @@
 #define CLOCKS_H_
 
 void *MappedClocksBaseAddress;
+void *MappedTUBiiClockBaseAddress;
+void *MappedMZClockBaseAddress;
+void *MappedClockCompBaseAddress;
 
 int clockReset(int clk_choice)
 {
@@ -30,4 +33,33 @@ int clockStatus()
   return mReadReg((u32) MappedClocksBaseAddress, RegOffset1);
 }
 
+int getClockTicks(int delay, void* MappedBaseAddress)
+{
+  if( delay == 0 )
+  {
+    return mReadReg((u32) MappedBaseAddress, RegOffset0);
+  }
+  else
+  {
+	u32 counts_init = mReadReg((u32) MappedBaseAddress, RegOffset0);
+	usleep( delay );
+	u32 counts_fin = mReadReg((u32) MappedBaseAddress, RegOffset0);
+    return counts_fin - counts_init;
+  }
+}
+/*
+int getMZClockTicks()
+{
+  return mReadReg((u32) MappedMZClockBaseAddress, RegOffset0);
+}
+
+int getClockTickDiff(delay)
+{
+  u32 diff_init = mReadReg((u32) MappedClockCompBaseAddress, RegOffset0);
+  usleep(1000);
+  u32 diff_fin = mReadReg((u32) MappedClockCompBaseAddress, RegOffset0);
+  if( diff_fin > diff_init) return diff_fin - diff_init;
+  else return -(diff_init-diff_fin);
+}
+*/
 #endif /* CLOCKS_H_ */

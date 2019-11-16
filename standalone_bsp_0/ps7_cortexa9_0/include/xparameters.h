@@ -41,6 +41,34 @@
 
 /******************************************************************/
 
+/* Definitions for driver CLOCKCOMPARISON */
+#define XPAR_CLOCKCOMPARISON_NUM_INSTANCES 1
+
+/* Definitions for peripheral CLOCKCOMPARISON_0 */
+#define XPAR_CLOCKCOMPARISON_0_DEVICE_ID 0
+#define XPAR_CLOCKCOMPARISON_0_S00_AXI_BASEADDR 0x43C23000
+#define XPAR_CLOCKCOMPARISON_0_S00_AXI_HIGHADDR 0x43C23FFF
+
+
+/******************************************************************/
+
+/* Definitions for driver CLOCKCOUNTER */
+#define XPAR_CLOCKCOUNTER_NUM_INSTANCES 2
+
+/* Definitions for peripheral CLOCKCOUNTER_0 */
+#define XPAR_CLOCKCOUNTER_0_DEVICE_ID 0
+#define XPAR_CLOCKCOUNTER_0_S00_AXI_BASEADDR 0x43C21000
+#define XPAR_CLOCKCOUNTER_0_S00_AXI_HIGHADDR 0x43C21FFF
+
+
+/* Definitions for peripheral CLOCKCOUNTER_1 */
+#define XPAR_CLOCKCOUNTER_1_DEVICE_ID 1
+#define XPAR_CLOCKCOUNTER_1_S00_AXI_BASEADDR 0x43C22000
+#define XPAR_CLOCKCOUNTER_1_S00_AXI_HIGHADDR 0x43C22FFF
+
+
+/******************************************************************/
+
 /* Definitions for driver COINCTRIGGER */
 #define XPAR_COINCTRIGGER_NUM_INSTANCES 1
 
@@ -297,14 +325,14 @@
 
 /* Definitions for peripheral ONESHOT_PULSE_0 */
 #define XPAR_ONESHOT_PULSE_0_DEVICE_ID 0
-#define XPAR_ONESHOT_PULSE_0_S00_AXI_BASEADDR 0x43C0A000
-#define XPAR_ONESHOT_PULSE_0_S00_AXI_HIGHADDR 0x43C0AFFF
+#define XPAR_ONESHOT_PULSE_0_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_ONESHOT_PULSE_0_S00_AXI_HIGHADDR 0x00000000
 
 
 /* Definitions for peripheral ONESHOT_PULSE_1 */
 #define XPAR_ONESHOT_PULSE_1_DEVICE_ID 1
-#define XPAR_ONESHOT_PULSE_1_S00_AXI_BASEADDR 0x43C0F000
-#define XPAR_ONESHOT_PULSE_1_S00_AXI_HIGHADDR 0x43C0FFFF
+#define XPAR_ONESHOT_PULSE_1_S00_AXI_BASEADDR 0xFFFFFFFF
+#define XPAR_ONESHOT_PULSE_1_S00_AXI_HIGHADDR 0x00000000
 
 
 /******************************************************************/

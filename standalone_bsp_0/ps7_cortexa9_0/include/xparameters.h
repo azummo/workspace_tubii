@@ -363,12 +363,18 @@
 /******************************************************************/
 
 /* Definitions for driver REGISTER_MUX */
-#define XPAR_REGISTER_MUX_NUM_INSTANCES 1
+#define XPAR_REGISTER_MUX_NUM_INSTANCES 2
 
 /* Definitions for peripheral REGISTER_MUX_0 */
 #define XPAR_REGISTER_MUX_0_DEVICE_ID 0
 #define XPAR_REGISTER_MUX_0_S00_AXI_BASEADDR 0x43C20000
 #define XPAR_REGISTER_MUX_0_S00_AXI_HIGHADDR 0x43C20FFF
+
+
+/* Definitions for peripheral REGISTER_MUX_1 */
+#define XPAR_REGISTER_MUX_1_DEVICE_ID 1
+#define XPAR_REGISTER_MUX_1_S00_AXI_BASEADDR 0x43C24000
+#define XPAR_REGISTER_MUX_1_S00_AXI_HIGHADDR 0x43C24FFF
 
 
 /******************************************************************/

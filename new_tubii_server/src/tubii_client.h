@@ -52,7 +52,8 @@ void SetAllowableClockMisses(client *c, int argc, sds *argv);
 
 // Ellie Commands
 void SetGenericdelay(client *c, int argc, sds *argv);
-void ToggleAsyncdelay(client *c, int argc, sds *argv);
+void SetAsyncdelayMode(client *c, int argc, sds *argv);
+void GetAsyncdelayMode(client *c, int argc, sds *argv);
 void SetAsyncdelay(client *c, int argc, sds *argv);
 void SetGenericpulser(client *c, int argc, sds *argv);
 void GetPulserRate(client *c, int argc, sds *argv);
@@ -61,6 +62,8 @@ void GetPulserNPulses(client *c, int argc, sds *argv);
 void GetDelay(client *c, int argc, sds *argv);
 void LengthenDelay(client *c, int argc, sds *argv);
 void SetSmelliedelay(client *c, int argc, sds *argv);
+void SetSmellieMode(client *c, int argc, sds *argv);
+void GetSmellieMode(client *c, int argc, sds *argv);
 void SetSmelliepulser(client *c, int argc, sds *argv);
 void GetSmellieRate(client *c, int argc, sds *argv);
 void GetSmelliePulseWidth(client *c, int argc, sds *argv);

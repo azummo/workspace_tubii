@@ -1,4 +1,4 @@
-13:48:55 **** Build of configuration Debug for project FSBL_tubii ****
+00:22:22 **** Build of configuration Debug for project FSBL_tubii ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
@@ -74,5 +74,5 @@ arm-none-eabi-size FSBL_tubii.elf  |tee "FSBL_tubii.elf.size"
 Finished building: FSBL_tubii.elf.size
  
 
-13:48:57 Build Finished (took 1s.672ms)
+00:22:24 Build Finished (took 2s.398ms)
 

@@ -85,7 +85,7 @@ int InitMapping()
   // Delays
   MappedDelayBaseAddress= MemoryMapping(GENERICDELAY_BASEADDR,GENERICDELAY_HIGHADDR);
   MappedDelayLengthenBaseAddress= MemoryMapping(DELAYLENGTHEN_BASEADDR,DELAYLENGTHEN_HIGHADDR);
-  MappedAsyncToggleBaseAddress= MemoryMapping(ASYNCTOGGLE_BASEADDR,ASYNCTOGGLE_HIGHADDR);
+  MappedAsyncModeBaseAddress= MemoryMapping(ASYNCMODE_BASEADDR,ASYNCMODE_HIGHADDR);
   MappedSDelayBaseAddress= MemoryMapping(SMELLIEDELAY_BASEADDR,SMELLIEDELAY_HIGHADDR);
   MappedTDelayBaseAddress= MemoryMapping(TELLIEDELAY_BASEADDR,TELLIEDELAY_HIGHADDR);
   MappedGTDelayBaseAddress= MemoryMapping(GTDELAY_BASEADDR,GTDELAY_HIGHADDR);
@@ -93,6 +93,8 @@ int InitMapping()
 
   // EllieControl
   MappedEllieControlBaseAddress= MemoryMapping(ELLIECONTROL_BASEADDR,ELLIECONTROL_HIGHADDR);
+  MappedDelayControlBaseAddress= MemoryMapping(DELAYCONTROL_BASEADDR,DELAYCONTROL_HIGHADDR);
+
 
   return 0;
 }
@@ -103,7 +105,7 @@ int auto_init()
   InitMapping();
 
   // MZHappy
-  Pulser(1,0.5,1e9,MappedHappyBaseAddress);
+  Pulser(1,0.5,1e9,OTHER,MappedHappyBaseAddress);
 
   // Reset the FIFO
   resetFIFO();
@@ -189,7 +191,7 @@ void GetClockTickDiff(client *c, int argc, sds *argv)
 void MZHappy(client *c, int argc, sds *argv)
 {
   // Set for 1e9 pulses. Should renew this in the status readout.
-  int ret= Pulser(1,500000000,1e9,MappedHappyBaseAddress);
+  int ret= Pulser(1,500000000,1e9,OTHER,MappedHappyBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -204,7 +206,7 @@ void SetMZHappyPulser(client *c, int argc, sds *argv)
   safe_strtof(argv[2],&length);
   safe_strtoul(argv[3],&nPulse);
 
-  int ret= Pulser(rate,length,nPulse,MappedHappyBaseAddress);
+  int ret= Pulser(rate,length,nPulse,OTHER,MappedHappyBaseAddress);
 
   if(ret == 0) addReplyStatus(c, "+OK");
   else addReplyError(c, tubii_err);
@@ -227,7 +229,7 @@ void SetGenericpulser(client *c, int argc, sds *argv)
   safe_strtoul(argv[3],&nPulse);
 
   // 1. Create Pulse
-  int ret1= Pulser(rate,length,nPulse,MappedPulserBaseAddress);
+  int ret1= Pulser(rate,length,nPulse,GENERIC,MappedPulserBaseAddress);
   if(ret1!=0){
     addReplyError(c, tubii_err);
     return;
@@ -266,12 +268,38 @@ void SetGenericdelay(client *c, int argc, sds *argv)
   addReplyStatus(c, "+OK");
 }
 
-void ToggleAsyncdelay(client *c, int argc, sds *argv)
+void SetAsyncdelayMode(client *c, int argc, sds *argv)
 {
-  uint32_t asyncToggle;
-  safe_strtoul(argv[1],&asyncToggle);
-  ToggleAsyncDelay(asyncToggle);
+  uint32_t asyncMode;
+  safe_strtoul(argv[1],&asyncMode);
+  SetAsyncDelayMode(asyncMode);
   addReplyStatus(c, "+OK");
+}
+
+void GetAsyncdelayMode(client *c, int argc, sds *argv)
+{
+  addReplyDouble(c, GetAsyncDelayMode());
+}
+
+int SetAsyncDelay(u32 delay1, u32 delay2)
+{
+
+  if(delay1<0 || delay1 >255 || delay2 <0 || delay2 > 255){
+	Log(WARNING, "TUBii: delay length is outside acceptable range.");
+	sprintf(tubii_err, "Tubii: delay length is outside acceptable range.");
+	return -1;
+  }
+
+  // Set Delay
+  int ret1= Muxer(4);
+  MuxEnable(1);
+  int ret2= LoadShift(delay1);
+  int ret3= LoadShift(delay2);
+  MuxEnable(0);
+
+  if(ret1 != 0 || ret2 != 0 || ret3 != 0) return -1;
+
+  return 0;
 }
 
 void SetAsyncdelay(client *c, int argc, sds *argv)
@@ -283,16 +311,7 @@ void SetAsyncdelay(client *c, int argc, sds *argv)
   u32 delay1 = length1;
   u32 delay2 = length2;
 
-  int ret1= Muxer(4);
-  MuxEnable(1);
-  int ret2= LoadShift(delay1);
-  int ret3= LoadShift(delay2);
-  MuxEnable(0);
-
-  if(ret1 != 0 || ret2 != 0 || ret3 != 0){
-      addReplyError(c, tubii_err);
-      return;
-    }
+  SetAsyncDelay(delay1,delay2);
 
   save_tubii_state();
 
@@ -315,7 +334,7 @@ void SetSmelliepulser(client *c, int argc, sds *argv)
   safe_strtof(argv[2],&length);
   safe_strtoul(argv[3],&nPulse);
 
-  int ret= Pulser(rate,length,nPulse,MappedSPulserBaseAddress);
+  int ret= Pulser(rate,length,nPulse,SMELLIE,MappedSPulserBaseAddress);
 
   save_tubii_state();
 
@@ -323,12 +342,35 @@ void SetSmelliepulser(client *c, int argc, sds *argv)
   else addReplyError(c, tubii_err);
 }
 
+void SetSmellieMode(client *c, int argc, sds *argv)
+{
+  uint32_t option=0;
+  safe_strtoul(argv[1],&option);
+
+  SetSmellieDelayMode(option);
+  addReplyStatus(c, "+OK");
+}
+
+void GetSmellieMode(client *c, int argc, sds *argv)
+{
+  addReplyDouble(c, GetSmellieDelayMode());
+}
+
 void SetSmelliedelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
   u32 delay = length;
+
+  // Old delay method, will still work should anyone want to use it
   int ret= Delay(delay,MappedSDelayBaseAddress);
+
+  if( ret != 0) addReplyError(c, tubii_err);
+
+  // New delay method
+  SetSmellieDelayMode(1);
+  SetAsyncDelayMode(1);
+  SetAsyncDelay(length/5,length/5);
 
   save_tubii_state();
 
@@ -344,7 +386,7 @@ void SetTelliepulser(client *c, int argc, sds *argv)
   safe_strtof(argv[2],&length);
   safe_strtoul(argv[3],&nPulse);
 
-  int ret= MZPulser(rate*2,length/2,nPulse,MappedTPulserBaseAddress);
+  int ret= Pulser(rate,length,nPulse,TELLIE,MappedTPulserBaseAddress);
 
   save_tubii_state();
 
@@ -370,7 +412,7 @@ void SetTelliedelay(client *c, int argc, sds *argv)
 {
   float length=0;
   safe_strtof(argv[1],&length);
-  u32 delay = length/2;
+  u32 delay = length;
   int ret= Delay(delay,MappedTDelayBaseAddress);
   save_tubii_state();
 
@@ -442,9 +484,9 @@ void GetDelay(client *c, int argc, sds *argv)
 int auto_stop_tubii()
 {
   //RESET THE PULSERS
-  Pulser(0,0,0,MappedSPulserBaseAddress);
-  Pulser(0,0,0,MappedTPulserBaseAddress);
-  Pulser(0,0,0,MappedPulserBaseAddress);
+  Pulser(0,0,0,OTHER,MappedSPulserBaseAddress);
+  Pulser(0,0,0,OTHER,MappedTPulserBaseAddress);
+  Pulser(0,0,0,OTHER,MappedPulserBaseAddress);
   return 0;
 }
 
@@ -714,7 +756,7 @@ void SetTUBiiPGT(client *c, int argc, sds *argv)
   float rate=0;
   safe_strtof(argv[1],&rate);
 
-  int ret= Pulser(rate,50,2147483647,MappedTUBiiPGTBaseAddress);
+  int ret= Pulser(rate,50,2147483647,PGT,MappedTUBiiPGTBaseAddress);
 
   save_tubii_state();
 

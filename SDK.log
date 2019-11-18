@@ -318,3 +318,19 @@
 13:48:39 INFO  : Clearing existing target manager status.
 13:48:39 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
 13:48:40 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+00:21:14 INFO  : Registering command handlers for SDK TCF services
+00:21:17 INFO  : Launching XSCT server: xsct -n -interactive /home/zummo/snoplus/TUBii/workspace_tubii/temp_xsdb_launch_script.tcl
+00:21:22 INFO  : XSCT server has started successfully.
+00:21:38 INFO  : Successfully done setting XSCT server connection channel  
+00:21:38 INFO  : Successfully done setting SDK workspace  
+00:21:38 INFO  : Processing command line option -hwspec /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+00:21:39 INFO  : Checking for hwspec changes in the project system_wrapper_hw_platform_0.
+00:21:47 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1574053800000,  Project:1573843164000
+00:21:47 INFO  : The hardware specification for project 'system_wrapper_hw_platform_0' is different from /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf.
+00:21:48 INFO  : Copied contents of /home/zummo/snoplus/TUBii/workspace_tubii/system_wrapper.hdf into /system_wrapper_hw_platform_0/system.hdf.
+00:21:56 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+00:22:03 INFO  : 
+00:22:04 INFO  : Updating hardware inferred compiler options for FSBL_tubii.
+00:22:04 INFO  : Clearing existing target manager status.
+00:22:04 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+00:22:06 WARN  : Linker script will not be updated automatically. Users need to update it manually.

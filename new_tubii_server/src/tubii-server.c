@@ -118,7 +118,8 @@ struct command commandTable[] = {
 		{"ping",         ping,         1},
 		// ellie
 		{"setGenericDelay",  	SetGenericdelay,  	2},
-		{"toggleAsyncDelay",  	ToggleAsyncdelay,  	2},
+		{"setAsyncDelayMode",  	SetAsyncdelayMode,  	2},
+		{"getAsyncDelayMode",  	GetAsyncdelayMode,  	2},
 		{"setAsyncDelay",	  	SetAsyncdelay,  	3},
 		{"setGenericPulser", 	SetGenericpulser, 	4},
 		{"getGenericRate", 		GetPulserRate, 		1},
@@ -127,6 +128,8 @@ struct command commandTable[] = {
 		{"getGenericDelay", 	GetDelay, 			1},
 		{"lengthenDelay", 		LengthenDelay, 		2},
 		{"setSmellieDelay", 	SetSmelliedelay, 	2},
+		{"setSmellieMode",       SetSmellieMode,      2},
+		{"getSmellieMode",       GetSmellieMode,      1},
 		{"setSmelliePulser",	SetSmelliepulser,	4},
 		{"getSmellieRate", 		GetSmellieRate, 	1},
 		{"getSmelliePulseWidth", GetSmelliePulseWidth, 1},
